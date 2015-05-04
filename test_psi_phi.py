@@ -69,7 +69,7 @@ events:
   infect4:
     delay: 0
     description: phi infects a psi_cell
-    propensity: 0
+    propensity: ir_phi*psi_cell*phi
     consequence: |-
       psi_cell = psi_cell-1
       phi = phi-1
@@ -123,7 +123,23 @@ from delay_ssa import run_delayed_ssa
 system = yaml.load(psi_phi_system)
 result = run_delayed_ssa(system)
 pyplot.plot(result['time'], result['participants'])
-pyplot.legend(result['headers'])
-print result['participants'][ len(result['time'])-1 ]
+pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
 #pyplot.ylim([0,100])
 pyplot.xlim([0,10])
+
+#RUN for many parameters
+particles = [ [1,10], [10, 50], [10,100], [20, 100], [30, 100] ]
+res = []
+for p in particles:
+    system['participants']['phi'] = p[0]
+    system['participants']['psi'] = p[1]
+    result = run_delayed_ssa(system)
+    final_i = len(result['time'])-1 
+    res.append(result['participants'][final_i])
+
+pyplot.figure()
+pyplot.plot(res,'o')
+pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
+pyplot.ylim([-50, max(max(res))+100])
+pyplot.xlim([-1, len(particles)])
+
