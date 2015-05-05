@@ -22,8 +22,6 @@ Unlike a vaccine, which takes several weeks to stimulate full immunity, DI virus
 
 #INPUT
 psi_phi_system = """
-sim-time: 200
-
 events:
   death:
     delay: 10
@@ -109,13 +107,13 @@ participants:
   psi_cell: 0
   psi_phi_cell: 0
 
+sim-time: 200
+
 comments: |-
   all propensity parameters are normalized to cell growth (which is 1.0).
 
 """
-from scipy import random
 from matplotlib import pyplot
-from numpy import inf
 from pyaml import yaml
 from delay_ssa import run_delayed_ssa
 
@@ -128,7 +126,7 @@ pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
 pyplot.xlim([0,10])
 
 #RUN for many parameters
-particles = [ [1,10], [10, 50], [10,100], [20, 100], [30, 100] ]
+particles = [ [1,10], [10, 50], [10,100], [20, 100], [30, 100], [50, 100] , [100, 100], [100, 300] , [100, 1000] ]
 res = []
 for p in particles:
     system['participants']['phi'] = p[0]
@@ -142,4 +140,3 @@ pyplot.plot(res,'o')
 pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
 pyplot.ylim([-50, max(max(res))+100])
 pyplot.xlim([-1, len(particles)])
-
