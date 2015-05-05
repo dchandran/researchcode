@@ -1,0 +1,25 @@
+Goal
+----
+Publication title will be something similar to "Platform for design and test of Interfering Satellite Viruses" 
+
+As demonstrated in prior work (*), it is possible to create defective interfering virus particles against a few infectious mammalian viruses. The goal of this work would be to create a "recipe" for this process and an automatable protocol for rigorously testing the interfering virus efficiency. The design process will involve removal of key components of the wild-type virus genome, such as capsid genes. 
+
+(*) Nigel J. Dimmock and Andrew J. Easton. Defective Interfering Influenza Virus RNAs: Time To Reevaluate Their Clinical Potential as Broad-Spectrum Antivirals? J. Virology, 2015
+
+
+Target Journal
+--------------
+depends on quality of findings; too early to decide; aim as high as possible
+
+Submission Date
+---------------
+~1 year from now
+
+Figures/Diagrams
+----------------
+1) Conceptual overview
+2) Plots: Mathematical Model of (1)
+3) Plots: Overlay of (2) and refined data
+
+
+
