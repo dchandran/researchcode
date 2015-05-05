@@ -1,0 +1,39 @@
+----
+Goal
+----
+Possible title for publication: "Platform for design and test of Interfering Satellite Viruses" 
+
+The goal is to create a process through which antiviral virus particles can be designed and tested. The applications of this technology are many: wherever viruses cause problems, this technology can help. A notable advantage of this type of an antiviral "drug" is that it is an evolving drug. The antiviral viruses will evolve alongsize the target virus. In some sense, this process would be an "app" that is built on other applications that our team provides.
+
+Prior work (*) has demonstrated that it is possible to create defective interfering virus particles against a few infectious mammalian viruses. The goal of this work would be to create a "recipe" for this process and an automatable protocol for rigorously testing the interfering virus efficiency. The design process will involve removal of key components of the wild-type virus genome, such as capsid genes. 
+
+(*) Nigel J. Dimmock and Andrew J. Easton. Defective Interfering Influenza Virus RNAs: Time To Reevaluate Their Clinical Potential as Broad-Spectrum Antivirals? J. Virology, 2015
+
+----------------------
+Stages of the project
+----------------------
+The project will utilize some form of design-build-test cycle. The design stage will involve removing essential components from the target wild-type virus. Although this process appears to be a vector-editting process, many of these designs will fail to assemble into virus particles. Therefore, it is essential to visualize design side-by-side with test results. 
+
+The build stage will involve co-transforming a host cell with the synthetic antivirus genome and a helper plasmid that will provide the proteins necessary for the virus particles to assemble. 
+
+The test stage will involve several controls to assure that the infection efficiency of the synthetic virus particles are the same as the original virus and that the synthetic virus particles do not lyse the cells. The main part of the test stage will be a time-course experiment where both the synthetic interfering viruses and the wild-type viruses compete in the same mix. The experiment needs to have several replicates and variables such as MOI need to be fairly well controlled. 
+
+--------------
+Target Journal
+--------------
+Depends on quality of preliminary findings. We should aim as high as possible
+
+---------------
+Submission Date
+---------------
+~1 year from now
+
+----------------
+Figures/Diagrams
+----------------
+1) Conceptual overview 
+2) Plots: Mathematical Model of (1) - interactive?
+3) Plots: Overlay of (2) and refined data
+4) Some kind of nice overview of protocols - interactive?
+
+
