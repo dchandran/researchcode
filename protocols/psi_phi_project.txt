@@ -1,6 +1,0 @@
-OVERVIEW
---------
-
-1) Create -F plasmid (AmpR) using PCR/overhang   
-2) Create Phi-F+GFP+KanR plasmid using PCR/overhang
-3) Transform 
