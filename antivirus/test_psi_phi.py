@@ -21,6 +21,43 @@ Unlike a vaccine, which takes several weeks to stimulate full immunity, DI virus
 
 
 #INPUT
+burst_model = """
+events:
+  goff:
+    propensity: koff
+    consequence: gene = 0
+  gon:
+    propensity: kon
+    consequence: gene = 1
+  mrna_birth:
+    propensity: kbirth_rna * gene
+    consequence: mrna = mrna + 1
+  mrna_death:
+    propensity: kdeath_rna * mrna
+    consequence: mrna = mrna - 1
+  prot_birth:
+    propensity: kbirth_prot * mrna
+    consequence: protein = protein+1
+  prot_death:
+    propensity: kdeath_prot * protein
+    consequence: protein = protein-1
+
+parameters:  
+  kon: 0.05
+  koff: 0.05
+  kbirth_rna: 5
+  kdeath_rna: 5
+  kbirth_prot: 5
+  kdeath_prot: 1
+
+participants:
+  gene: 0
+  mrna: 0
+  protein: 0
+
+sim-time: 200
+"""
+
 psi_phi_system = """
 events:
   death:
@@ -118,13 +155,16 @@ from pyaml import yaml
 from delay_ssa import run_delayed_ssa
 
 #RUN the example system and plot the results
-system = yaml.load(psi_phi_system)
+system = yaml.load(burst_model)
 result = run_delayed_ssa(system)
+for i in result['participants']:
+    i[1] = i[1] * 10
 pyplot.plot(result['time'], result['participants'])
 pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
 #pyplot.ylim([0,100])
-pyplot.xlim([0,10])
+#pyplot.xlim([0,10])
 
+'''
 #RUN for many parameters
 particles = [ [1,10], [10, 50], [10,100], [20, 100], [30, 100], [50, 100] , [100, 100], [100, 300] , [100, 1000] ]
 res = []
@@ -140,3 +180,4 @@ pyplot.plot(res,'o')
 pyplot.legend(result['headers'], bbox_to_anchor=(1.05, 1), loc=2)
 pyplot.ylim([-50, max(max(res))+100])
 pyplot.xlim([-1, len(particles)])
+'''

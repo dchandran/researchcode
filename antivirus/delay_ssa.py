@@ -45,7 +45,10 @@ def run_delayed_ssa(system):
 
     #create (compile) functions from input strings for rates and events
     for name in events:
-        delays[name] = events[name]['delay']
+        if events[name].has_key('delay'):
+            delays[name] = events[name]['delay']
+        else:
+            delays[name] = 0.0
         last_exec_time[name] = -1
         props[name] = 0.0
         prop_funcs[name] = compile("props['" + name + "'] = " + str(events[name]['propensity']), 'prop_funcs_'+name, 'exec')
@@ -58,6 +61,7 @@ def run_delayed_ssa(system):
         for name in props:
             exec(prop_funcs[name])
             if delays[name] > 0 and delays[name] + last_exec_time[name] < time:
+                print name
                 props[name] = 0.0
         
         #calculate total of all propensities
@@ -66,7 +70,7 @@ def run_delayed_ssa(system):
             total_prop += props[name]
     
         
-        u = random.uniform(total_prop)
+        u = random.uniform(0,total_prop)
         usum = 0
         lucky = None
         for name in props:
@@ -74,7 +78,7 @@ def run_delayed_ssa(system):
             if usum > u:
                 lucky = name
                 break
-        
+
         #fire that reaction
         if lucky:
             last_exec_time[lucky] = time
