@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DrawCellJS</title>
+    <link rel="stylesheet" type="text/css" href="third-party/w2ui-1.4.2/w2ui-1.4.2.min.css" />
+    <script src="third-party/jquery.js"></script>
+    <script type="text/javascript" src="third-party/paper-full.min.js"></script>
+    <script src="pathdefs.js"></script>
+    <script src="main.js"></script>    
+    <script type="text/javascript" src="third-party/w2ui-1.4.2/w2ui-1.4.2.min.js"></script>
+    <script src="examples.js"></script>
+</head>
+<body>
+
+<div id="layout-container" style="height:700px;">
+        <div id="layout" style="width: 100%; height: 100%;"></div>
+    </div>
+
+
+
+<script type="text/javascript">
+
+function setLayoutContainerHeight()
+{
+    // Get top position of layout container, subtract from screen height, subtract a bit for padding
+    var y = $('#layout-container').position().top;
+    var layoutHeight = $(window).height() - y - 10;
+    $('#layout-container').css('height', layoutHeight + 'px');      
+}
+
+// Whenever the window changes size, recalculate the layout container height
+setLayoutContainerHeight();
+
+$(window).resize(setLayoutContainerHeight);
+
+var catalogHtml = '<div id="top">\
+<input value="Eukayotic Cell" type="button" class="button" style="width:75px" onclick="insertComponent(\'Eukaryote\',250)" rel="" />\
+<input value="Prokaryotic Cell" type="button" class="button" style="width:75px" onclick="insertComponent(\'Prokaryote\',150)" rel="" />\
+<input value="Receptor" type="button" class="button" style="width:75px" onclick="insertComponent(\'Receptor\',25)" rel="" />\
+<input value="Enzyme" type="button" class="button" style="width:75px" onclick="insertComponent(\'Enzyme\',25)" rel="" />\
+<input value="Substrate1" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate1\',15)" rel="" />\
+<input value="Substrate2" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate2\',15)" rel="" />\
+<input value="Substrate3" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate3\',15)" rel="" />\
+</div>'
+
+$(function () {
+    var pstyle = 'border: 1px solid #dfdfdf; padding: 5px;';
+    $('#layout').w2layout({
+        name: 'layout',
+        panels: [
+            { type: 'top', resizable: true, size: 50, style: pstyle, content: catalogHtml },
+            { type: 'left', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
+            { type: 'main', resizable: true, style: pstyle, content: '<canvas id="mainCanvas" resize></canvas>' }
+        ]
+    });
+});
+
+
+
+  function setupCallbacks(targetLayer) {
+    if (!targetLayer) {
+      targetLayer = paper.project.activeLayer;
+    }
+
+    /*$('#mainCanvas').on('mousewheel', function(e) {
+      console.log(e.originalEvent.wheelDelta);
+      var delta = e.originalEvent.wheelDelta;
+      var selected = getSelectedItems();
+      if (selected.length > 0) {
+        var update = [];
+        var sz, bounds;
+        for (var i=0; i < selected.length; ++i) {
+          bounds = selected[i].bounds;
+          if (bounds.width > bounds.height) {
+            sz = bounds.width;
+          } else {
+            sz = bounds.height;
+          }
+          if (delta > 0) {
+            sz = sz * 1.1;
+          } else {
+            sz = sz * 0.9;
+          }
+          update.push( {
+            name: selected[i].data.name, 
+            size: sz 
+          } ); 
+        }
+        updateScene(update);
+      } else {
+
+      }
+    });*/
+
+    $('#mainCanvas').on("keypress", function(e) {
+      console.log(e);
+      debugger;
+    });
+
+
+    targetLayer.onMouseDown = function(e) {
+      if (e.target && e.target.parent && e.target.parent.data.name) {
+        var obj = e.target.parent;
+        if (!e.modifiers.control && !e.modifiers.shift && !obj.selected) {
+          deselectAll();
+        }
+        _SceneInteractiveComponents['mousedown'] = obj;
+      } else {
+        deselectAll();
+      }
+    };
+
+    targetLayer.onMouseUp = function(e) { 
+      if (e.target && e.target.parent && e.target.parent.data.name) {
+        var hitItem;
+        var obj = e.target.parent;
+        var mouseDownObj = _SceneInteractiveComponents['mousedown'];
+        if (mouseDownObj===obj) {
+          _SceneInteractiveComponents['mousedown'] = null;
+          _SceneInteractiveComponents['mouseup'] = null;
+          if (_SceneInteractiveComponents['mousedrag'] !== obj) {
+            obj.selected = true;
+          } else {
+            //mouseDownObj.sendToBack();
+            var oldParent = mouseDownObj.parent;
+            mouseDownObj.remove();
+            var hitTest = paper.project.activeLayer.hitTest(e.point);
+            if (hitTest) {
+              hitItem = hitTest.item;
+            }
+            oldParent.addChild(mouseDownObj);
+          }
+          _SceneInteractiveComponents['mousedrag'] = null;
+        } else {
+          hitItem = obj
+        }
+
+        if (hitItem && !hitItem.data.name) {
+          hitItem = hitItem.parent;
+        }
+
+        if (mouseDownObj) {
+          mouseDownObj.bringToFront();
+          var i,f;
+          if (hitItem === mouseDownObj) {
+            hitItem = null;
+          }
+          for (i=0; i < _onHitCBs.length; ++i) {
+            f = _onHitCBs[i];
+            f(mouseDownObj, hitItem);
+          }
+        }
+      }
+    };
+
+    targetLayer.onMouseDrag = function(e) { 
+      var obj = _SceneInteractiveComponents['mousedown'];
+      if (obj) {
+        _SceneInteractiveComponents['mousedrag'] = obj;
+        moveObjects(getSelectedItems(obj), e.point, e.delta);
+      }
+    };
+
+    targetLayer.onMouseEnter = function(e) { 
+      if (e.target && e.target.parent && e.target.parent.data.name) {
+        var obj = e.target.parent;
+
+        if (obj.data.tooltip) {
+          obj.data.tooltip.remove();
+        }
+        
+        var pos = obj.bounds.topRight;
+        var text = getDescription(obj);
+        text = text.replace(/\[\d+\]/,'');
+
+        var tooltip = new paper.PointText({
+            point: [pos.x, pos.y],
+            content: text,
+            fillColor: 'black',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+            fontSize: 15
+        });
+        var rect = new paper.Path.Rectangle(tooltip.bounds);
+        rect.fillColor = 'white';
+        obj.data.tooltip = new paper.Group([rect, tooltip]);
+      }
+    };
+
+    targetLayer.onMouseLeave = function(e) { 
+      if (e.target && e.target.parent && e.target.parent.data.name) {
+        var obj = e.target.parent;
+        if (obj.data.tooltip) {
+          obj.data.tooltip.remove();
+          delete obj.data.tooltip;
+        }
+      }
+    };
+  }
+
+  _DefaultColors = {};
+
+  function insertComponent(type, size) {
+    var color = _DefaultColors[type];
+
+    if (!color) {
+      color = new paper.RGBColor(Math.random(),Math.random(),Math.random());
+      _DefaultColors[type] = color;
+    }
+    var json = {
+      position: paper.project.activeLayer.bounds.center,
+      type: type,
+      fillColor: color,
+      strokeColor: color,
+      membraneColor: color,
+      size: size,
+    };
+
+    var i = 1;
+    var name = type + ' ' + i;
+    while (_SceneComponents[name]) {
+      i = i + 1;
+      name = type + ' ' + i;
+    }
+    json.name = name;
+    if (type==='Eukaryote') {
+      json.innermembrane = true;
+    }
+    updateScene(json);
+  }
+
+  // Only executed our code once the DOM is ready.
+  window.onload = function() {
+    
+    var canvas = document.getElementById('mainCanvas');
+    paper.setup(canvas);    
+    paper.view.draw();
+
+    $('#inputArea').focusout(function(e) {
+      var text = 'updateScene(' + $('#inputArea').val() + ')';
+      eval(text);
+    });
+
+    var INPUT = example2;
+    $('#inputArea').val(JSON.stringify(INPUT, null, 2));
+
+    _HiddenLayer = paper.project.activeLayer;
+    _ComponentsLayer = new paper.Layer();
+    _ReactionLayer = new paper.Layer();
+    _HiddenLayer.opacity = 0;
+
+    _ComponentsLayer.activate();
+    setupCallbacks();
+    
+
+    onHit(function(obj, parent) {
+      if (obj.parent && obj.parent.data.name && !parent) {
+        obj.moveAbove(obj.parent);
+      }
+      if (!parent) return;
+
+      if (parent.data.type==='Eukaryote' ||
+          parent.data.type==='Prokaryote' ||
+          parent.data.type==='DNA' ||
+          parent.data.type==='Plasmid') {
+        var json = {name: obj.data.name, inside: parent.data.name};
+        if (obj.data.type==='Receptor') {
+          json.offset = Math.random();
+        }
+        updateScene(json);
+      }
+    });
+  };
+
+</script>
+
+</body>
+</html>

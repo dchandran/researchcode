@@ -1,0 +1,596 @@
+  var example1 = [{ 
+       name: 'Glu', 
+       type: 'Substrate3', 
+       count: 100, 
+       angle: 0,
+       size: 10,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+
+   { 
+       name: 'Euk' , 
+       type: 'Eukaryote', 
+       innermembrane: true,
+       position : {x:200,y:200},
+       fillColor: '#e2ffa4',
+       strokeColor: '#8aaf3c',
+       membraneColor: '#8aaf3c',
+       size: 200
+    },
+    { 
+       name: 'Duk' , 
+       type: 'Eukaryote', 
+       innermembrane: true,
+       position : {x:500,y:200},
+       fillColor: '#f2fea4',
+       strokeColor: '#faa83c',
+       membraneColor: '#faa83c',
+       size: 250
+    },
+    { 
+       name: 'Ecoli' , 
+       type: 'Prokaryote', 
+       innermembrane: true,
+       count: 3,
+       inside: 'Duk',
+       angle: 45,
+       position : {x:400,y:300},
+       fillColor: '#e2ffa4',
+       strokeColor: '#8aaf3c',
+       membraneColor: '#8aaf3c',
+       size: 80
+    },
+
+   { 
+       name: 'D' , 
+       type: 'DNA', 
+       position : {x:400,y:600},
+       strokeColor: '#29464f',
+       strokeWidth: 5,
+       size: 400
+    },
+
+   { 
+       name: 'R' , 
+       type: 'Receptor', 
+       count: 10, 
+       offset: 0.1,
+       align: 'center',
+       inside: 'Euk',
+       strokeColor: 'black',
+       size: 25,
+       strokeColor: '#356270',
+       fillColor: '#62a1b4'
+    },
+
+   { 
+       name: 'E' , 
+       type: 'Enzyme', 
+       count: 20, 
+       angle: 0,
+       inside: 'Euk',
+       size: 10,
+       strokeColor: '#356270',
+       fillColor: '#62a1b4'
+    },
+
+   { 
+       name: 'S1' , 
+       type: 'Substrate1', 
+       count: 50, 
+       angle: 0,
+       inside: 'Euk',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+   { 
+       name: 'S2' , 
+       type: 'Substrate2', 
+       count: 10, 
+       angle: 0,
+       inside: 'Euk',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+    { 
+       name: 'S3' , 
+       type: 'Substrate2', 
+       count: 10, 
+       angle: 0,
+       inside: 'Ecoli',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+   { 
+       name: 'pTac' , 
+       type: 'Promoter', 
+       offset: 0.1,
+       align: 'top',
+       inside: 'D',
+       fillColor: '#2ad51e',
+       strokeColor: '#11730a',
+       size: 20
+    },
+
+   { 
+       name: 'Pex1' , 
+       type: 'CDS', 
+       offset: 0.15,
+       align: 'center',
+       inside: 'D',
+       fillColor: '#6c86b1',
+       strokeColor: '#274371',
+       size: 25
+    },
+
+    { 
+       name: 'Hex1' , 
+       type: 'CDS', 
+       offset: 0.15,
+       align: 'center',
+       inside: 'D',
+       fillColor: '#6c86b1',
+       strokeColor: '#274371',
+       size: 25
+    },
+
+    {
+       name: 'A' ,
+       position: {x:200,y:400},
+       type: 'Substrate1',
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'B' ,
+       position: {x:170,y:530},
+       type: 'Substrate2',
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'C' ,
+       type: 'Substrate3',
+       position: {x:500,y:450},
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'Enz' ,
+       position: {x:300,y:500},
+       type: 'Enzyme',
+       angle: 0,
+       size: 30,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+        name: 'R1',
+        from: ['A','B'],
+        to: ['C'],
+        through: 'Enz',
+        arrowHead: 'Triangle',
+        strokeColor: '#8aa111',
+    },
+    {
+        name: 'R2',
+        from: ['Pex1'],
+        to: ['Enz'],
+        strokeColor: '#274371',
+        dashArray: [10,4]
+    },
+    {
+        name: 'R3',
+        from: ['Hex1'],
+        to: ['R'],
+        strokeColor: '#274371',
+        dashArray: [10,4]
+    },
+    {
+        name: 'R4',
+        from: ['Glu'],
+        to: ['S2'],
+        through: 'R',
+        arrowHead: 'Triangle',
+        strokeColor: '#274371'
+    },
+    {
+        name: 'R5',
+        from: ['S1'],
+        to: ['S3'],
+        arrowHead: 'Triangle',
+        strokeColor: '#274371'
+    }];
+
+
+var example2 = [{ 
+       name: 'Glu', 
+       type: 'Substrate3', 
+       count: 100, 
+       angle: 0,
+       size: 10,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+
+   { 
+       name: 'Euk' , 
+       type: 'Eukaryote', 
+       innermembrane: true,
+       position : {x:200,y:200},
+       fillColor: '#e2ffa4',
+       strokeColor: '#8aaf3c',
+       membraneColor: '#8aaf3c',
+       size: 200
+    },
+
+    { 
+       name: 'Duk' , 
+       type: 'Eukaryote', 
+       innermembrane: true,
+       position : {x:500,y:200},
+       fillColor: '#f2fea4',
+       strokeColor: '#faa83c',
+       membraneColor: '#faa83c',
+       size: 250
+    },
+    { 
+       name: 'Ecoli' , 
+       type: 'Prokaryote', 
+       innermembrane: true,
+       count: 3,
+       inside: 'Duk',
+       angle: 45,
+       position : {x:400,y:300},
+       fillColor: '#e2ffa4',
+       strokeColor: '#8aaf3c',
+       membraneColor: '#8aaf3c',
+       size: 80
+    },
+
+   { 
+       name: 'D' , 
+       type: 'DNA', 
+       position : {x:400,y:600},
+       strokeColor: '#29464f',
+       strokeWidth: 5,
+       size: 400
+    },
+
+   { 
+       name: 'R' , 
+       type: 'Receptor', 
+       count: 10, 
+       offset: 0.1,
+       align: 'center',
+       inside: 'Euk',
+       strokeColor: 'black',
+       size: 25,
+       strokeColor: '#356270',
+       fillColor: '#62a1b4'
+    },
+
+    { 
+       name: 'R2' , 
+       type: 'Two Component System', 
+       position: {x: 400, y: 500},
+       strokeColor: 'black',
+       size: 200,
+       strokeColor: '#356270',
+       fillColor: '#62a1b4'
+    },
+   { 
+       name: 'E' , 
+       type: 'Enzyme', 
+       count: 20, 
+       angle: 0,
+       inside: 'Euk',
+       size: 10,
+       strokeColor: '#356270',
+       fillColor: '#62a1b4'
+    },
+
+   { 
+       name: 'S1' , 
+       type: 'Substrate1', 
+       count: 50, 
+       angle: 0,
+       inside: 'Euk',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+   { 
+       name: 'S2' , 
+       type: 'Substrate2', 
+       count: 10, 
+       angle: 0,
+       inside: 'Euk',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+    { 
+       name: 'S3' , 
+       type: 'Substrate2', 
+       count: 10, 
+       angle: 0,
+       inside: 'Ecoli',
+       fillColor: '#f6ad16',
+       strokeColor: '#9d6a02',
+       size: 5
+    },
+
+   { 
+       name: 'pTac' , 
+       type: 'Promoter', 
+       offset: 0.1,
+       align: 'top',
+       inside: 'D',
+       fillColor: '#2ad51e',
+       strokeColor: '#11730a',
+       size: 20
+    },
+
+   { 
+       name: 'Pex1' , 
+       type: 'CDS', 
+       offset: 0.15,
+       align: 'center',
+       inside: 'D',
+       fillColor: '#6c86b1',
+       strokeColor: '#274371',
+       size: 25
+    },
+
+    { 
+       name: 'Hex1' , 
+       type: 'CDS', 
+       offset: 0.15,
+       align: 'center',
+       inside: 'D',
+       fillColor: '#6c86b1',
+       strokeColor: '#274371',
+       size: 25
+    },
+
+    {
+       name: 'A' ,
+       position: {x:200,y:400},
+       type: 'Substrate1',
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'B' ,
+       position: {x:170,y:530},
+       type: 'Substrate2',
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'C' ,
+       type: 'Substrate3',
+       position: {x:500,y:450},
+       angle: 0,
+       size: 20,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+       name: 'Enz' ,
+       position: {x:300,y:500},
+       type: 'Enzyme',
+       angle: 0,
+       size: 30,
+       fillColor: '#daff00',
+       strokeColor: '#8aa100'
+    },
+    {
+        name: 'R1',
+        from: ['A','B'],
+        to: ['C'],
+        through: 'Enz',
+        arrowHead: 'Triangle',
+        strokeColor: '#8aa111',
+    },
+    {
+        name: 'R2',
+        from: ['Pex1'],
+        to: ['Enz'],
+        strokeColor: '#274371',
+        dashArray: [10,4]
+    },
+    {
+        name: 'R3',
+        from: ['Hex1'],
+        to: ['R'],
+        strokeColor: '#274371',
+        dashArray: [10,4]
+    },
+    {
+        name: 'R4',
+        from: ['Glu'],
+        to: ['S2'],
+        through: 'R',
+        arrowHead: 'Triangle',
+        strokeColor: '#274371'
+    },
+    {
+        name: 'R5',
+        from: ['S1'],
+        to: ['S3'],
+        arrowHead: 'Triangle',
+        strokeColor: '#274371'
+    }];
+
+var phageExample = [
+{ 
+  name: "WT Phage Stage 1",
+  type: "Phage",
+  count: 30,
+  angle: 1,
+  size: 30,
+  strokeColor: "#e0771d",
+  fillColor: "#e0771d",
+  description: "Wild Type phage that infects\nand lyses the target cells"
+},
+{ 
+  name: "Defective Phage Stage 1",
+  type: "Phage",
+  count: 100,
+  angle: 1,
+  size: 30,
+  strokeColor: "#00780c",
+  fillColor: "#00780c",
+  description: "Defective phage that requires\nWT Phage for replicating inside the target cell"
+},
+{ 
+  name: "Target Cell",
+  type: "Prokaryote",
+  position: {x: 200, y: 300},
+  strokeColor: "#1d6b25",
+  strokeWidth: 5,
+  fillColor: "#b7b7b7",
+  size: 200
+},
+{ 
+  name: "Infected Cell",
+  type: "Prokaryote",
+  position: {x: 500, y: 300},
+  strokeColor: "#1d6b25",
+  strokeWidth: 5,
+  fillColor: "#b7b7b7",
+  size: 200
+},
+{ 
+  name: "Protected Cell",
+  type: "Prokaryote",
+  position: {x: 500, y: 100},
+  strokeWidth: 5,
+  strokeColor: "#75a266",
+  fillColor: "#73e01d",
+  size: 200
+},
+{ 
+  name: "Double Infected Cell",
+  type: "Prokaryote",
+  position: {x: 700, y: 100},
+  strokeWidth: 5,
+  strokeColor: "#75a266",
+  fillColor: "#73e01d",
+  size: 200,
+  description: "This cell has been infected by\nboth types of virus particles"
+},
+{ 
+  name: "Cell Lysis",
+  type: "Prokaryote Lysis",
+  position: {x: 500, y: 500},
+  strokeColor: "#1d6b25",
+  fillColor: "#b7b7b7",
+  size: 200,
+  description: "Cells that have died due to the\npresence of lytic phages"
+},
+{ 
+  name: "WT Phage Stage 2",
+  type: "Phage",
+  inside: "Infected Cell",
+  count: 5,
+  angle: 1,
+  size: 30,
+  strokeColor: "#e0771d",
+  fillColor: "#e0771d"
+},
+{ 
+  name: "Defective Phage Stage 2",
+  type: "Phage",
+  inside: "Protected Cell",
+  count: 5,
+  angle: 1,
+  size: 30,
+  strokeColor: "#00780c",
+  fillColor: "#00780c"
+},
+{ 
+  name: "Defective Phage Stage 3",
+  type: "Phage",
+  inside: "Double Infected Cell",
+  count: 5,
+  angle: 1,
+  size: 30,
+  strokeColor: "#00780c",
+  fillColor: "#00780c"
+},
+{ 
+  name: "WT Phage Stage 4",
+  type: "Phage",
+  inside: "Double Infected Cell",
+  count: 5,
+  angle: 1,
+  size: 30,
+  strokeColor: "#e0771d",
+  fillColor: "#e0771d"
+},
+{ 
+  name: "WT Phage Stage 3",
+  type: "Phage",
+  inside: "Cell Lysis",
+  count: 5,
+  angle: 1,
+  size: 30,
+  strokeColor: "#e0771d",
+  fillColor: "#e0771d"
+},
+{
+  name: "R1",
+  from: ["Target Cell", "Free Phage"],
+  to: ["Infected Cell"],
+  strokeColor: "#21475b",
+  strokeWidth: 2,
+  arrowHead: "Triangle"
+},
+{
+  name: "R2",
+  from: ["Infected Cell"],
+  to: ["Cell Lysis"],
+  strokeColor: "#21475b",
+  strokeWidth: 2,
+  arrowHead: "Triangle"
+},
+{
+  name: "R3",
+  from: ["Target Cell", "Defective Phage Stage 1"],
+  to: ["Protected Cell"],
+  strokeColor: "#21475b",
+  strokeWidth: 2,
+  arrowHead: "Triangle"
+},
+{
+  name: "R4",
+  from: ["Protected Cell", "WT Phage Stage 1"],
+  to: ["Double Infected Cell"],
+  strokeColor: "#21475b",
+  strokeWidth: 2,
+  arrowHead: "Triangle"
+}
+];
+

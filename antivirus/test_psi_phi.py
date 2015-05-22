@@ -153,6 +153,7 @@ comments: |-
 from matplotlib import pyplot
 from pyaml import yaml
 from delay_ssa import run_delayed_ssa
+from scipy import linspace
 
 #RUN the example system and plot the results
 system = yaml.load(burst_model)

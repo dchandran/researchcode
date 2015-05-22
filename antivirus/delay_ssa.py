@@ -45,7 +45,7 @@ def run_delayed_ssa(system):
 
     #create (compile) functions from input strings for rates and events
     for name in events:
-        if events[name].has_key('delay'):
+        if events[name].get('delay'):
             delays[name] = events[name]['delay']
         else:
             delays[name] = 0.0
@@ -61,7 +61,7 @@ def run_delayed_ssa(system):
         for name in props:
             exec(prop_funcs[name])
             if delays[name] > 0 and delays[name] + last_exec_time[name] < time:
-                print name
+                print(name)
                 props[name] = 0.0
         
         #calculate total of all propensities
