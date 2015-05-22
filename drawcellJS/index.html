@@ -3,7 +3,14 @@
 <head>
     <title>DrawCellJS</title>
     <link rel="stylesheet" type="text/css" href="third-party/w2ui-1.4.2/w2ui-1.4.2.min.css" />
+
     <script src="third-party/jquery.js"></script>
+    <link rel="stylesheet" href="third-party/codemirror.css">
+    <script src="third-party/codemirror.js"></script>
+    <script src="third-party/matchbrackets.js"></script>
+    <script src="third-party/continuecomment.js"></script>
+    <script src="third-party/comment.js"></script>
+    <script src="third-party/javascript.js"></script>
     <script type="text/javascript" src="third-party/paper-full.min.js"></script>
     <script src="pathdefs.js"></script>
     <script src="main.js"></script>    
@@ -49,7 +56,7 @@ $(function () {
         name: 'layout',
         panels: [
             { type: 'top', resizable: true, size: 50, style: pstyle, content: catalogHtml },
-            { type: 'left', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
+            { type: 'left', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" .CodeMirror { border: 1px solid #eee; height: auto; } style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
             { type: 'main', resizable: true, style: pstyle, content: '<canvas id="mainCanvas" resize></canvas>' }
         ]
     });
@@ -236,13 +243,20 @@ $(function () {
     paper.setup(canvas);    
     paper.view.draw();
 
-    $('#inputArea').focusout(function(e) {
+
+    var INPUT = phageExample;
+    $('#inputArea').val(JSON.stringify(INPUT, null, 2));
+    var editor = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment"}
+      });
+
+    editor.on('blur', function(e) {
       var text = 'updateScene(' + $('#inputArea').val() + ')';
       eval(text);
     });
-
-    var INPUT = example2;
-    $('#inputArea').val(JSON.stringify(INPUT, null, 2));
 
     _HiddenLayer = paper.project.activeLayer;
     _ComponentsLayer = new paper.Layer();

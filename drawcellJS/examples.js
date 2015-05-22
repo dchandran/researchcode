@@ -594,3 +594,23 @@ var phageExample = [
 }
 ];
 
+
+/*
+-- Draw --
+Cell named A
+At (200,300)
+
+*/
+var feedback = [
+  {
+    
+  },
+  {
+    name: "R4",
+    from: ["Protected Cell", "WT Phage Stage 1"],
+    to: ["Double Infected Cell"],
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  }
+];
