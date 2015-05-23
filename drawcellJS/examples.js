@@ -7,7 +7,6 @@
        fillColor: '#daff00',
        strokeColor: '#8aa100'
     },
-
    { 
        name: 'Euk' , 
        type: 'Eukaryote', 
@@ -601,14 +600,101 @@ Cell named A
 At (200,300)
 
 */
-var feedback = [
+var feedbackExample = [
   {
-    
+    name: "x0",
+    type: "Enzyme",
+    position: {x: 400, y: 200},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 50
   },
   {
-    name: "R4",
-    from: ["Protected Cell", "WT Phage Stage 1"],
-    to: ["Double Infected Cell"],
+    name: "x1",
+    type: "Enzyme",
+    position: {x: 400, y: 60},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 50
+  },
+  {
+    name: "dot1",
+    type: "Substrate2",
+    position: {x: 300, y: 130},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 5
+  },
+  {
+    name: "dot2",
+    type: "Substrate2",
+    position: {x: 500, y: 130},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 5
+  },
+  {
+    name: "Source",
+    type: "Substrate2",
+    position: {x: 50, y: 400},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 30
+  },
+  {
+    name: "S0",
+    type: "Substrate2",
+    position: {x: 150, y: 400},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 30
+  },
+  {
+    name: "S1",
+    type: "Substrate2",
+    position: {x: 250, y: 400},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 30
+  },
+  {
+    name: "S2",
+    type: "Substrate2",
+    position: {x: 350, y: 400},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 30
+  },
+  {
+    name: "Sink",
+    type: "Substrate2",
+    position: {x: 450, y: 400},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 30
+  },
+  {
+    name: "dot2",
+    type: "Substrate2",
+    position: {x: 500, y: 130},
+    strokeColor: "#00780c",
+    fillColor: "#00780c",
+    size: 5
+  },
+  {
+    name: "R1",
+    from: ["x0"],
+    to: ["x1"],
+    through: "dot1",
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R2",
+    from: ["x1"],
+    to: ["x0"],
+    through: "dot2",
     strokeColor: "#21475b",
     strokeWidth: 2,
     arrowHead: "Triangle"
