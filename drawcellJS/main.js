@@ -2,7 +2,7 @@ var _SceneComponents = {};
 var _SceneReactions = {};
 var _ReactionLayer = null;
 var _ComponentsLayer = null;
-var _ARROWHEADSCALE = 10; //x line width
+var _ARROWHEADSCALE = 5; //x line width
 var _ARROWHEADCTRLDIST = 20; //hard coded
 
 var distance = function(p1, p2) {
@@ -129,6 +129,11 @@ function updateSceneArray(jsonArray) {
   for (i=0; i < jsonArray.length; ++i) {
     updateScene(jsonArray[i]);
   }
+}
+
+
+function parseDescription(s) {
+
 }
 
 function updateScene(json) {

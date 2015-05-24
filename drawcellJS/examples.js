@@ -596,90 +596,82 @@ var phageExample = [
 
 /*
 -- Draw --
-Cell named A
-At (200,300)
-
+Enzyme named x0
+at (100,300)
+style: { strokeColor: "#00780c", fillColor: "#00780c", size: 20 }
 */
 var feedbackExample = [
   {
     name: "x0",
     type: "Enzyme",
-    position: {x: 400, y: 200},
+    position: {x: 100, y: 300},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 50
+    size: 20
   },
   {
     name: "x1",
     type: "Enzyme",
-    position: {x: 400, y: 60},
+    position: {x: 100, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 50
+    size: 20
   },
   {
     name: "dot1",
-    type: "Substrate2",
-    position: {x: 300, y: 130},
+    type: "Substrate",
+    position: {x: 80, y: 350},
     strokeColor: "#00780c",
     fillColor: "#00780c",
     size: 5
   },
   {
     name: "dot2",
-    type: "Substrate2",
-    position: {x: 500, y: 130},
+    type: "Substrate",
+    position: {x: 120, y: 350},
     strokeColor: "#00780c",
     fillColor: "#00780c",
     size: 5
   },
   {
     name: "Source",
-    type: "Substrate2",
+    type: "Substrate",
     position: {x: 50, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 30
+    size: 20
   },
   {
     name: "S0",
-    type: "Substrate2",
+    type: "Substrate",
     position: {x: 150, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 30
+    size: 20
   },
   {
     name: "S1",
-    type: "Substrate2",
+    type: "Substrate",
     position: {x: 250, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 30
+    size: 20
   },
   {
     name: "S2",
-    type: "Substrate2",
+    type: "Substrate",
     position: {x: 350, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 30
+    size: 20
   },
   {
     name: "Sink",
-    type: "Substrate2",
+    type: "Substrate",
     position: {x: 450, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 30
-  },
-  {
-    name: "dot2",
-    type: "Substrate2",
-    position: {x: 500, y: 130},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 5
+    size: 20
   },
   {
     name: "R1",
@@ -695,6 +687,46 @@ var feedbackExample = [
     from: ["x1"],
     to: ["x0"],
     through: "dot2",
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R3",
+    from: ["Source"],
+    to: ["S0"],
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R4",
+    from: ["S0"],
+    to: ["S1"],
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R5",
+    from: ["S1"],
+    to: ["S2"],
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R6",
+    from: ["S2"],
+    to: ["Sink"],
+    strokeColor: "#21475b",
+    strokeWidth: 2,
+    arrowHead: "Triangle"
+  },
+  {
+    name: "R7",
+    from: ["S2"],
+    to: ["Sink"],
     strokeColor: "#21475b",
     strokeWidth: 2,
     arrowHead: "Triangle"
