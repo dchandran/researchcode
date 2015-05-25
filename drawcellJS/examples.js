@@ -594,53 +594,22 @@ var phageExample = [
 ];
 
 
-/*
--- Draw --
-Enzyme named x0
-at (100,300)
-style: { strokeColor: "#00780c", fillColor: "#00780c", size: 20 }
-*/
 var feedbackExample = [
-  {
-    name: "x0",
-    type: "Enzyme",
-    position: {x: 100, y: 300},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
-  {
-    name: "x1",
-    type: "Enzyme",
-    position: {x: 100, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
-  {
-    name: "dot1",
-    type: "Substrate",
-    position: {x: 80, y: 350},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 5
-  },
-  {
-    name: "dot2",
-    type: "Substrate",
-    position: {x: 120, y: 350},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 5
-  },
-  {
-    name: "Source",
-    type: "Substrate",
-    position: {x: 50, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
+  'Enzyme named x0 at (100,300)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }',
+
+  'Enzyme named x1 at (100,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }',
+
+  'Substate named dot[1] at (80,350)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }',
+
+  'Substate named dot[2] at (120,350)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }',
+
+  'Substate named Source at (50,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 10 }',
+
   {
     name: "S0",
     type: "Substrate",
@@ -671,13 +640,14 @@ var feedbackExample = [
     position: {x: 450, y: 400},
     strokeColor: "#00780c",
     fillColor: "#00780c",
-    size: 20
+    opacity: 0.5,
+    size: 10
   },
   {
     name: "R1",
     from: ["x0"],
     to: ["x1"],
-    through: "dot1",
+    through: "dot[1]",
     strokeColor: "#21475b",
     strokeWidth: 2,
     arrowHead: "Triangle"
@@ -686,7 +656,7 @@ var feedbackExample = [
     name: "R2",
     from: ["x1"],
     to: ["x0"],
-    through: "dot2",
+    through: "dot[2]",
     strokeColor: "#21475b",
     strokeWidth: 2,
     arrowHead: "Triangle"
@@ -715,20 +685,72 @@ var feedbackExample = [
     strokeWidth: 2,
     arrowHead: "Triangle"
   },
-  {
-    name: "R6",
-    from: ["S2"],
-    to: ["Sink"],
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
-  {
-    name: "R7",
-    from: ["S2"],
-    to: ["Sink"],
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  }
+  'Connect "S2" to "Sink"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
 ];
+
+
+var feedbackExampleCode = "# -*- coding: utf-8 -*-\n\
+import numpy\n\
+from scipy import integrate\n\
+from matplotlib import pyplot\n\
+from scipy import random\n\
+from scipy import linspace\n\
+\n\
+E2 = 50\n\
+source = 50\n\
+def f(x,t):\n\
+    global E2, source\n\
+    \n\
+    x0 = x[0]\n\
+    x1 = x[1]\n\
+    s0 = x[2]\n\
+    s1 = x[3]\n\
+    s2 = x[4]\n\
+    s3 = x[5]\n\
+    s4 = x[6]\n\
+\n\
+    #linear region\n\
+    ds0 = source/(1+x1) - 0.2*s0\n\
+    ds1 = 0.2*s0 - 0.2*s1\n\
+    ds2 = 0.2*s1 - 0.2*s2\n\
+    ds3 = 0.2*s2 - 0.2*s3\n\
+    ds4 = 0.2*s3 - 0.2*s4\n\
+    \n\
+    E = s1*(1+x1)\n\
+    #E = s4\n\
+    #dual enzyme\n\
+    dx0 = E2*x1/(1+x1) - E*x0/(200+x0)\n\
+    dx1 = -E2*x1/(1+x1) + E*x0/(200+x0)    \n\
+    \n\
+    return [dx0,dx1,ds0,ds1,ds2,ds3,ds4]\n\
+\n\
+x0 = [50.,30.] + [0]*5\n\
+names = ['x0', 'x1', 's0', 's1', 's2', 's3', 's4']\n\
+n = 200\n\
+time = linspace(0,200,n)\n\
+result = integrate.odeint(f,x0,time)\n\
+#result.resize(n, 2)\n\
+pyplot.plot(time, result)\n\
+pyplot.legend(names, bbox_to_anchor=(1.05, 1), loc=2)\n\
+#pyplot.ylim([0,100])\n\
+\n\
+pyplot.figure()\n\
+y = []\n\
+x = [50,60,80,100,150,180,200,250,300,400,500]\n\
+for i in x:\n\
+    source = i\n\
+    result = integrate.odeint(f,x0,time)\n\
+    y.append(result[199][6])\n\
+\n\
+pyplot.plot(x, y)\n\
+\n\
+\n\
+pyplot.figure()\n\
+n = 100\n\
+x = linspace(0,80,n)\n\
+y = 80 - x\n\
+v1 = 50.0*x/(1.0+x)\n\
+v2 = 70.0*x*y/(400.0 + y)\n\
+pyplot.plot(x,v2-v1)\n\
+";

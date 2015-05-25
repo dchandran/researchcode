@@ -133,10 +133,69 @@ function updateSceneArray(jsonArray) {
 
 
 function parseDescription(s) {
+  var re1 = new RegExp("(\\S+)\\s+named\\s+(\\S+)","gi");
+  var re2 = new RegExp("at\\s+\\((\\d+)\\s*,\\s*(\\d+)\\)","gi");
+  var re3 = new RegExp("style\\s*\\:\\s*(\\{[^}]+})","gi");
+  
+  var m1 = re1.exec(s);
+  var m2 = re2.exec(s);
+  var m3 = re3.exec(s);
+
+  var json, style, i;
+
+  if (m1 && m1[1] && m1[2]) {
+    json = {};
+    json.type = m1[1];
+    json.name = m1[2];
+
+    if (m2 && m2[1] !== undefined && m2[2] !== undefined) {
+      json.position = {x: m2[1], y: m2[2]};
+    }
+
+    if (m3 && m3[1]) {
+      style = JSON.parse(m3[1]);
+      for (i in style) {
+        json[i] = style[i];
+      }
+    }
+  }
+
+  if (json)
+    return json;
+
+  debugger;
+  re1 = new RegExp("Connect\\s+((\"\\S+\"\\s*,)+\"\\S+\")\\s+to\\s+((\"\\S+\"\\s*,)+\"\\S+\")\\s+","gi");
+  re2 = new RegExp("style\\s*\\:\\s*(\\{[^}]+})","gi");
+  
+  m1 = re1.exec(s);
+  m2 = re2.exec(s);
+  
+  if (m1 && m1[1] && m1[2]) {
+    json = {};
+    json.from = JSON.parse("["+m1[1]+"]");
+    json.to = JSON.parse("["+m1[2]+"]");
+
+    if (m2 && m2[1]) {
+      style = JSON.parse(m2[1]);
+      for (i in style) {
+        json[i] = style[i];
+      }
+    }
+  }
+
+  return json;
+}
+
+function scrapeCodeComments() {
 
 }
 
 function updateScene(json) {
+
+  if (typeof(json)==='string') {
+    json = parseDescription(json);
+  }
+
   if (json.length !== undefined) {
     updateSceneArray(json);
     return;

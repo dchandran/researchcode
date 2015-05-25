@@ -16,6 +16,12 @@
     <script src="main.js"></script>    
     <script type="text/javascript" src="third-party/w2ui-1.4.2/w2ui-1.4.2.min.js"></script>
     <script src="examples.js"></script>
+    <style type="text/css">
+      .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+      .CodeMirror-selected  { background-color: blue !important; }
+      .CodeMirror-selectedtext { color: white; }
+      .styled-background { background-color: #ff7; }
+    </style>
 </head>
 <body>
 
@@ -49,6 +55,8 @@ var catalogHtml = '<div id="top">\
 <input value="Substrate2" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate2\',15)" rel="" />\
 <input value="Substrate3" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate3\',15)" rel="" />\
 </div>'
+
+var CODEEDITOR;
 
 $(function () {
     var pstyle = 'border: 1px solid #dfdfdf; padding: 5px;';
@@ -127,6 +135,11 @@ $(function () {
           _SceneInteractiveComponents['mouseup'] = null;
           if (_SceneInteractiveComponents['mousedrag'] !== obj) {
             obj.selected = true;
+            if (CODEEDITOR && obj.lineNumbers) {
+              var l1 = obj.lineNumbers[0];
+              var l2 = obj.lineNumbers[1];
+              CODEEDITOR.setSelection({line:l1,ch:0},{line:(l2+1),ch:0});
+            }
           } else {
             //mouseDownObj.sendToBack();
             var oldParent = mouseDownObj.parent;
@@ -246,17 +259,20 @@ $(function () {
 
     var INPUT = feedbackExample;
     $('#inputArea').val(JSON.stringify(INPUT, null, 2));
-    var editor = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
+    CODEEDITOR = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
         lineNumbers: true,
         matchBrackets: true,
         continueComments: "Enter",
         extraKeys: {"Ctrl-Q": "toggleComment"}
       });
 
-    editor.on('blur', function(e) {
+    CODEEDITOR.on('blur', function(e) {
       var text = 'updateScene(' + $('#inputArea').val() + ')';
+      CODEEDITOR.setSize('100%','100%');
       eval(text);
     });
+
+    CODEEDITOR.setSize('100%','100%')
 
     _HiddenLayer = paper.project.activeLayer;
     _ComponentsLayer = new paper.Layer();
