@@ -133,9 +133,9 @@ function updateSceneArray(jsonArray) {
 
 
 function parseDescription(s) {
-  var re1 = new RegExp("(\\S+)\\s+named\\s+(\\S+)","gi");
-  var re2 = new RegExp("at\\s+\\((\\d+)\\s*,\\s*(\\d+)\\)","gi");
-  var re3 = new RegExp("style\\s*\\:\\s*(\\{[^}]+})","gi");
+  var re1 = /(\S+)\s+named\s+(\S+)/gi;
+  var re2 = /at\s+\((\d+)\s*,\s*(\d+)\)/gi;
+  var re3 = /style\s*\:\s*({[^}]+})/gi;
   
   var m1 = re1.exec(s);
   var m2 = re2.exec(s);
@@ -163,20 +163,25 @@ function parseDescription(s) {
   if (json)
     return json;
 
-  debugger;
-  re1 = new RegExp("Connect\\s+((\"\\S+\"\\s*,)+\"\\S+\")\\s+to\\s+((\"\\S+\"\\s*,)+\"\\S+\")\\s+","gi");
-  re2 = new RegExp("style\\s*\\:\\s*(\\{[^}]+})","gi");
+  re1 = /Connect\s+(("\S+"\s*,)*\s*"\S+")\s+to\s+(("\S+"\s*,)*\s*"\S+")\s*/gi;
+  re2 = /through\s+("\S+")/gi;
+  re3 = /style\s*\:\s*({[^}]+})/gi;
   
   m1 = re1.exec(s);
   m2 = re2.exec(s);
+  m3 = re3.exec(s);
   
-  if (m1 && m1[1] && m1[2]) {
+  if (m1 && m1[1] && m1[3]) {
     json = {};
     json.from = JSON.parse("["+m1[1]+"]");
-    json.to = JSON.parse("["+m1[2]+"]");
+    json.to = JSON.parse("["+m1[3]+"]");
 
-    if (m2 && m2[1]) {
-      style = JSON.parse(m2[1]);
+    if (m2) {
+      json.through = eval(m2[1]);
+    }
+
+    if (m3 && m3[1]) {
+      style = JSON.parse(m3[1]);
       for (i in style) {
         json[i] = style[i];
       }
@@ -186,8 +191,36 @@ function parseDescription(s) {
   return json;
 }
 
-function scrapeCodeComments() {
-
+function scrapeCodeComments(code) {
+  var commentsMarker = /"""|'''/gi;
+  var lines = code.split(/\n|\r/);
+  var i, block, json;
+  var jsonArray = [];
+  for (i=0; i < lines.length; ++i) {
+    if (commentsMarker.exec(lines[i])) {
+      console.log(i);
+      if (block) {
+        console.log(block);
+        json = parseDescription(block);
+        if (json) {
+          jsonArray.push(json);
+        } else {
+          console.log(block);
+        }
+        block = undefined;
+      } else {
+        block = "";
+        console.log(block);
+      }
+    } else {
+      console.log(lines[i]);
+      if (block) {
+        console.log(lines[i]);
+        block = block + " " + lines[i];
+      }      
+    }
+  }
+  return jsonArray;
 }
 
 function updateScene(json) {

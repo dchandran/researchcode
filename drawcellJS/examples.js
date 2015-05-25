@@ -608,83 +608,41 @@ var feedbackExample = [
    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }',
 
   'Substate named Source at (50,400)\n\
-   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 10 }',
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "opacity":0.5, "size": 10 }',
 
-  {
-    name: "S0",
-    type: "Substrate",
-    position: {x: 150, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
-  {
-    name: "S1",
-    type: "Substrate",
-    position: {x: 250, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
-  {
-    name: "S2",
-    type: "Substrate",
-    position: {x: 350, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    size: 20
-  },
-  {
-    name: "Sink",
-    type: "Substrate",
-    position: {x: 450, y: 400},
-    strokeColor: "#00780c",
-    fillColor: "#00780c",
-    opacity: 0.5,
-    size: 10
-  },
-  {
-    name: "R1",
-    from: ["x0"],
-    to: ["x1"],
-    through: "dot[1]",
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
-  {
-    name: "R2",
-    from: ["x1"],
-    to: ["x0"],
-    through: "dot[2]",
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
-  {
-    name: "R3",
-    from: ["Source"],
-    to: ["S0"],
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
-  {
-    name: "R4",
-    from: ["S0"],
-    to: ["S1"],
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
-  {
-    name: "R5",
-    from: ["S1"],
-    to: ["S2"],
-    strokeColor: "#21475b",
-    strokeWidth: 2,
-    arrowHead: "Triangle"
-  },
+  'Substate named dot[3] at (350,360)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }',
+
+  'Substate named S0 at (150,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }',
+  
+  'Substate named S1 at (250,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }',
+
+  'Substate named S2 at (350,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }',
+
+  'Substate named Sink at (450,400)\n\
+   style: { "strokeColor": "#00780c", "fillColor": "#00780c", "opacity":0.5, "size": 10 }',
+
+  'Connect "S2" to "dot[2]" through "dot[3]"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle", "dashArray": [10,4]}'  
+  ,
+  'Connect "x0" to "x1" through "dot[1]"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
+  ,
+  'Connect "x1" to "x0" through "dot[2]"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
+  ,
+  'Connect "Source" to "S0"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
+  ,
+  'Connect "S0" to "S1"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
+  ,
+  'Connect "S1" to "S2"\n\
+  style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
+  ,
   'Connect "S2" to "Sink"\n\
   style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}'
 ];
@@ -710,7 +668,10 @@ def f(x,t):\n\
     s3 = x[5]\n\
     s4 = x[6]\n\
 \n\
-    #linear region\n\
+    '''\n\
+    Enzyme named x0 at (100,300)\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    '''\n\
     ds0 = source/(1+x1) - 0.2*s0\n\
     ds1 = 0.2*s0 - 0.2*s1\n\
     ds2 = 0.2*s1 - 0.2*s2\n\
