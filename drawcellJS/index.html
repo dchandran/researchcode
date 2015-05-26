@@ -5,12 +5,16 @@
     <link rel="stylesheet" type="text/css" href="third-party/w2ui-1.4.2/w2ui-1.4.2.min.css" />
 
     <script src="third-party/jquery.js"></script>
-    <link rel="stylesheet" href="third-party/codemirror.css">
-    <script src="third-party/codemirror.js"></script>
-    <script src="third-party/matchbrackets.js"></script>
-    <script src="third-party/continuecomment.js"></script>
-    <script src="third-party/comment.js"></script>
-    <script src="third-party/javascript.js"></script>
+    <link rel="stylesheet" href="third-party/codemirror/codemirror.css">
+    <link rel="stylesheet" href="third-party/codemirror/solarized.css">
+    <link rel="stylesheet" href="third-party/codemirror/mdn-like.css">
+    <link rel="stylesheet" href="third-party/codemirror/neat.css">
+    <link rel="stylesheet" href="third-party/codemirror/monokai.css">
+    <script src="third-party/codemirror/codemirror.js"></script>
+    <script src="third-party/codemirror/matchbrackets.js"></script>
+    <script src="third-party/codemirror/continuecomment.js"></script>
+    <script src="third-party/codemirror/comment.js"></script>
+    <script src="third-party/codemirror/python.js"></script>
     <script type="text/javascript" src="third-party/paper-full.min.js"></script>
     <script src="pathdefs.js"></script>
     <script src="main.js"></script>    
@@ -65,7 +69,7 @@ $(function () {
         panels: [
             { type: 'top', resizable: true, size: 50, style: pstyle, content: '' },
             { type: 'right', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" .CodeMirror { border: 1px solid #eee; height: auto; } style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
-            { type: 'main', resizable: true, style: pstyle, content: '<canvas id="mainCanvas" resize></canvas>' }
+            { type: 'main', resizable: true, style: pstyle, content: '<canvas id="mainCanvas" resize="true"></canvas>' }
         ]
     });
 });
@@ -107,12 +111,6 @@ $(function () {
       }
     });*/
 
-    $('#mainCanvas').on("keypress", function(e) {
-      console.log(e);
-      debugger;
-    });
-
-
     targetLayer.onMouseDown = function(e) {
       if (e.target && e.target.parent && e.target.parent.data.name) {
         var obj = e.target.parent;
@@ -144,7 +142,7 @@ $(function () {
             //mouseDownObj.sendToBack(); //not working as expected, but needed
             var oldParent = mouseDownObj.parent;
             mouseDownObj.remove();
-            var hitTest = paper.project.activeLayer.hitTest(e.point);
+            var hitTest = targetLayer.hitTest(e.point);
             if (hitTest) {
               hitItem = hitTest.item;
             }
@@ -216,6 +214,34 @@ $(function () {
         }
       }
     };
+
+    var tool = new paper.Tool();
+    tool.onKeyDown = function(e) {
+      if (e.key==='+' || e.key==='=') {
+        paper.project.view.zoom = paper.project.view.zoom * 1.1;
+        _ComponentsLayer.updateBackground();
+      }
+      if (e.key==='-') {
+        paper.project.view.zoom = paper.project.view.zoom * 0.9;
+        _ComponentsLayer.updateBackground();
+      }
+      if (e.key==='left') {
+        paper.project.view.scrollBy(-10,0);
+        _ComponentsLayer.updateBackground();
+      }
+      if (e.key==='right') {
+        paper.project.view.scrollBy(10,0);
+        _ComponentsLayer.updateBackground();
+      }
+      if (e.key==='up') {
+        paper.project.view.scrollBy(0,-10);
+        _ComponentsLayer.updateBackground();
+      }
+      if (e.key==='down') {
+        paper.project.view.scrollBy(0,10);
+        _ComponentsLayer.updateBackground();
+      }
+    };
   }
 
   _DefaultColors = {};
@@ -249,16 +275,8 @@ $(function () {
     updateScene(json);
   }
 
-  // Only executed our code once the DOM is ready.
-  window.onload = function() {
-    
-    var canvas = document.getElementById('mainCanvas');
-    paper.setup(canvas);    
-    paper.view.draw();
-
-
-    var INPUT = feedbackExample;
-    $('#inputArea').val(INPUT);
+  function setupCodeEditor(code) {
+    $('#inputArea').val(code);
     CODEEDITOR = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
         lineNumbers: true,
         matchBrackets: true,
@@ -273,16 +291,46 @@ $(function () {
       eval(js);
     });
 
-    CODEEDITOR.setSize('100%','100%')
+    CODEEDITOR.setSize('100%','100%');
 
+    CODEEDITOR.setOption("theme", "mdn-like");
+  }
+
+  function setupPaperCanvas() {
     _HiddenLayer = paper.project.activeLayer;
-    _ComponentsLayer = new paper.Layer();
+    _ComponentsLayer = new paper.Layer();        
     _ReactionLayer = new paper.Layer();
     _HiddenLayer.opacity = 0;
 
     _ComponentsLayer.activate();
-    setupCallbacks();
+    var bgrect = paper.Path.Rectangle(paper.project.view.size);
+    bgrect.fillColor = '#ffffff';
+
+    _ComponentsLayer.updateBackground = function() {
+      var bounds = paper.project.view.bounds;
+      bgrect.bounds.width = bounds.width;
+      bgrect.bounds.height = bounds.height;
+      bgrect.position.x = bounds.x + bounds.width/2;
+      bgrect.position.y = bounds.y + bounds.height/2;
+    };
+
+    paper.project.view.on("resize", 
+      function(e) {
+        _ComponentsLayer.updateBackground();
+      }
+    );
+  }
+
+  // Only executed our code once the DOM is ready.
+  window.onload = function() {
     
+    var canvas = document.getElementById('mainCanvas');
+    paper.setup(canvas);    
+    paper.view.draw();
+    setupCodeEditor(feedbackExample);
+
+    setupPaperCanvas();
+    setupCallbacks();
 
     onHit(function(obj, parent) {
       if (obj.parent && obj.parent.data.name && !parent) {

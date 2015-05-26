@@ -211,7 +211,10 @@ function scrapeCodeComments(code) {
         json = parseDescription(block);
         while (json !== undefined && json !== null) {
           if (json) {
-            json.lineNumbers = [ i, i + 1 ]; //todo: i+1 should be i+n
+            for (j=i+1; j < lines.length; ++j) {
+              if (commentsMarker.exec(lines[j])) break;
+            }
+            json.lineNumbers = [ i, j ];
             jsonArray.push(json);
           } else {
             console.log(block);
