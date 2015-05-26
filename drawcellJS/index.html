@@ -45,7 +45,7 @@ function setLayoutContainerHeight()
 setLayoutContainerHeight();
 
 $(window).resize(setLayoutContainerHeight);
-
+/*
 var catalogHtml = '<div id="top">\
 <input value="Eukayotic Cell" type="button" class="button" style="width:75px" onclick="insertComponent(\'Eukaryote\',250)" rel="" />\
 <input value="Prokaryotic Cell" type="button" class="button" style="width:75px" onclick="insertComponent(\'Prokaryote\',150)" rel="" />\
@@ -55,7 +55,7 @@ var catalogHtml = '<div id="top">\
 <input value="Substrate2" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate2\',15)" rel="" />\
 <input value="Substrate3" type="button" class="button" style="width:75px" onclick="insertComponent(\'Substrate3\',15)" rel="" />\
 </div>'
-
+*/
 var CODEEDITOR;
 
 $(function () {
@@ -63,8 +63,8 @@ $(function () {
     $('#layout').w2layout({
         name: 'layout',
         panels: [
-            { type: 'top', resizable: true, size: 50, style: pstyle, content: catalogHtml },
-            { type: 'left', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" .CodeMirror { border: 1px solid #eee; height: auto; } style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
+            { type: 'top', resizable: true, size: 50, style: pstyle, content: '' },
+            { type: 'right', resizable: true, overflow : false, size: 400, style: pstyle, content: ' <textarea id="inputArea" .CodeMirror { border: 1px solid #eee; height: auto; } style="border: none; width: 100%; height: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></textarea>' },
             { type: 'main', resizable: true, style: pstyle, content: '<canvas id="mainCanvas" resize></canvas>' }
         ]
     });
@@ -135,13 +135,13 @@ $(function () {
           _SceneInteractiveComponents['mouseup'] = null;
           if (_SceneInteractiveComponents['mousedrag'] !== obj) {
             obj.selected = true;
-            if (CODEEDITOR && obj.lineNumbers) {
-              var l1 = obj.lineNumbers[0];
-              var l2 = obj.lineNumbers[1];
+            if (CODEEDITOR && obj.data.lineNumbers) {
+              var l1 = obj.data.lineNumbers[0];
+              var l2 = obj.data.lineNumbers[1];
               CODEEDITOR.setSelection({line:l1,ch:0},{line:(l2+1),ch:0});
             }
           } else {
-            //mouseDownObj.sendToBack();
+            //mouseDownObj.sendToBack(); //not working as expected, but needed
             var oldParent = mouseDownObj.parent;
             mouseDownObj.remove();
             var hitTest = paper.project.activeLayer.hitTest(e.point);
@@ -258,7 +258,7 @@ $(function () {
 
 
     var INPUT = feedbackExample;
-    $('#inputArea').val(JSON.stringify(INPUT, null, 2));
+    $('#inputArea').val(INPUT);
     CODEEDITOR = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
         lineNumbers: true,
         matchBrackets: true,
@@ -267,9 +267,10 @@ $(function () {
       });
 
     CODEEDITOR.on('blur', function(e) {
-      var text = 'updateScene(' + $('#inputArea').val() + ')';
+      var text = CODEEDITOR.getValue();
+      var js = 'updateScene(scrapeCodeComments(text))';
       CODEEDITOR.setSize('100%','100%');
-      eval(text);
+      eval(js);
     });
 
     CODEEDITOR.setSize('100%','100%')

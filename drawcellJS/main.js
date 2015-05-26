@@ -145,11 +145,13 @@ function parseDescription(s) {
 
   if (m1 && m1[1] && m1[2]) {
     json = {};
+    json.inputStrings = [m1[0]];
     json.type = m1[1];
     json.name = m1[2];
 
     if (m2 && m2[1] !== undefined && m2[2] !== undefined) {
       json.position = {x: m2[1], y: m2[2]};
+      json.inputStrings.push(m2[0]);
     }
 
     if (m3 && m3[1]) {
@@ -157,11 +159,13 @@ function parseDescription(s) {
       for (i in style) {
         json[i] = style[i];
       }
+      json.inputStrings.push(m3[0]);
     }
   }
 
-  if (json)
+  if (json) {
     return json;
+  }
 
   re1 = /Connect\s+(("\S+"\s*,)*\s*"\S+")\s+to\s+(("\S+"\s*,)*\s*"\S+")\s*/gi;
   re2 = /through\s+("\S+")/gi;
@@ -173,11 +177,14 @@ function parseDescription(s) {
   
   if (m1 && m1[1] && m1[3]) {
     json = {};
+    json.inputStrings = [];
     json.from = JSON.parse("["+m1[1]+"]");
     json.to = JSON.parse("["+m1[3]+"]");
+    json.inputStrings.push(m1[0]);
 
     if (m2) {
       json.through = eval(m2[1]);
+      json.inputStrings.push(m2[0]);
     }
 
     if (m3 && m3[1]) {
@@ -185,6 +192,7 @@ function parseDescription(s) {
       for (i in style) {
         json[i] = style[i];
       }
+      json.inputStrings.push(m3[0]);
     }
   }
 
@@ -194,28 +202,31 @@ function parseDescription(s) {
 function scrapeCodeComments(code) {
   var commentsMarker = /"""|'''/gi;
   var lines = code.split(/\n|\r/);
-  var i, block, json;
+  var i, j, block, json;
   var jsonArray = [];
+  block = null;
   for (i=0; i < lines.length; ++i) {
     if (commentsMarker.exec(lines[i])) {
-      console.log(i);
-      if (block) {
-        console.log(block);
+      if (block !== null) {
         json = parseDescription(block);
-        if (json) {
-          jsonArray.push(json);
-        } else {
-          console.log(block);
+        while (json !== undefined && json !== null) {
+          if (json) {
+            json.lineNumbers = [ i, i + 1 ]; //todo: i+1 should be i+n
+            jsonArray.push(json);
+          } else {
+            console.log(block);
+          }
+          for (j=0; j < json.inputStrings.length; ++j) {
+            block = block.replace(json.inputStrings[j],"");
+          }
+          json = parseDescription(block);
         }
-        block = undefined;
+        block = null;
       } else {
         block = "";
-        console.log(block);
       }
     } else {
-      console.log(lines[i]);
-      if (block) {
-        console.log(lines[i]);
+      if (block !== null) {
         block = block + " " + lines[i];
       }      
     }
