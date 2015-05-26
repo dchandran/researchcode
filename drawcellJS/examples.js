@@ -686,17 +686,18 @@ def f(x,t):\n\
     \n\
     return [dx0,dx1,ds0,ds1,ds2,ds3,ds4]\n\
 \n\
+pyplot.figure(1)\n\
 x0 = [50.,30.] + [0]*5\n\
 names = ['x0', 'x1', 's0', 's1', 's2', 's3', 's4']\n\
 n = 200\n\
 time = linspace(0,200,n)\n\
 result = integrate.odeint(f,x0,time)\n\
-#result.resize(n, 2)\n\
+pyplot.subplot(311)\n\
 pyplot.plot(time, result)\n\
 pyplot.legend(names, bbox_to_anchor=(1.05, 1), loc=2)\n\
 #pyplot.ylim([0,100])\n\
 \n\
-pyplot.figure()\n\
+pyplot.subplot(312)\n\
 y = []\n\
 x = [50,60,80,100,150,180,200,250,300,400,500]\n\
 for i in x:\n\
@@ -707,11 +708,12 @@ for i in x:\n\
 pyplot.plot(x, y)\n\
 \n\
 \n\
-pyplot.figure()\n\
+pyplot.subplot(313)\n\
 n = 100\n\
 x = linspace(0,80,n)\n\
 y = 80 - x\n\
 v1 = 50.0*x/(1.0+x)\n\
 v2 = 70.0*x*y/(400.0 + y)\n\
 pyplot.plot(x,v2-v1)\n\
+pyplot.show()\n\
 ";
