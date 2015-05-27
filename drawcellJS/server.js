@@ -15,7 +15,7 @@ require('http').createServer(function (request, response) {
     var query, code;
     if (parsedUrl.pathname==='/api') {
         try {
-            console.log(parsedUrl);
+            //console.log(request);
             code = decodeURI(parsedUrl.query);
             fs.writeFile("temp.py", code, function(err) {
                 if(err) {
@@ -35,4 +35,10 @@ require('http').createServer(function (request, response) {
             fileServer.serve(request, response);
         }).resume();
     }
+
+    request.setEncoding('utf8');
+    request.on('data', function (chunk) {
+       console.log(chunk);
+    });
+
 }).listen(1337, '127.0.0.1');
