@@ -288,9 +288,10 @@ $(function () {
 
     CODEEDITOR.on('blur', function(e) {
       var text = CODEEDITOR.getValue();
-      var js = 'updateScene(scrapeCodeComments(text))';
+      var jsonArray = scrapeCodeComments(text);
+      var components = updateScene(jsonArray);
+      removeUnusedComponents(components);
       CODEEDITOR.setSize('100%','100%');
-      eval(js);
     });
 
     CODEEDITOR.setSize('100%','100%');

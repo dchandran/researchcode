@@ -125,10 +125,14 @@ function saveSceneComponent(name, object) {
 
 
 function updateSceneArray(jsonArray) {
-
+  var lst = {}, component;
   for (i=0; i < jsonArray.length; ++i) {
-    updateScene(jsonArray[i]);
+    component = updateScene(jsonArray[i]);
+    if (component) {
+      lst[component.data.name] = component;
+    }
   }
+  return lst;
 }
 
 
@@ -200,6 +204,25 @@ function parseDescription(s) {
   return json;
 }
 
+function removeUnusedComponents(inUseItems) {
+  var delList = [];
+  var i;
+  for (i in _SceneComponents) {
+    if (inUseItems[i] === undefined || inUseItems[i] === null) {
+      delList[i] = true
+    }
+  }
+  for (i in _SceneReactions) {
+    if (inUseItems[i] === undefined || inUseItems[i] === null) {
+      delList[i] = true
+    }
+  }
+
+  for (i in delList) {
+    deleteObject(i);
+  }
+}
+
 function scrapeCodeComments(code) {
   var commentsMarker = /"""|'''/gi;
   var lines = code.split(/\n|\r/);
@@ -247,8 +270,7 @@ function updateScene(json) {
   }
 
   if (json.length !== undefined) {
-    updateSceneArray(json);
-    return;
+    return updateSceneArray(json);
   }
 
   var objs = getSceneComponent(json.name, true);
@@ -272,7 +294,7 @@ function updateScene(json) {
     }
   }
 
-  updateSceneHelper(json);
+  return updateSceneHelper(json);
 }
 
 function updateSceneHelper(json) {
@@ -318,7 +340,7 @@ function updateSceneHelper(json) {
     } else {
       createReactionCurve(fromArray, toArray, throughItem, json);
     }
-    return;
+    return _SceneReactions[json.name];
   }
 
   var name = json.name;
@@ -459,6 +481,8 @@ function updateSceneHelper(json) {
     if (json.count) {
       group.sendToBack();
     }
+
+    return group;
   }
 };
 
