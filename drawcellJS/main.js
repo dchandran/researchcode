@@ -207,19 +207,21 @@ function parseDescription(s) {
 function removeUnusedComponents(inUseItems) {
   var delList = [];
   var i;
-  for (i in _SceneComponents) {
-    if (inUseItems[i] === undefined || inUseItems[i] === null) {
-      delList[i] = true
-    }
-  }
+  
   for (i in _SceneReactions) {
     if (inUseItems[i] === undefined || inUseItems[i] === null) {
-      delList[i] = true
+      delList.push(i);
+    }
+  }
+  
+  for (i in _SceneComponents) {
+    if (inUseItems[i] === undefined || inUseItems[i] === null) {
+      delList.push(i);
     }
   }
 
-  for (i in delList) {
-    deleteObject(i);
+  for (i=0; i < delList.length; ++i) {
+    deleteObject(delList[i]);
   }
 }
 

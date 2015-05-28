@@ -66,11 +66,11 @@ def f(x,t):
     Enzyme named x0 at (100,300)
     style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
     Dot named dot[1] at (80,350)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }
+    style: { "strokeColor": "#555555", "fillColor": "#555555", "size": 2 }
     Dot named dot[2] at (120,350)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }
+    style: { "strokeColor": "#555555", "fillColor": "#555555", "size": 2 }
     Dot named dot[3] at (550,360)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 5 }
+    style: { "strokeColor": "#555555", "fillColor": "#555555", "size": 2 }
     Connect "S4" to "dot[2]" through "dot[3]"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle", "dashArray": [10,4]}
     '''
