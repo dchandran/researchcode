@@ -213,11 +213,6 @@ function scrapeCodeComments(code) {
         i2 = i;
         while (json !== undefined && json !== null) {
           if (json) {
-            if (!json.hasOwnProperty('name')) {
-              json.name = json.type + i2;
-            } else {
-              console.log(json.name);
-            }
             for (j=i+1; j < lines.length; ++j) {
               if (commentsMarker.exec(lines[j])) break;
             }
@@ -254,10 +249,6 @@ function updateScene(json) {
   if (json.length !== undefined) {
     updateSceneArray(json);
     return;
-  }
-
-  if (json.name && getSceneReaction(json.name)) {
-    deleteObject(json.name);
   }
 
   var objs = getSceneComponent(json.name, true);
@@ -317,8 +308,16 @@ function updateSceneHelper(json) {
     if (json.throughItem) {
       delete json.throughItem;
     }
+
+    if (!json.name) {
+      json.name = createReactionName(fromArray, toArray);
+    }
     
-    createReactionCurve(fromArray, toArray, throughItem, json);
+    if (_SceneReactions[json.name]) {
+      updateReactionCurve(_SceneReactions[json.name]);
+    } else {
+      createReactionCurve(fromArray, toArray, throughItem, json);
+    }
     return;
   }
 

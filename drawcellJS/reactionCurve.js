@@ -1,3 +1,13 @@
+function createReactionName(fromItems, toItems) {
+  var name = "";
+  for (i=0; i < fromItems.length; ++i) 
+    name = name + fromItems[i].data.name;
+  name = name + "->";
+  for (i=0; i < toItems.length; ++i) 
+    name = name + toItems[i].data.name;
+  return name;
+}
+
 function createReactionCurve(fromItems, toItems, throughItem, style) {
 
   if (_ReactionLayer) {
@@ -10,16 +20,17 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   reactionCurve.data.throughItem = throughItem;
   
   var name;
+  var i,j,k;
   if (style && style.name) 
     name = style.name;
-  else 
-    name = 'Rxn-' + Object.keys(_SceneReactions).length;
+  else {
+    name = createReactionName(fromItems, toItems);
+  }
   
   var fromMidPt = new paper.Point(0,0), 
       toMidPt = new paper.Point(0,0),
       allMidPt = new paper.Point(0,0);
 
-  var i,j,k;
   var visited = {};
   var loop;
   var len1 = 0, len2 = 0;
