@@ -60,7 +60,7 @@ var CODEEDITOR;
 function runCode() {
   debugger;
   var code = CODEEDITOR.getValue();
-  $.ajax({url: "/api", data: encodeURI(code)});
+  $.ajax({url: "/api", data: encodeURI(code), type: "POST"});
 }
 
 $(function () {
