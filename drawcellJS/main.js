@@ -139,11 +139,17 @@ function updateSceneArray(jsonArray) {
 function parseDescription(s) {
   var re1 = /(\S+)\s+named\s+(\S+)/gi;
   var re2 = /at\s+\((\d+)\s*,\s*(\d+)\)/gi;
+  var re4a = /inside\s+(\S+)/gi;
+  var re4b = /inside\s+["']([^"']+)["']/gi;
   var re3 = /style\s*\:\s*({[^}]+})/gi;
   
   var m1 = re1.exec(s);
   var m2 = re2.exec(s);
   var m3 = re3.exec(s);
+  var m4 = re4a.exec(s);
+  if (m4===null || m4===undefined) {
+    m4 = re4b.exec(s);
+  }
 
   var json, style, i;
 
@@ -164,6 +170,11 @@ function parseDescription(s) {
         json[i] = style[i];
       }
       json.inputStrings.push(m3[0]);
+    }
+
+    if (m4) {
+      json.inside = m4[1];
+      json.inputStrings.push(m4[0]);
     }
   }
 
