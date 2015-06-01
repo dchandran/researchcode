@@ -133,13 +133,14 @@ $(function () {
         if (mouseDownObj===obj) {
           _SceneInteractiveComponents['mousedown'] = null;
           _SceneInteractiveComponents['mouseup'] = null;
+          obj.selected = true;
+          if (CODEEDITOR && obj.data.lineNumbers) {
+            var l1 = obj.data.lineNumbers[0];
+            var l2 = obj.data.lineNumbers[1];
+            CODEEDITOR.setSelection({line:l1,ch:0},{line:(l2+1),ch:0});
+          }
           if (_SceneInteractiveComponents['mousedrag'] !== obj) {
-            obj.selected = true;
-            if (CODEEDITOR && obj.data.lineNumbers) {
-              var l1 = obj.data.lineNumbers[0];
-              var l2 = obj.data.lineNumbers[1];
-              CODEEDITOR.setSelection({line:l1,ch:0},{line:(l2+1),ch:0});
-            }
+            
           } else {
             //mouseDownObj.sendToBack(); //not working as expected, but needed
             var oldParent = mouseDownObj.parent;
