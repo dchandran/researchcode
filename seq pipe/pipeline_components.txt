@@ -13,3 +13,7 @@ PIPELINE COMPONENTS
 4) k-mer analyses + MSD/PCA - only seen in Metavir2, not common, but looks useful
 
 
+Other Methods
+=============
+1) GeoChip and HumiChip for high throughput expression profiling
+2) "individual cell genomes are hybridized against a set of individual viral genomes from the same sample, previously immobilized on a microarray" http://www.nature.com/ncomms/2014/140814/ncomms5542/full/ncomms5542.html
