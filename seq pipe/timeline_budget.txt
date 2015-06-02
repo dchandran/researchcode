@@ -1,10 +1,41 @@
 
 Goal 1: Understanding the software tools available
-Timeline: 1-2 weeks
+Timeline: 1 week
 
-Subgoals:
-1. Understanding the size and contents of existing virome data. Raw data sets are available at MetaVir website and iMicrobe and 
+Tasks:
+1. Reading publications on the following software tools: VIROME, MetaVir, QIIME, RAST
+2. Skimming publications that have used the above software tools
+3. Get a few raw data sets, which are available at MetaVir website, VIROME website, and iMicrobe.
+4. Use the software tools on public virome data sets
+ 
 
-Details:
-From literature search, the MetaVir and VIROME appear to be the two main software tools specific for virome analysis. There are a few others for metagenomic analysis, such as QIIME and RAST. The virome-specific software tools use slightly different methods.
+Goal 2: Understanding protocols for Virome sequencing
+Timeline: 1 week
+
+Tasks:
+1. Identify sequencing services available via Assay Depot or Science Exchange and get quotes
+2. Identify DNA extraction services available via Assay Depot or Science Exchange and get quotes
+
+
+Goal 3: Extract viruses
+Timeline: 3-4 days
+
+Tasks:
+1. Collect 100-400mL water sample from the bay
+2. Order virus extraction kit and positive control viruses/DNA
+3. Order primers for checking whether the positive control virses were extracted
+4. Perform the protocol by following the instructions provided in the kit
+5. PCR (or rtPCR via Transcriptic) to check whether the positive control viruses were extracted properly 
+6. If positive control is ok, then ship the sample to DNA extraction facility
+
+
+
+Budget (rough):
+TOTAL ~ $4000
+  Virus extraction kit ~ $400
+  Transcriptic rtPCR ~ $100
+  DNA Sequencing (Illumina)~ $3000
+  DNA extraction service ~ $100
+
+
 

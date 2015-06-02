@@ -1,0 +1,15 @@
+PIPELINE COMPONENTS
+===================
+
+0) Quality Control - ??
+1) BLAST + phylogenetic analyses
+   important factors: 
+       a) choice of DBs: SEED, NR-NR, RefSeqVirus, JCBI, MGOL (CAMERA)
+       b) BLAST small reads (translated), not contigs
+   or use HMM instead of BLAST
+
+2) Clustering + rarefaction 
+3) GO and other annotations based on (1)
+4) k-mer analyses + MSD/PCA - only seen in Metavir2, not common, but looks useful
+
+
