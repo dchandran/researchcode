@@ -600,10 +600,12 @@ from matplotlib import pyplot\n\
 from scipy import random\n\
 from scipy import linspace\n\
 \n\
-E2 = 50\n\
+E2 = 20\n\
 '''\n\
-Substrate named Source at (50,400)\n\
-style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"opacity\":0.5, \"size\": 10 }\n\
+Membrane named membrane at (100,400)\n\
+style: { \"strokeColor\": \"#6fafd6\", \"fillColor\": \"#6fafd6\", \"opacity\":1, \"size\": 400, \"angle\": 90 }\n\
+Substrate named Source at (30,400)\n\
+style: { \"strokeColor\": \"#666666\", \"fillColor\": \"#eeeeee\", \"opacity\":0.8, \"size\": 20 }\n\
 '''\n\
 source = 50\n\
 def f(x,t):\n\
@@ -618,38 +620,38 @@ def f(x,t):\n\
     s4 = x[6]\n\
 \n\
     '''\n\
-    Substrate named S0 at (150,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Substrate1 named S0 at (180,400)\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#1faf2d\", \"size\": 30 }\n\
     Connect \"Source\" to \"S0\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds0 = source/(1+x1) - 0.2*s0\n\
     '''\n\
-    Substrate named S1 at (250,400)\n\
-    style: { \"strokeColor\": \"#00780c\",\"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Substrate2 named S1 at (260,400)\n\
+    style: { \"strokeColor\": \"#00780c\",\"fillColor\": \"#1faf2d\", \"size\": 30 }\n\
     Connect \"S0\" to \"S1\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds1 = 0.2*s0 - 0.2*s1\n\
     '''\n\
-    Substrate named S2 at (350,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Substrate3 named S2 at (360,400)\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#1faf2d\", \"size\": 30 }\n\
     Connect \"S1\" to \"S2\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds2 = 0.2*s1 - 0.2*s2\n\
     '''\n\
-    Substrate named S3 at (450,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Substrate4 named S3 at (450,400)\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#1faf2d\", \"size\": 30 }\n\
     Connect \"S2\" to \"S3\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds3 = 0.2*s2 - 0.2*s3\n\
     '''\n\
-    Substrate named S4 at (550,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Substrate5 named S4 at (550,400)\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#1faf2d\", \"size\": 30 }\n\
     Substrate named Sink at (650,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"opacity\":0.5, \"size\": 10 }\n\
+    style: { \"strokeColor\": \"#666666\", \"fillColor\": \"#eeeeee\", \"opacity\":0.8, \"size\": 20 }\n\
     Connect \"S3\" to \"S4\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     Connect \"S4\" to \"Sink\"\n\
@@ -658,23 +660,22 @@ def f(x,t):\n\
     ds4 = 0.2*s3 - 0.2*s4\n\
     \n\
     '''\n\
-    Enzyme named x0 at (100,300)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Receptor named x0 at (100,300) inside membrane\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#6f777a\", \"size\": 40, \"angle\": 90, \"opacity\": 0.5}\n\
     Dot named dot[1] at (80,350)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
+    style: { \"strokeColor\": \"#555555\", \"fillColor\": \"#555555\", \"size\": 2 }\n\
     Dot named dot[2] at (120,350)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
-    Dot named dot[3] at (250,360)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
-    Connect \"S1\" to \"dot[2]\" through \"dot[3]\"\n\
+    style: { \"strokeColor\": \"#555555\", \"fillColor\": \"#555555\", \"size\": 2 }\n\
+    Dot named dot[3] at (550,360)\n\
+    style: { \"strokeColor\": \"#555555\", \"fillColor\": \"#555555\", \"size\": 2 }\n\
+    Connect \"S4\" to \"dot[2]\" through \"dot[3]\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\", \"dashArray\": [10,4]}\n\
     '''\n\
-    E = s1*(1+x1)\n\
-    #E = s4\n\
+    E = s4\n\
     dx0 = E2*x1/(1+x1) - E*x0/(200+x0)\n\
     '''\n\
-    Enzyme named x1 at (100,400)\n\
-    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
+    Receptor named x1 at (100,400) inside membrane\n\
+    style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#1f83af\", \"size\": 40, \"angle\": 270}\n\
     '''\n\
     dx1 = -E2*x1/(1+x1) + E*x0/(200+x0)\n\
     '''\n\
