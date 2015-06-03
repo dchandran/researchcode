@@ -602,7 +602,7 @@ from scipy import linspace\n\
 \n\
 E2 = 50\n\
 '''\n\
-Substate named Source at (50,400)\n\
+Substrate named Source at (50,400)\n\
 style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"opacity\":0.5, \"size\": 10 }\n\
 '''\n\
 source = 50\n\
@@ -618,37 +618,37 @@ def f(x,t):\n\
     s4 = x[6]\n\
 \n\
     '''\n\
-    Substate named S0 at (150,400)\n\
+    Substrate named S0 at (150,400)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
     Connect \"Source\" to \"S0\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds0 = source/(1+x1) - 0.2*s0\n\
     '''\n\
-    Substate named S1 at (250,400)\n\
+    Substrate named S1 at (250,400)\n\
     style: { \"strokeColor\": \"#00780c\",\"fillColor\": \"#00780c\", \"size\": 20 }\n\
     Connect \"S0\" to \"S1\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds1 = 0.2*s0 - 0.2*s1\n\
     '''\n\
-    Substate named S2 at (350,400)\n\
+    Substrate named S2 at (350,400)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
     Connect \"S1\" to \"S2\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds2 = 0.2*s1 - 0.2*s2\n\
     '''\n\
-    Substate named S3 at (450,400)\n\
+    Substrate named S3 at (450,400)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
     Connect \"S2\" to \"S3\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
     '''\n\
     ds3 = 0.2*s2 - 0.2*s3\n\
     '''\n\
-    Substate named S4 at (550,400)\n\
+    Substrate named S4 at (550,400)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
-    Substate named Sink at (650,400)\n\
+    Substrate named Sink at (650,400)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"opacity\":0.5, \"size\": 10 }\n\
     Connect \"S3\" to \"S4\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\"}\n\
@@ -660,11 +660,11 @@ def f(x,t):\n\
     '''\n\
     Enzyme named x0 at (100,300)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 20 }\n\
-    Substate named dot[1] at (80,350)\n\
+    Dot named dot[1] at (80,350)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
-    Substate named dot[2] at (120,350)\n\
+    Dot named dot[2] at (120,350)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
-    Substate named dot[3] at (250,360)\n\
+    Dot named dot[3] at (250,360)\n\
     style: { \"strokeColor\": \"#00780c\", \"fillColor\": \"#00780c\", \"size\": 5 }\n\
     Connect \"S1\" to \"dot[2]\" through \"dot[3]\"\n\
     style: {\"strokeColor\": \"#21475b\", \"strokeWidth\": 2, \"arrowHead\": \"Triangle\", \"dashArray\": [10,4]}\n\

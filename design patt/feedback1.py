@@ -7,8 +7,10 @@ from scipy import linspace
 
 E2 = 20
 '''
-Substate named Source at (50,400)
-style: { "strokeColor": "#00780c", "fillColor": "#00780c", "opacity":0.5, "size": 10 }
+Membrane named membrane at (100,400)
+style: { "strokeColor": "#6fafd6", "fillColor": "#6fafd6", "opacity":1, "size": 400, "angle": 90 }
+Substrate named Source at (30,400)
+style: { "strokeColor": "#666666", "fillColor": "#eeeeee", "opacity":0.8, "size": 20 }
 '''
 source = 50
 def f(x,t):
@@ -23,38 +25,38 @@ def f(x,t):
     s4 = x[6]
 
     '''
-    Substate named S0 at (150,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
+    Substrate1 named S0 at (180,400)
+    style: { "strokeColor": "#00780c", "fillColor": "#1faf2d", "size": 30 }
     Connect "Source" to "S0"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
     '''
     ds0 = source/(1+x1) - 0.2*s0
     '''
-    Substate named S1 at (250,400)
-    style: { "strokeColor": "#00780c","fillColor": "#00780c", "size": 20 }
+    Substrate2 named S1 at (260,400)
+    style: { "strokeColor": "#00780c","fillColor": "#1faf2d", "size": 30 }
     Connect "S0" to "S1"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
     '''
     ds1 = 0.2*s0 - 0.2*s1
     '''
-    Substate named S2 at (350,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
+    Substrate3 named S2 at (360,400)
+    style: { "strokeColor": "#00780c", "fillColor": "#1faf2d", "size": 30 }
     Connect "S1" to "S2"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
     '''
     ds2 = 0.2*s1 - 0.2*s2
     '''
-    Substate named S3 at (450,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
+    Substrate4 named S3 at (450,400)
+    style: { "strokeColor": "#00780c", "fillColor": "#1faf2d", "size": 30 }
     Connect "S2" to "S3"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
     '''
     ds3 = 0.2*s2 - 0.2*s3
     '''
-    Substate named S4 at (550,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
-    Substate named Sink at (650,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "opacity":0.5, "size": 10 }
+    Substrate5 named S4 at (550,400)
+    style: { "strokeColor": "#00780c", "fillColor": "#1faf2d", "size": 30 }
+    Substrate named Sink at (650,400)
+    style: { "strokeColor": "#666666", "fillColor": "#eeeeee", "opacity":0.8, "size": 20 }
     Connect "S3" to "S4"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
     Connect "S4" to "Sink"
@@ -63,8 +65,8 @@ def f(x,t):
     ds4 = 0.2*s3 - 0.2*s4
     
     '''
-    Enzyme named x0 at (100,300)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
+    Receptor named x0 at (100,300) inside membrane
+    style: { "strokeColor": "#00780c", "fillColor": "#6f777a", "size": 40, "angle": 90, "opacity": 0.5}
     Dot named dot[1] at (80,350)
     style: { "strokeColor": "#555555", "fillColor": "#555555", "size": 2 }
     Dot named dot[2] at (120,350)
@@ -77,8 +79,8 @@ def f(x,t):
     E = s4
     dx0 = E2*x1/(1+x1) - E*x0/(200+x0)
     '''
-    Enzyme named x1 at (100,400)
-    style: { "strokeColor": "#00780c", "fillColor": "#00780c", "size": 20 }
+    Receptor named x1 at (100,400) inside membrane
+    style: { "strokeColor": "#00780c", "fillColor": "#1f83af", "size": 40, "angle": 270}
     '''
     dx1 = -E2*x1/(1+x1) + E*x0/(200+x0)
     '''

@@ -138,33 +138,64 @@ function updateSceneArray(jsonArray) {
 
 function parseDescription(s) {
   var re1 = /(\S+)\s+named\s+(\S+)/gi;
-  var re2 = /at\s+\((\d+)\s*,\s*(\d+)\)/gi;
+  var re2a = /at\s+\((\d+)\s*,\s*(\d+)\)/gi;
+  var re2b = /at\s+(0\.\d+)\s+/gi;
   var re4a = /inside\s+(\S+)/gi;
   var re4b = /inside\s+["']([^"']+)["']/gi;
   var re3 = /style\s*\:\s*({[^}]+})/gi;
   
   var m1 = re1.exec(s);
-  var m2 = re2.exec(s);
-  var m3 = re3.exec(s);
-  var m4 = re4a.exec(s);
-  if (m4===null || m4===undefined) {
-    m4 = re4b.exec(s);
-  }
-
+  var m2, m3, m4;
+  
   var json, style, i;
 
   if (m1 && m1[1] && m1[2]) {
     json = {};
+    s.replace(m1[0],"");
     json.inputStrings = [m1[0]];
     json.type = m1[1];
     json.name = m1[2];
 
-    if (m2 && m2[1] !== undefined && m2[2] !== undefined) {
-      json.position = {x: m2[1], y: m2[2]};
+    m1 = re1.exec(s);
+
+    m2 = re2a.exec(s);
+    if (m1 && m2 && m2.index > m1.index) {
+      m2 = null;
+    }
+    if (m2===null || m2===undefined) {
+      m2 = re2b.exec(s);
+    }
+    if (m1 && m2 && m2.index > m1.index) {
+      m2 = null;
+    }
+    m3 = re3.exec(s);
+    if (m1 && m3 && m3.index > m1.index) {
+      m3 = null;
+    }
+    m4 = re4a.exec(s);
+    if (m1 && m4 && m4.index > m1.index) {
+      m4 = null;
+    }
+    if (m4===null || m4===undefined) {
+      m4 = re4b.exec(s);
+    }
+    if (m1 && m4 && m4.index > m1.index) {
+      m4 = null;
+    }
+
+    if (m2) {
+      if (m2.length === 3 && m2[1] !== undefined && m2[2] !== undefined) {
+        json.position = {x: m2[1], y: m2[2]};        
+      } else
+      if (m2.length === 2 && m2[1] !== undefined) {
+        debugger;
+        json.position = {x: 0, y: 0};
+        json.offset = m2[1];
+      }
       json.inputStrings.push(m2[0]);
     }
 
-    if (m3 && m3[1]) {
+    if (m3) {
       style = JSON.parse(m3[1]);
       for (i in style) {
         json[i] = style[i];
@@ -290,10 +321,10 @@ function updateScene(json) {
 
   if (objs) {
     if (json.count) {
-      var oldJson;
+      var oldJson, i;
       if (objs && objs.length > 0) {
         oldJson = objs[0].data;
-        for (var i in oldJson) {
+        for (i in oldJson) {
           if (!json[i]) {
             json[i] = oldJson[i];
           }
@@ -363,6 +394,8 @@ function updateSceneHelper(json) {
     parent = getSceneComponent(parent);
   }
   var type = json.type;
+  var showName = (type !== null && type !== undefined && type.toLowerCase() !== "dot"); //show component name
+  var text, textItem;
   var pos = json.position;
   if (count !== undefined && count !== null) {
     
@@ -374,7 +407,7 @@ function updateSceneHelper(json) {
     var bounds;
     if (parent) {
       bounds = parent.bounds;
-      pos = new paper.Point( bounds.left + bounds.width/4 + Math.random() * bounds.width*1/2, bounds.top + bounds.height/4 + Math.random() * bounds.height*1/2 );
+      pos = new paper.Point( bounds.left + bounds.width/4 + Math.random() * bounds.width*1/2, bounds.top + bounds.height/4 + Math.random() * bounds.height*1/2 );      
     } else {
       bounds = paper.project.view.bounds;
       pos = new paper.Point( bounds.left + Math.random() * bounds.width, bounds.top + Math.random() * bounds.height);
@@ -428,9 +461,9 @@ function updateSceneHelper(json) {
     path = group.getChildren()[0]; //main path
 
     if (pos || firstTime) {
-      pos = pos || {x:0,y:0};
-      group.position.x = pos.x;
-      group.position.y = pos.y;    
+      pos = pos || {x:0,y:0};      
+      group.position.x = group.position.x + (pos.x - path.position.x);
+      group.position.y = group.position.y + (pos.y - path.position.y);    
     }
 
     bounds = path.bounds;
@@ -471,6 +504,10 @@ function updateSceneHelper(json) {
       path.fillColor = group.data.membraneColor;
     }
 
+    if (group.data.opacity) {
+      group.opacity = group.data.opacity;
+    }
+
     if (json.inside && (!parent || parent.name !== json.inside)) {
       json.offset = group.data.offset;
     }
@@ -489,6 +526,26 @@ function updateSceneHelper(json) {
 
     if (parent && parent != group.parent) {
       parent.addChild(group);
+    }
+
+    
+    if (!group.data.textItem && showName) {
+    
+      text = group.data.name;
+      text = text.replace(/\[\d+\]/,'');
+
+      pos = path.bounds.topRight;
+
+      textItem = new paper.PointText({
+            point: [pos.x, pos.y],
+            content: text,
+            fillColor: 'black',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+            fontSize: 15
+        });
+      group.addChild(textItem);
+      group.data.textItem = textItem;
     }
 
     if (json.count) {
@@ -666,8 +723,8 @@ function deleteObject(name) {
 function getDescription(obj) {
   var descr = "";
   if (obj.data.name) {
-    descr = obj.data.name;
-    descr = descr + "\n";
+    //descr = obj.data.name;
+    //descr = descr + "\n";
     if (obj.data.description) {
       descr = descr + obj.data.description;
     }
