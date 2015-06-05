@@ -32,3 +32,7 @@ CloVR: sequence analysis on the cloud
 
 Pandaseq: create contigs from Illumina reads. Also includes PHRED read quality scores
 https://github.com/neufeld/pandaseq
+
+
+CAMERA workflow:
+https://confluence.crbs.ucsd.edu/display/CAM/CAMERA+Workflows#CAMERAWorkflows-Assembly
