@@ -1,7 +1,7 @@
 PIPELINE COMPONENTS
 ===================
 
-0) Quality Control - ??
+0) Quality Control - remove low scores, short sequences, Ns
 1) Identify ORFs using MetaGene or others
 2) BLAST + phylogenetic analyses
    important factors: 
@@ -11,7 +11,7 @@ PIPELINE COMPONENTS
 
 3) Clustering + rarefaction 
 4) GO and other annotations based on (1)
-5) k-mer analyses + MSD/PCA - only seen in Metavir2, not common, but looks useful
+5) k-mer analyses + MSD/PCA - seen in Metavir2 and MetaBAT
 
 
 Other Methods
@@ -33,6 +33,17 @@ CloVR: sequence analysis on the cloud
 Pandaseq: create contigs from Illumina reads. Also includes PHRED read quality scores
 https://github.com/neufeld/pandaseq
 
+MetaBAT: bins (classify?) genomes
+https://registry.hub.docker.com/u/jfroula/metabat-docker/dockerfile/
+https://bitbucket.org/berkeleylab/metabat
 
+Trimmomatic:
+https://registry.hub.docker.com/u/metagenomics/2015-biogas-cebitec/
+
+
+
+REFERENCES
+===========
 CAMERA workflow:
 https://confluence.crbs.ucsd.edu/display/CAM/CAMERA+Workflows#CAMERAWorkflows-Assembly
+
