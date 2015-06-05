@@ -2,18 +2,33 @@ PIPELINE COMPONENTS
 ===================
 
 0) Quality Control - ??
-1) BLAST + phylogenetic analyses
+1) Identify ORFs using MetaGene or others
+2) BLAST + phylogenetic analyses
    important factors: 
        a) choice of DBs: SEED, NR-NR, RefSeqVirus, JCBI, MGOL (CAMERA)
        b) BLAST small reads (translated), not contigs
    or use HMM instead of BLAST
 
-2) Clustering + rarefaction 
-3) GO and other annotations based on (1)
-4) k-mer analyses + MSD/PCA - only seen in Metavir2, not common, but looks useful
+3) Clustering + rarefaction 
+4) GO and other annotations based on (1)
+5) k-mer analyses + MSD/PCA - only seen in Metavir2, not common, but looks useful
 
 
 Other Methods
 =============
 1) GeoChip and HumiChip for high throughput expression profiling
 2) "individual cell genomes are hybridized against a set of individual viral genomes from the same sample, previously immobilized on a microarray" http://www.nature.com/ncomms/2014/140814/ncomms5542/full/ncomms5542.html
+
+
+
+TOOLS & DBs
+===========
+MGOL: Metagenomics data, esp enviromnetal sampling such as Global Ocean Expedition
+http://metagenomesonline.org/library.php
+
+ViroBLAST: blast against multiple DBs
+
+CloVR: sequence analysis on the cloud
+
+Pandaseq: create contigs from Illumina reads. Also includes PHRED read quality scores
+https://github.com/neufeld/pandaseq
