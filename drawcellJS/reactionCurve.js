@@ -1,3 +1,4 @@
+var _USERECTTHRESHOLDSZ = 100;
 function createReactionName(fromItems, toItems) {
   var name = "";
   for (i=0; i < fromItems.length; ++i) 
@@ -102,10 +103,18 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   var p1, p2, p3;
 
   for (i=0; i < fromItems.length; ++i) {
-    objectPath = fromItems[i].getChildren()[0];
+    path = fromItems[i].getChildren()[0];
+    if (path.bounds.width > _USERECTTHRESHOLDSZ || path.bounds.height > _USERECTTHRESHOLDSZ) {
+      objectPath = path.clone();
+      objectPath.scale(1.1);
+    } else {
+      objectPath = new paper.Path.Rectangle(path.bounds);
+      objectPath.position = path.position
+    }
     path = new paper.Path();
 
     p1 = objectPath.getNearestPoint(fromMidPt);
+    objectPath.remove();
     vector = fromMidPt.subtract(p1).normalize(_ARROWHEADCTRLDIST);
     p2 = p1.add(vector);
     p3 = fromMidPtCtr;
@@ -131,10 +140,18 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   }
 
   for (i=0; i < toItems.length; ++i) {
-    objectPath = toItems[i].getChildren()[0];
+    path = fromItems[i].getChildren()[0];
+    if (path.bounds.width > _USERECTTHRESHOLDSZ || path.bounds.height > _USERECTTHRESHOLDSZ) {
+      objectPath = path.clone();
+      objectPath.scale(1.1);
+    } else {
+      objectPath = new paper.Path.Rectangle(path.bounds);
+      objectPath.position = path.position
+    }
     path = new paper.Path();
 
     p1 = objectPath.getNearestPoint(toMidPt);
+    objectPath.remove();
     vector = toMidPt.subtract(p1).normalize(_ARROWHEADCTRLDIST);
     p2 = p1.add(vector);
     p3 = toMidPtCtr;
@@ -265,13 +282,22 @@ function updateReactionCurve(reactionCurve) {
   var k = 0;
 
   var paths = reactionCurve.getChildren();
+  var path;
 
   for (i=0; i < fromItems.length; ++i) {
-    objectPath = fromItems[i].getChildren()[0];
+    path = fromItems[i].getChildren()[0];
+    if (path.bounds.width > _USERECTTHRESHOLDSZ || path.bounds.height > _USERECTTHRESHOLDSZ) {
+      objectPath = path.clone();
+      objectPath.scale(1.1);
+    } else {
+      objectPath = new paper.Path.Rectangle(path.bounds);
+      objectPath.position = path.position;
+    }
     path = paths[k];
     k = k+1;
 
     p1 = objectPath.getNearestPoint(fromMidPt);
+    objectPath.remove();
     vector = fromMidPt.subtract(p1).normalize(_ARROWHEADCTRLDIST);
     p2 = p1.add(vector);
     p3 = fromMidPtCtr;
@@ -283,11 +309,19 @@ function updateReactionCurve(reactionCurve) {
   }
 
   for (i=0; i < toItems.length; ++i) {
-    objectPath = toItems[i].getChildren()[0];
+    path = toItems[i].getChildren()[0];
+    if (path.bounds.width > _USERECTTHRESHOLDSZ || path.bounds.height > _USERECTTHRESHOLDSZ) {
+      objectPath = path.clone();
+      objectPath.scale(1.1);
+    } else {
+      objectPath = new paper.Path.Rectangle(path.bounds);
+      objectPath.position = path.position;
+    }
     path = paths[k];
     k = k+2;
 
     p1 = objectPath.getNearestPoint(toMidPt);
+    objectPath.remove();
     vector = toMidPt.subtract(p1).normalize(_ARROWHEADCTRLDIST);
     p2 = p1.add(vector);
     p3 = toMidPtCtr;

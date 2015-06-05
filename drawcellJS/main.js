@@ -3,7 +3,7 @@ var _SceneReactions = {};
 var _ReactionLayer = null;
 var _ComponentsLayer = null;
 var _ARROWHEADSCALE = 5; //x line width
-var _ARROWHEADCTRLDIST = 20; //hard coded
+var _ARROWHEADCTRLDIST = 10; //hard coded
 
 var distance = function(p1, p2) {
   return ((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
