@@ -292,8 +292,11 @@ $(function () {
     CODEEDITOR.on('blur', function(e) {
       var text = CODEEDITOR.getValue();
       var jsonArray = scrapeCodeComments(text);
-      var components = updateScene(jsonArray);
-      removeUnusedComponents(components);
+      if (jsonArray.length > 0) {
+        var components = updateScene(jsonArray);
+        removeUnusedComponents(components);
+        CODEEDITOR.setValue(jsonArray.nonCommentCode);
+      }
       CODEEDITOR.setSize('100%','100%');
     });
 

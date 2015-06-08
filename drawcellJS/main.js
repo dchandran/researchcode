@@ -270,7 +270,8 @@ function removeUnusedComponents(inUseItems) {
 function scrapeCodeComments(code) {
   var commentsMarker = /"""|'''/gi;
   var lines = code.split(/\n|\r/);
-  var i, i2, j, block, json;
+  var nonCommentCode = [];
+  var i, i2, j, k, block, json;
   var jsonArray = [];
   block = null;
   for (i=0; i < lines.length; ++i) {
@@ -278,22 +279,27 @@ function scrapeCodeComments(code) {
       if (block !== null) {
         json = parseDescription(block);
         i2 = i;
-        while (json !== undefined && json !== null) {
-          if (json) {
-            for (j=i+1; j < lines.length; ++j) {
-              if (commentsMarker.exec(lines[j])) break;
+        if (json === null || json === null) {
+          nonCommentCode.push(block);
+        } else {
+          while (json !== undefined && json !== null) {
+            if (json) {
+              for (j=i+1; j < lines.length; ++j) {
+                if (commentsMarker.exec(lines[j])) break;
+              }
+              k = nonCommentCode.length;
+              json.lineNumbers = [ k, k+j-i-2 ];
+              jsonArray.push(json);
+            } else {
+              console.log(block);
             }
-            json.lineNumbers = [ i, j ];
-            jsonArray.push(json);
-          } else {
-            console.log(block);
-          }
-          for (j=0; j < json.inputStrings.length; ++j) {
-            block = block.replace(json.inputStrings[j],"");
-          }
-          json = parseDescription(block);
-          i2 = i2 + 1;
-        }
+            for (j=0; j < json.inputStrings.length; ++j) {
+              block = block.replace(json.inputStrings[j],"");
+            }
+            json = parseDescription(block);
+            i2 = i2 + 1;
+          }    
+        }    
         block = null;
       } else {
         block = "";
@@ -301,9 +307,13 @@ function scrapeCodeComments(code) {
     } else {
       if (block !== null) {
         block = block + " " + lines[i];
+      } else {
+        nonCommentCode.push(lines[i]);
       }      
     }
   }
+
+  jsonArray.nonCommentCode = nonCommentCode.join("\n");
   return jsonArray;
 }
 
