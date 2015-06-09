@@ -36,11 +36,17 @@ https://github.com/neufeld/pandaseq
 MetaBAT: bins (classify?) genomes
 https://registry.hub.docker.com/u/jfroula/metabat-docker/dockerfile/
 https://bitbucket.org/berkeleylab/metabat
+needs fastaq files
 
-Trimmomatic:
+Trimmomatic: quality control
 https://registry.hub.docker.com/u/metagenomics/2015-biogas-cebitec/
 
+MEGAN: BLast based taxonomic reconstruction + visualization
+MetaPhlan: uses 16s and other genes for taxonomy
 
+
+VIROME/MetaVIR Data:
+http://metavir-meb.univ-bpclermont.fr/dynamic/Project_manager/public_projects_info.php
 
 REFERENCES
 ===========
