@@ -34,9 +34,14 @@ function addReactionToGroup(reactionName, groupName) {
   var reaction = getReaction(reactionName);
   if (reaction) {
     _Groups[groupName] = _Groups[groupName] || [];
-    _Groups[groupName].push(reaction);
+
+    if (_Groups[groupName].indexOf(reaction)===-1)
+      _Groups[groupName].push(reaction);
+    
     reaction.data.groups = reaction.data.groups || [];
-    reaction.data.groups.push(groupName);
+
+    if (reaction.data.groups.indexOf(groupName)===-1)
+      reaction.data.groups.push(groupName);
   }
 }
 
@@ -65,12 +70,15 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
     if (groups) {
       var text = "";
       for (var i=0; i < groups.length; ++i) {
-        text = text + groups[i] + "\n";
+        text = text + groups[i];
         if (_Groups[ groups[i] ]) {
           var group = _Groups[ groups[i] ];
           for (var j=0; j < group.length; ++j) {
             highlightReactionCurve(group[j]);
           }
+        }
+        if (i !== groups.length-1) {
+          text = text + "\n";
         }
       }
       if (reactionCurve.data.tooltip) {
@@ -281,7 +289,7 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
 
 }
 
-function updateReactionCurve(reactionCurve) {
+function updateReactionCurve(reactionCurve, style) {
   var fromItems = reactionCurve.data.fromItems;
   var toItems = reactionCurve.data.toItems;
   var throughPoint; 
@@ -361,7 +369,7 @@ function updateReactionCurve(reactionCurve) {
 
   var path, segment, objectPath;
   var p1, p2, p3;
-  var k = 0;
+  var k = 0, l;
 
   var paths = reactionCurve.getChildren();
   var path;
@@ -400,6 +408,13 @@ function updateReactionCurve(reactionCurve) {
       objectPath.position = path.position;
     }
     path = paths[k];
+    
+    if (style) {
+      for (l in style) {
+        path[l] = style[l];
+      }
+    }
+
     k = k+2;
 
     p1 = objectPath.getNearestPoint(toMidPt);

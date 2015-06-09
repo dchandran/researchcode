@@ -406,12 +406,12 @@ function updateSceneHelper(json) {
     }
     
     if (_SceneReactions[json.name]) {
-      updateReactionCurve(_SceneReactions[json.name]);
+      updateReactionCurve(_SceneReactions[json.name], json);
     } else {
       createReactionCurve(fromArray, toArray, throughItem, json);
-      if (json.group) {
-        addReactionToGroup(json.name, json.group);
-      }
+    }
+    if (json.group) {
+      addReactionToGroup(json.name, json.group);
     }
     return _SceneReactions[json.name];
   }
