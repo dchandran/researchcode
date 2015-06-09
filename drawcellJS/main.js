@@ -1,5 +1,6 @@
 var _SceneComponents = {};
 var _SceneReactions = {};
+var _Groups = {};
 var _ReactionLayer = null;
 var _ComponentsLayer = null;
 var _ARROWHEADSCALE = 5; //x line width

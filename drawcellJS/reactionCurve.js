@@ -9,6 +9,27 @@ function createReactionName(fromItems, toItems) {
   return name;
 }
 
+function highlightReactionCurve(reaction) {
+  if (_ReactionLayer)
+    _ReactionLayer.activate();
+
+  var glow = reaction.clone();
+  glow.opacity = 0.4;
+  glow.strokeWidth = 10;
+  glow.strokeColor = '#4444ee';
+
+  reaction.highlights = reaction.highlights || [];
+  reaction.highlights.push(glow);
+}
+
+function removeHighlightForReactionCurve(reaction) {
+  if (reaction.highlights) {
+    for (var i=0; i < reaction.highlights.length; ++i)
+      reaction.highlights[i].remove();
+  }
+  delete reaction.highlights; 
+}
+
 function createReactionCurve(fromItems, toItems, throughItem, style) {
 
   if (_ReactionLayer) {
@@ -16,6 +37,7 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   }
 
   var reactionCurve = new paper.Group();
+
   reactionCurve.data.fromItems = fromItems;
   reactionCurve.data.toItems = toItems;
   reactionCurve.data.throughItem = throughItem;
@@ -27,6 +49,22 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   else {
     name = createReactionName(fromItems, toItems);
   }
+
+  reactionCurve.onMouseEnter = function() {
+    /*var groups = reactionCurve.data.groups;
+    if (groups) {
+      for (var i=0; i < groups.length; ++i) {
+        if (_Groups[ groups[i] ]) {
+
+        }
+      }
+    }*/
+    highlightReactionCurve(reactionCurve);
+  };
+  reactionCurve.onMouseLeave = function() {
+    removeHighlightForReactionCurve(reactionCurve);
+  };
+  
   
   var fromMidPt = new paper.Point(0,0), 
       toMidPt = new paper.Point(0,0),
