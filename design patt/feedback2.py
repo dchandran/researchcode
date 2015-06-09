@@ -79,6 +79,7 @@ def f(x,t):
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle", "dashArray": [10,4]}
     Connect "x0" to "dot[2]" through "dot[4]"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle", "dashArray": [10,4]}
+    group: bistable
     '''
     E = s1*(1+x1)
     dx0 = E2*x1/(1+x1) - E*x0/(200+x0)
@@ -90,8 +91,10 @@ def f(x,t):
     '''
     Connect "x0" to "x1" through "dot[1]"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
+    group: bistable
     Connect "x1" to "x0" through "dot[2]"
     style: {"strokeColor": "#21475b", "strokeWidth": 2, "arrowHead": "Triangle"}
+    group: bistable
     '''
     
     return [dx0,dx1,ds0,ds1,ds2,ds3,ds4]

@@ -79,7 +79,7 @@ function setFillStrokeColor(path, json, firstTime) {
   }
 }
 
-function getSceneReaction(name) {
+function getReaction(name) {
   return _SceneReactions[name];
 }
 
@@ -87,7 +87,7 @@ function getSceneReaction(name) {
 //the second arg is a multi-purpose arg (name is misleading)
 //when second arg is true, returns all items under this name
 //when second arg is a point, returns closest item
-function getSceneComponent(name, closestPosition) {
+function getComponent(name, closestPosition) {
   if (_SceneComponents[name]) 
     return _SceneComponents[name];
 
@@ -138,26 +138,27 @@ function updateSceneArray(jsonArray) {
 
 
 function parseDescription(s) {
-  var re1 = /(\S+)\s+named\s+(\S+)/gi;
-  var re2a = /at\s+\((\d+)\s*,\s*(\d+)\)/gi;
-  var re2b = /at\s+(0\.\d+)\s+/gi;
-  var re4a = /inside\s+(\S+)/gi;
-  var re4b = /inside\s+["']([^"']+)["']/gi;
-  var re3 = /style\s*\:\s*({[^}]+})/gi;
+  var re1 = /(\S+)\s+named\s+(\S+)/i;
+  var re2a = /at\s+\((\d+)\s*,\s*(\d+)\)/i;
+  var re2b = /at\s+(0\.\d+)\s+/i;
+  var re4a = /inside\s+(\S+)/i;
+  var re4b = /inside\s+["']([^"']+)["']/i;
+  var re3 = /style\s*\:\s*({[^}]+})/i;
   
   var m1 = re1.exec(s);
+  var nextRe = /(named)|(connect)/i;
   var m2, m3, m4;
   
   var json, style, i;
 
   if (m1 && m1[1] && m1[2]) {
     json = {};
-    s.replace(m1[0],"");
+    s = s.replace(m1[0],"");
     json.inputStrings = [m1[0]];
     json.type = m1[1];
     json.name = m1[2];
 
-    m1 = re1.exec(s);
+    m1 = nextRe.exec(s);
 
     m2 = re2a.exec(s);
     if (m1 && m2 && m2.index > m1.index) {
@@ -189,7 +190,6 @@ function parseDescription(s) {
         json.position = {x: m2[1], y: m2[2]};        
       } else
       if (m2.length === 2 && m2[1] !== undefined) {
-        debugger;
         json.position = {x: 0, y: 0};
         json.offset = m2[1];
       }
@@ -214,13 +214,12 @@ function parseDescription(s) {
     return json;
   }
 
-  re1 = /Connect\s+(("\S+"\s*,)*\s*"\S+")\s+to\s+(("\S+"\s*,)*\s*"\S+")\s*/gi;
-  re2 = /through\s+("\S+")/gi;
-  re3 = /style\s*\:\s*({[^}]+})/gi;
+  re1 = /Connect\s+(("\S+"\s*,)*\s*"\S+")\s+to\s+(("\S+"\s*,)*\s*"\S+")\s*/i;
+  re2 = /through\s+("\S+")/i;
+  re3 = /style\s*\:\s*({[^}]+})/i;
+  re4 = /group\s*\:\s*(\S+)/i;
   
   m1 = re1.exec(s);
-  m2 = re2.exec(s);
-  m3 = re3.exec(s);
   
   if (m1 && m1[1] && m1[3]) {
     json = {};
@@ -230,17 +229,33 @@ function parseDescription(s) {
     json.type = "Connection";
     json.inputStrings.push(m1[0]);
 
-    if (m2) {
+    s = s.replace(m1[0],"");
+
+    m1 = nextRe.exec(s);
+    m2 = re2.exec(s);
+    m3 = re3.exec(s);
+    m4 = re4.exec(s);
+
+    if (m2 && (!m1 || m2.index < m1.index)) {
       json.through = eval(m2[1]);
       json.inputStrings.push(m2[0]);
     }
 
-    if (m3 && m3[1]) {
+    if (m3 && m3[1] && (!m1 || m3.index < m1.index)) {
       style = JSON.parse(m3[1]);
       for (i in style) {
         json[i] = style[i];
       }
       json.inputStrings.push(m3[0]);
+    }
+
+    if (m4 && m4[1] && (!m1 || m4.index < m1.index)) {
+      json.group = m4[1];
+      json.inputStrings.push(m4[0]);
+    } else {
+      if (m4) {
+        debugger;
+      }
     }
   }
 
@@ -328,7 +343,7 @@ function updateScene(json) {
     return updateSceneArray(json);
   }
 
-  var objs = getSceneComponent(json.name, true);
+  var objs = getComponent(json.name, true);
 
   if (objs) {
     if (json.count) {
@@ -363,20 +378,20 @@ function updateSceneHelper(json) {
     var throughItem = undefined;
     var closestPosition = undefined;
     if (json.through) {
-      throughItem = getSceneComponent(json.through);
+      throughItem = getComponent(json.through);
       if (throughItem.length) 
         throughItem = throughItem[0];
       closestPosition = throughItem.position;
     }
     for (i=0; i < json.from.length; ++i) {
-      if (getSceneComponent(json.from[i])) {
-        fromArray.push(getSceneComponent( json.from[i] , closestPosition));
+      if (getComponent(json.from[i])) {
+        fromArray.push(getComponent( json.from[i] , closestPosition));
       }
     }
 
     for (i=0; i < json.to.length; ++i) {
-      if (getSceneComponent(json.to[i])) {
-        toArray.push(getSceneComponent( json.to[i] , closestPosition));
+      if (getComponent(json.to[i])) {
+        toArray.push(getComponent( json.to[i] , closestPosition));
       }
     }
 
@@ -394,6 +409,9 @@ function updateSceneHelper(json) {
       updateReactionCurve(_SceneReactions[json.name]);
     } else {
       createReactionCurve(fromArray, toArray, throughItem, json);
+      if (json.group) {
+        addReactionToGroup(json.name, json.group);
+      }
     }
     return _SceneReactions[json.name];
   }
@@ -402,7 +420,7 @@ function updateSceneHelper(json) {
   var count = json.count;
   var parent = json.inside;
   if (parent) {
-    parent = getSceneComponent(parent);
+    parent = getComponent(parent);
   }
   var type = json.type;
   var showName = (type !== null && type !== undefined && type.toLowerCase() !== "dot"); //show component name
@@ -443,7 +461,7 @@ function updateSceneHelper(json) {
 
   if (name) {
     var pathData = _PathData[type];
-    var group = getSceneComponent(name);
+    var group = getComponent(name);
     var path;
     var firstTime = false;
     if (!group) {
@@ -455,7 +473,7 @@ function updateSceneHelper(json) {
       group.addChild(path);
     } else {
       if (!parent && group.data.inside) {
-        parent = getSceneComponent(group.data.inside);
+        parent = getComponent(group.data.inside);
       }
     }
 
@@ -703,7 +721,7 @@ function deleteObject(name) {
     }
   }
 
-  var component = getSceneComponent(name, true);
+  var component = getComponent(name, true);
   if (component && component.length !== undefined) {
     for (var i=0; i < component.length; ++i) {
       if (!component[i].data.reactions ||
@@ -720,7 +738,7 @@ function deleteObject(name) {
         component.remove();
       }
     } else {
-      var reaction =  getSceneReaction(name);
+      var reaction =  getReaction(name);
 
       if (reaction) {
         disconnectReaction(reaction);

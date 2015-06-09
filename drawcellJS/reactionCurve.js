@@ -30,6 +30,16 @@ function removeHighlightForReactionCurve(reaction) {
   delete reaction.highlights; 
 }
 
+function addReactionToGroup(reactionName, groupName) {
+  var reaction = getReaction(reactionName);
+  if (reaction) {
+    _Groups[groupName] = _Groups[groupName] || [];
+    _Groups[groupName].push(reaction);
+    reaction.data.groups = reaction.data.groups || [];
+    reaction.data.groups.push(groupName);
+  }
+}
+
 function createReactionCurve(fromItems, toItems, throughItem, style) {
 
   if (_ReactionLayer) {
@@ -51,18 +61,52 @@ function createReactionCurve(fromItems, toItems, throughItem, style) {
   }
 
   reactionCurve.onMouseEnter = function() {
-    /*var groups = reactionCurve.data.groups;
+    var groups = reactionCurve.data.groups;
+    if (groups) {
+      var text = "";
+      for (var i=0; i < groups.length; ++i) {
+        text = text + groups[i] + "\n";
+        if (_Groups[ groups[i] ]) {
+          var group = _Groups[ groups[i] ];
+          for (var j=0; j < group.length; ++j) {
+            highlightReactionCurve(group[j]);
+          }
+        }
+      }
+      if (reactionCurve.data.tooltip) {
+        reactionCurve.data.tooltip.remove();
+      }
+      
+      var pos = reactionCurve.bounds.topRight;
+      
+      var tooltip = new paper.PointText({
+          point: [pos.x, pos.y],
+          content: text,
+          fillColor: 'black',
+          fontFamily: 'Courier New',
+          fontWeight: 'bold',
+          fontSize: 15
+      });
+      var rect = new paper.Path.Rectangle(tooltip.bounds);
+      rect.fillColor = 'white';
+      reactionCurve.data.tooltip = new paper.Group([rect, tooltip]);
+    }
+  };
+  reactionCurve.onMouseLeave = function() {
+    var groups = reactionCurve.data.groups;
     if (groups) {
       for (var i=0; i < groups.length; ++i) {
         if (_Groups[ groups[i] ]) {
-
+          var group = _Groups[ groups[i] ];
+          for (var j=0; j < group.length; ++j) {
+            removeHighlightForReactionCurve(group[j]);
+          }
         }
       }
-    }*/
-    highlightReactionCurve(reactionCurve);
-  };
-  reactionCurve.onMouseLeave = function() {
-    removeHighlightForReactionCurve(reactionCurve);
+      if (reactionCurve.data.tooltip) {
+        reactionCurve.data.tooltip.remove();
+      }
+    }
   };
   
   
