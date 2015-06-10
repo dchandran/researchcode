@@ -1,0 +1,14 @@
+Ideas
+=====
+
+Drones for sampling
+-------------------
+1) Use on-board devices for DNA sequencing, imaging, spectrophotometry
+Issue: (a) cannot achieve metagenomics-level sequencing , (b) imaging will probably be mostly non-living things, and (c) spec might be too noisy
+
+2) Smart sampling using swarm intelligence
+Issues: requires fast measurements on the drones
+
+Function sampling
+-----------------
+1) Use of BioLog 
