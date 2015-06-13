@@ -1,0 +1,1 @@
+cat water_ps_g4002_minimetagenomics_1b_reads.fasta | parallel --block 100k --recstart '>' --pipe blastx -outfmt '"6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids"' -db env_nr.00 -max_target_seqs 10 -query - > results
