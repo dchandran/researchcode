@@ -4,8 +4,13 @@ import sys
 import subprocess
 import os.path
 
+if len(sys.argv) < 3:
+    print ("command-line args: protein-sequence, input-folder, output-folder. std input: DNA sequence")
+    sys.exit()
 
-prot_seq = "IAMSYNTHETIC"
+inputsfolder = sys.argv[2]
+outputsfolder = sys.argv[2]
+prot_seq = sys.argv[1]
 dna_seqs = backtranslate(prot_seq)
 
 def build_primer3_input(forward, reverse, filename):
@@ -26,8 +31,8 @@ def check_all_reverse_primers(forward):
         if not dna_seqs[i] == forward:
             reverse = str(Seq(dna_seqs[i]).complement())
 
-            inputfile = 'inputs/' + forward + '.' + reverse + '.txt'
-            outputfile = 'outputs/' + forward + '.' + reverse + '.txt'
+            inputfile = inputsfolder + '/' + forward + '.' + reverse + '.txt'
+            outputfile = outputsfolder + '/' + forward + '.' + reverse + '.txt'
 
             build_primer3_input(forward, reverse, inputfile)
             os.system('primer3 < ' + inputfile + ' > ' + outputfile)
