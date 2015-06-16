@@ -28,10 +28,9 @@ def check_all_reverse_primers(forward, dna_seqs):
     n = len(dna_seqs)
     for i in range(0,n):
 
-
         forward = forward.replace('\n','')
         reverse = str(Seq(dna_seqs[i]).complement())
-
+        
         gc1 = GC(forward)
         gc2 = GC(reverse)
 
@@ -72,4 +71,5 @@ else:
 
     for line in sys.stdin:
         forward = line.replace('\n','')
+        print ('Testing: ' + forward)
         check_all_reverse_primers(forward, dna_seqs)

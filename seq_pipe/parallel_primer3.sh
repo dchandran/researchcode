@@ -5,4 +5,4 @@ mkdir inputs
 mkdir outputs
 mkdir outputs/good
 mkdir outputs/bad
-cat candidate_seqs.txt | parallel --block 100k --blocksize 1060493 --recstart '>' --pipe python3 run_primer3_on_stdin.py 'IAMSYNTHETIC' 'inputs' 'outputs'
+cat candidate_seqs.txt | parallel --progress -n0 python3 run_primer3_on_stdin.py 'IAMSYNTHETIC' 'inputs' 'outputs'
