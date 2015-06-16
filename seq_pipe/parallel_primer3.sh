@@ -1,3 +1,4 @@
+python run_back_translate.py > candidate_seqs.txt
 rm -rf inputs
 rm -rf outputs
 mkdir inputs
