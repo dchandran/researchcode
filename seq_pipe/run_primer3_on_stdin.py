@@ -56,8 +56,8 @@ def check_all_reverse_primers(forward, dna_seqs):
             if n <= 10:  
                 os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/good')
             else:
-                os.system('rm ' + outputfile)
-                #os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/bad')
+                #os.system('rm ' + outputfile)
+                os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/bad')
 
 # -------------
 # MAIN PROGRAM
