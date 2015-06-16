@@ -22,8 +22,8 @@ def check_all_reverse_primers(forward, dna_seqs):
     global _INPUTFOLDER
     global _OUTPUTFOLDER
 
-    os.system('mkdir ' + _OUTPUTFOLDER + '/good')
-    os.system('mkdir ' + _OUTPUTFOLDER + '/bad')
+    #os.system('mkdir ' + _OUTPUTFOLDER + '/good')
+    #os.system('mkdir ' + _OUTPUTFOLDER + '/bad')
 
     n = len(dna_seqs)
     for i in range(0,n):
@@ -33,10 +33,9 @@ def check_all_reverse_primers(forward, dna_seqs):
         
         gc1 = GC(forward)
         gc2 = GC(reverse)
-
+        
         #first, screen using GC content before running primer3
-        if gc1 > 0.4 and gc1 < 0.6 and gc2 > 0.4 and gc2 < 0.6:
-            print (reverse)
+        if gc1 >= 40 and gc1 <= 60 and gc2 >= 40 and gc2 <= 60:
 
             #input and output file locations for primer 3
             inputfile = _INPUTFOLDER + '/' + forward + '.' + reverse + '.in'
@@ -54,10 +53,10 @@ def check_all_reverse_primers(forward, dna_seqs):
             out.close()
             #if more lines then input file, then there must be errors -- not sure if this is too strict!
             if n <= 10:  
-                os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/good')
+                os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/good/')
             else:
                 #os.system('rm ' + outputfile)
-                os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/bad')
+                os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/bad/')
 
 # -------------
 # MAIN PROGRAM
@@ -72,6 +71,5 @@ else:
     lines = sys.stdin.readlines()
 
     for line in lines:
-        forward = line.replace('\n','')
-        print ('Testing: ' + forward)
-        check_all_reverse_primers(forward, dna_seqs)
+        forward = line.replace('\n','')        
+        check_all_reverse_primers(forward, dna_seqs[12500:12520])
