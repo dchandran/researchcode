@@ -36,7 +36,7 @@ def check_all_reverse_primers(forward, dna_seqs):
         gc2 = GC(reverse)
 
         #first, screen using GC content before running primer3
-        if gc1 > 0.4 and gc < 0.6 and gc2 > 0.4 and gc2 < 0.6:
+        if gc1 > 0.4 and gc1 < 0.6 and gc2 > 0.4 and gc2 < 0.6:
 
             #input and output file locations for primer 3
             inputfile = _INPUTFOLDER + '/' + forward + '.' + reverse + '.in'
