@@ -1,6 +1,6 @@
 from back_translate import backtranslate
 from Bio.Seq import Seq
-from Bio.SeqUtil import GC
+from Bio.SeqUtils import GC
 import sys
 import subprocess
 import os.path
