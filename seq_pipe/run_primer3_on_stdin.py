@@ -36,6 +36,7 @@ def check_all_reverse_primers(forward, dna_seqs):
 
         #first, screen using GC content before running primer3
         if gc1 > 0.4 and gc1 < 0.6 and gc2 > 0.4 and gc2 < 0.6:
+            print (reverse)
 
             #input and output file locations for primer 3
             inputfile = _INPUTFOLDER + '/' + forward + '.' + reverse + '.in'
@@ -61,15 +62,16 @@ def check_all_reverse_primers(forward, dna_seqs):
 # -------------
 # MAIN PROGRAM
 # -------------
-if len(sys.argv) < 3:
+if len(sys.argv) < 4:
     print ("command-line args: protein-sequence, input-folder, output-folder. std input: DNA sequence")
 else:
     _INPUTFOLDER = sys.argv[2]
     _OUTPUTFOLDER = sys.argv[3]
     prot_seq = sys.argv[1]
     dna_seqs = backtranslate(prot_seq)
+    lines = sys.stdin.readlines()
 
-    for line in sys.stdin:
+    for line in lines:
         forward = line.replace('\n','')
         print ('Testing: ' + forward)
         check_all_reverse_primers(forward, dna_seqs)
