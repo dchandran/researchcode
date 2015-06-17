@@ -53,3 +53,13 @@ REFERENCES
 CAMERA workflow:
 https://confluence.crbs.ucsd.edu/display/CAM/CAMERA+Workflows#CAMERAWorkflows-Assembly
 
+
+TODO
+=====
+get bay water
+purify 2 samples
+setup sFTP on AWS Glacier
+ship sample
+
+
+
