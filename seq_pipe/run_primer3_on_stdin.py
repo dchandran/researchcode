@@ -87,4 +87,4 @@ else:
 
     for line in lines:
         forward = line.replace('\n','')        
-        check_all_reverse_primers(forward, dna_seqs[12500:12520])
+        check_all_reverse_primers(forward, dna_seqs)
