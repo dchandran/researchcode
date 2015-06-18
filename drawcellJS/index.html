@@ -156,7 +156,7 @@ $(function () {
           hitItem = obj
         }
 
-        if (hitItem && !hitItem.data.name) {
+        while (hitItem && !hitItem.data.name) {
           hitItem = hitItem.parent;
         }
 
@@ -350,9 +350,10 @@ $(function () {
       if (parent.data.type==='Eukaryote' ||
           parent.data.type==='Prokaryote' ||
           parent.data.type==='DNA' ||
-          parent.data.type==='Plasmid') {
+          parent.data.type==='Plasmid' ||
+          parent.data.type==='Membrane') {
         var json = {name: obj.data.name, inside: parent.data.name};
-        if (obj.data.type==='Receptor') {
+          if (obj.data.type==='Receptor') {
           json.offset = Math.random();
         }
         updateScene(json);

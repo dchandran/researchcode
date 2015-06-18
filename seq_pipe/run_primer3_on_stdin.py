@@ -13,7 +13,17 @@ def build_primer3_input(forward, reverse, filename):
     primer_input_file = open(filename,'w');
     s = "SEQUENCE_PRIMER=" + forward + "\n" + \
          "SEQUENCE_PRIMER_REVCOMP=" + reverse + "\n" + \
-         "PRIMER_TASK=check_primers\nPRIMER_EXPLAIN_FLAG=1\nPRIMER_PAIR_EXPLAIN=1\nPRIMER_MIN_SIZE=5\nPRIMER_MAX_SIZE=36\nPRIMER_THERMODYNAMIC_PARAMETERS_PATH=/usr/share/primer3-2.3.6/src/primer3_config/\n="
+         "PRIMER_TASK=check_primers\n" + \
+         "PRIMER_EXPLAIN_FLAG=1\n" + \
+         "PRIMER_PAIR_EXPLAIN=1\n" + \
+         "PRIMER_MIN_SIZE=5\n" + \
+         "PRIMER_MAX_SIZE=36\n" + \
+         "PRIMER_MIN_TM=55.0\n" + \
+         "PRIMER_OPT_TM=65.0\n" + \
+         "PRIMER_MAX_TM=70.0\n" + \
+         "PRIMER_MAX_HAIRPIN_TH=60\n" + \
+         "PRIMER_THERMODYNAMIC_PARAMETERS_PATH=/usr/share/primer3-2.3.6/src/primer3_config/\n" + \
+         "="
     primer_input_file.write(s)
     primer_input_file.close()
 
@@ -49,10 +59,15 @@ def check_all_reverse_primers(forward, dna_seqs):
 
             #parse the output file and check for errors
             out = open(outputfile)
-            n = len(out.readlines())
+            output = out.read()
             out.close()
+
+            n1 = output.count("PRIMER_LEFT_EXPLAIN=considered 1, ok 1")
+            n2 = output.count("PRIMER_RIGHT_EXPLAIN=considered 1, ok 1")
+            n3 = output.count("PRIMER_PAIR_EXPLAIN=considered 1, ok 1")
+
             #if more lines then input file, then there must be errors -- not sure if this is too strict!
-            if n <= 10:  
+            if n1 == 1 and n2 == 1 and n3 == 1:
                 os.system('mv ' + outputfile + ' ' + _OUTPUTFOLDER + '/good/')
             else:
                 #os.system('rm ' + outputfile)
@@ -72,4 +87,4 @@ else:
 
     for line in lines:
         forward = line.replace('\n','')        
-        check_all_reverse_primers(forward, dna_seqs[12500:12520])
+        check_all_reverse_primers(forward, dna_seqs)
