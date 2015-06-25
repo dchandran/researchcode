@@ -15,4 +15,6 @@ RUN ln -s /usr/share/velvet/velvetg /usr/bin/velvetg
 RUN git clone https://github.com/tseemann/VelvetOptimiser.git
 RUN cd VelvetOptimiser
 COPY install_packages.r /install_packages.r
+COPY stage1_pipeline.r /stage1_pipeline.r
+COPY reads.fasta /reads.fasta
 RUN R < install_packages.r --no-save
