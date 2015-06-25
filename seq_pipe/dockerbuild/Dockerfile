@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y python3 python3-pip r-base git
+RUN apt-get install -y python3 python3-pip r-base git gcc binutils make linux-source build-essential
 RUN pip3 install numpy
 RUN pip3 install scipy
 RUN git clone https://github.com/dchandran/Prodigal.git
