@@ -10,7 +10,8 @@ for (i in 1:n) {
   kmers[i,] = count(fas[[i]], k)
 }
 
-pamk.best <- pamk(kmers)
-clusters = kmeans( kmers,  pamk.best$nc )
+save(".RData")
+#pamk.best <- pamk(kmers,krange= (1:10 * 10))
+#clusters = kmeans( kmers,  pamk.best$nc )
 
 
