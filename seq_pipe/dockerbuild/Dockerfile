@@ -4,9 +4,7 @@ RUN apt-get install -y python3 python3-pip r-base git gcc binutils make linux-so
 RUN pip3 install numpy
 RUN pip3 install scipy
 RUN git clone https://github.com/dchandran/Prodigal.git
-RUN cd Prodigal
-RUN make all
-RUN make install
+RUN cd Prodigal && make all && make install
 RUN git clone https://github.com/dchandran/cdhit.git
 RUN cd cdhit && make all && make install
 RUN git clone https://github.com/dchandran/velvet.git
