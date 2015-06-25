@@ -1,0 +1,17 @@
+Needed to create Docker Image
+-------------------------------
+
+apt-get python3 python3-pip r-base
+
+git clone https://github.com/dchandran/Prodigal.git
+git clone https://github.com/dchandran/cdhit.git
+git clone https://github.com/dchandran/velvet.git
+git clone https://github.com/tseemann/VelvetOptimiser.git
+
+R CMD BATCH:
+    install.packages("cluster")
+    install.packages("fpc")
+    install.packages("seqinr")    
+    source("http://bioconductor.org/biocLite.R")
+    biocLite()
+
