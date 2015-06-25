@@ -1,0 +1,5 @@
+install.packages("cluster")
+install.packages("fpc")
+install.packages("seqinr")    
+source("http://bioconductor.org/biocLite.R")
+biocLite()

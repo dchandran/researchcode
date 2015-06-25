@@ -74,7 +74,6 @@
 //-----------------------------------------------------------------------------
 }
 
-
 var canvas;
 var context;
 var svg; // for snapshot mode
@@ -91,8 +90,6 @@ var fontSizeText;
 var fontSizeButtonDecrease;
 var fontSizeButtonIncrease;
 var fontSizeLast;
-var radiusButtonDecrease;
-var radiusButtonIncrease;
 var shorten;
 var shortenCheckBox;
 var maxAbsoluteDepth;
@@ -116,7 +113,6 @@ var keyControl;
 var showKeys = true;
 var linkButton;
 var linkText;
-var frame;
 
 // Node references. Note that the meanings of 'selected' and 'focused' are
 // swapped in the docs.
@@ -131,8 +127,6 @@ var currentNodeID = 0; // to iterate while loading
 
 var nodeHistory = new Array();
 var nodeHistoryPosition = 0;
-
-var dataEnabled = false; // true when supplemental files are present
 
 // store non-Krona GET variables so they can be passed on to links
 //
@@ -163,8 +157,7 @@ var updateViewNeeded = false;
 //
 var rotationOffset = Math.PI / 2;
 
-var buffer;
-var bufferFactor = .1;
+var buffer = 100;
 
 // The maps are the small pie charts showing the current slice being viewed.
 //
@@ -259,11 +252,9 @@ var fpsDisplay = document.getElementById('frameRate');
 
 // Arrays to translate xml attribute names into displayable attribute names
 //
-var attributes = new Array();
-//
-var magnitudeIndex; // the index of attribute arrays used for magnitude
-var membersAssignedIndex;
-var membersSummaryIndex;
+var attributeNames = new Array();
+var attributeDisplayNames = new Array();
+var magnitudeIndex;
 
 // For defining gradients
 //
@@ -278,18 +269,20 @@ var currentDataset = 0;
 var lastDataset = 0;
 var datasets = 1;
 var datasetNames;
-var datasetSelectSize = 30;
+var datasetSelectSize = 40;
 var datasetAlpha = new Tween(0, 0);
 var datasetWidths = new Array();
 var datasetChanged;
-var datasetSelectWidth = 50;
+var datasetSelectWidth = 120;
 
+document.body.style.overflow = "hidden";
 //window.onload = load;
 
 var image;
 var hiddenPattern;
-var loadingImage;
-var logoImage;
+
+canvas = document.getElementById('canvas');
+context = canvas.getContext('2d');
 
 function resize()
 {
@@ -302,30 +295,14 @@ function resize()
 		context.canvas.height = imageHeight;
 	}
 	
-	if ( datasetDropDown )
-	{
-		var ratio = 
-			(datasetDropDown.offsetTop + datasetDropDown.clientHeight) * 2 /
-			imageHeight;
-		
-		if ( ratio > 1 )
-		{
-			ratio = 1;
-		}
-		
-		ratio = Math.sqrt(ratio);
-		
-		datasetSelectWidth = 
-			(datasetDropDown.offsetLeft + datasetDropDown.clientWidth) * ratio;
-	}
-	var leftMargin = datasets > 1 ? datasetSelectWidth + 30 : 0;
-	var minDimension = imageWidth - mapWidth - leftMargin > imageHeight ?
+	var minDimension = imageWidth - mapWidth > imageHeight ?
 		imageHeight :
-		imageWidth - mapWidth - leftMargin;
+		imageWidth - mapWidth;
 	
 	maxMapRadius = minDimension * .03;
-	buffer = minDimension * bufferFactor;
+	buffer = minDimension * .1;
 	margin = minDimension * .015;
+	var leftMargin = datasets > 1 ? datasetSelectWidth + 30 : 0;
 	centerX = (imageWidth - mapWidth - leftMargin) / 2 + leftMargin;
 	centerY = imageHeight / 2;
 	gRadius = minDimension / 2 - buffer;
@@ -335,10 +312,6 @@ function resize()
 function handleResize()
 {
 	updateViewNeeded = true;
-}
-
-function Attribute()
-{
 }
 
 function Tween(start, end)
@@ -393,7 +366,7 @@ function Node()
 	this.children = Array();
 	this.parent = 0;
 	
-	this.attributes = new Array(attributes.length);
+	this.attributes = new Array();
 	
 	this.addChild = function(child)
 	{
@@ -1019,11 +992,6 @@ function Node()
 			for ( var i = firstHiddenChild; i <= firstChild.hiddenEnd; i++ )
 			{
 				hiddenSearchResults += this.children[i].searchResults;
-				
-				if ( this.children[i].magnitude == 0 )
-				{
-					hiddenChildren--;
-				}
 			}
 			
 			if
@@ -1032,8 +1000,6 @@ function Node()
 				(angleEnd - angleStart) * 
 				(gRadius + gRadius) >=
 				minWidth() ||
-				this == highlightedNode &&
-				hiddenChildren ||
 				hiddenSearchResults
 			)
 			{
@@ -1190,7 +1156,7 @@ function Node()
 					true
 				);
 				
-				if ( false && ! this.searchResults )
+				if ( ! this.searchResults )
 				{
 					this.drawHiddenLabel
 					(
@@ -1237,7 +1203,6 @@ function Node()
 	{
 		var offset = keyOffset();
 		var color;
-		var colorText = this.magnitude == 0 ? 'gray' : 'black';
 		var patternAlpha = this.alphaPattern.end;
 		var boxLeft = imageWidth - keySize - margin;
 		var textY = offset + keySize / 2;
@@ -1479,7 +1444,7 @@ function Node()
 				}
 			}
 			
-			svg += svgText(labelSVG, boxLeft - keyBuffer, textY, 'end', bold, colorText);
+			svg += svgText(labelSVG, boxLeft - keyBuffer, textY, 'end', bold);
 		}
 		else
 		{
@@ -1526,6 +1491,7 @@ function Node()
 			if ( lineX.length )
 			{
 				context.beginPath();
+				//alert(this.name + ' ' + keyAngle);
 				context.moveTo(lineX[0] + centerX, lineY[0] + centerY);
 				
 				context.arc(centerX, centerY, bendRadius, angle, arcAngle, angle > arcAngle);
@@ -1567,7 +1533,7 @@ function Node()
 				}
 			}
 			
-			drawText(label, boxLeft - keyBuffer, offset + keySize / 2, 0, 'end', bold, colorText);
+			drawText(label, boxLeft - keyBuffer, offset + keySize / 2, 0, 'end', bold);
 			
 			context.translate(centerX, centerY);
 		}
@@ -1969,64 +1935,6 @@ function Node()
 		}
 	}
 	
-	this.getData = function(index, summary)
-	{
-		var files = new Array();
-		
-		if
-		(
-			this.attributes[index] != null &&
-			this.attributes[index][currentDataset] != null &&
-			this.attributes[index][currentDataset] != ''
-		)
-		{
-			files.push
-			(
-				document.location +
-				'.files/' +
-				this.attributes[index][currentDataset]
-			);
-		}
-		
-		if ( summary )
-		{
-			for ( var i = 0; i < this.children.length; i++ )
-			{
-				files = files.concat(this.children[i].getData(index, true));
-			}
-		}
-		
-		return files;
-	}
-	
-	this.getList = function(index, summary)
-	{
-		var list;
-		
-		if
-		(
-			this.attributes[index] != null &&
-			this.attributes[index][currentDataset] != null
-		)
-		{
-			list = this.attributes[index][currentDataset];
-		}
-		else
-		{
-			list = new Array();
-		}
-		
-		if ( summary )
-		{
-			for ( var i = 0; i < this.children.length; i++ )
-			{
-				list = list.concat(this.children[i].getList(index, true));
-			}
-		}
-		
-		return list;
-	}
-	
 	this.getParent = function()
 	{
 		// returns parent, accounting for collapsing or 0 if doesn't exist
@@ -2063,7 +1971,7 @@ function Node()
 	
 	this.getUnclassifiedText = function()
 	{
-		return '[unassigned '+ this.name + ']';
+		return '[unclassified '+ this.name + ']';
 	}
 	
 	this.getUncollapsed = function()
@@ -3007,18 +2915,15 @@ function Node()
 				}
 				else if ( this == selectedNode )
 				{
-					var min = 0.0;
-					var max = 1.0;
-					
 					if ( this.children.length > 6 )
 					{
-						childHueMin = lerp((1 - Math.pow(1 - i / this.children.length, 1.4)) * .95, 0, 1, min, max);
-						childHueMax = lerp((1 - Math.pow(1 - (i + .55) / this.children.length, 1.4)) * .95, 0, 1, min, max);
+						childHueMin = (1 - Math.pow(1 - i / this.children.length, 1.4)) * .95;
+						childHueMax = (1 - Math.pow(1 - (i + .35) / this.children.length, 1.4)) * .95;
 					}
 					else
 					{
-						childHueMin = lerp(i / this.children.length, 0, 1, min, max);
-						childHueMax = lerp((i + .55) / this.children.length, 0, 1, min, max);
+						childHueMin = i / this.children.length;
+						childHueMax = (i + .35) / this.children.length;
 					}
 				}
 				else
@@ -3033,7 +2938,7 @@ function Node()
 					);
 					childHueMax = lerp
 					(
-						child.baseMagnitude + child.magnitude * .99,
+						child.baseMagnitude + child.magnitude * .7,
 						this.baseMagnitude,
 						this.baseMagnitude + this.magnitude,
 						hueMin,
@@ -3082,7 +2987,7 @@ function Node()
 			i++;
 		}
 		
-	 	if ( this.hue && this.magnitude )
+	 	if ( this.hues && this.magnitude )
 	 	{
 		 	this.hue.setTarget(this.hues[currentDataset]);
 			
@@ -3388,48 +3293,28 @@ function Node()
 	}
 }
 
-var options;
-
 function addOptionElement(position, innerHTML, title)
 {
 	var div = document.createElement("div");
-//	div.style.position = 'absolute';
-//	div.style.top = position + 'px';
+	div.style.position = 'absolute';
+	div.style.top = position + 'px';
 	div.innerHTML = innerHTML;
-//	div.style.display = 'block';
-	div.style.padding = '2px';
 	
 	if ( title )
 	{
 		div.title = title;
 	}
 	
-	options.appendChild(div);
-	var height = 0;//div.clientHeight;
-	return position + height;
+	document.body.insertBefore(div, canvas);
+	return position + div.clientHeight;
 }
 
 function addOptionElements(hueName, hueDefault)
 {
-	options = document.createElement('div');
-	options.style.position = 'absolute';
-	options.style.top = '0px';
-	options.addEventListener('mousedown', function(e) {mouseClick(e)}, false);
-//	options.onmouseup = function(e) {mouseUp(e)}
-	document.body.appendChild(options);
-	
 	document.body.style.font = '11px sans-serif';
 	var position = 5;
 	
-	details = document.createElement('div');
-	details.style.position = 'absolute';
-	details.style.top = '1%';
-	details.style.right = '2%';
-	details.style.textAlign = 'right';
-	document.body.insertBefore(details, canvas);
-//		<div id="details" style="position:absolute;top:1%;right:2%;text-align:right;">
-
-	details.innerHTML = '\
+	document.getElementById('details').innerHTML = '\
 <span id="detailsName" style="font-weight:bold"></span>&nbsp;\
 <input type="button" id="detailsExpand" onclick="expand(focusNode);"\
 value="&harr;" title="Expand this wedge to become the new focus of the chart"/><br/>\
@@ -3437,32 +3322,21 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 
 	keyControl = document.createElement('input');
 	keyControl.type = 'button';
-	keyControl.value = showKeys ? 'x' : '…';
+	keyControl.value = showKeys ? 'x' : 'â€¦';
 	keyControl.style.position = '';
 	keyControl.style.position = 'fixed';
 	keyControl.style.visibility = 'hidden';
 	
 	document.body.insertBefore(keyControl, canvas);
 	
-	var logoElement = document.getElementById('logo');
-	
-	if ( logoElement )
-	{
-		logoImage = logoElement.src;
-	}
-	else
-	{
-		logoImage = 'http://krona.sourceforge.net/img/logo.png';
-	}
-	
 //	document.getElementById('options').style.fontSize = '9pt';
 	position = addOptionElement
 	(
 		position,
-'<a style="margin:2px" target="_blank" href="http://krona.sourceforge.net"><div style="display:inline-block;vertical-align:middle;background-color:#EEEEEE;border:1px solid gray;padding:2px;font-size:18px"><img style="vertical-align:middle;" src="' + logoImage + '"/><span style="vertical-align:middle;color:#555555">Krona</span></div></a><input type="button" id="back" value="&larr;" title="Go back (Shortcut: &larr;)"/>\
+'&nbsp;<input type="button" id="back" value="&larr;" title="Go back (Shortcut: &larr;)"/>\
 <input type="button" id="forward" value="&rarr;" title="Go forward (Shortcut: &rarr;)"/> \
 &nbsp;Search: <input type="text" id="search"/>\
-<input id="searchClear" type="button" value="x" onclick="clearSearch()"/> \
+<input type="button" value="x" onclick="clearSearch()"/> \
 <span id="searchResults"></span>'
 	);
 	
@@ -3471,8 +3345,9 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 		var size = datasets < datasetSelectSize ? datasets : datasetSelectSize;
 		
 		var select =
-			'<table style="border-collapse:collapse;padding:0px"><tr><td style="padding:0px">' +
-			'<select id="datasets" style="min-width:100px" size="' + size + '" onchange="onDatasetChange()">';
+			'<div style="float:left">&nbsp;</div><div style="float:left">' +
+			'<select id="datasets" style="width:' + datasetSelectWidth +
+			'px"' + 'size="' + size + '" onchange="onDatasetChange()">';
 		
 		for ( var i = 0; i < datasetNames.length; i++ )
 		{
@@ -3480,10 +3355,10 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 		}
 		
 		select +=
-			'</select></td><td style="vertical-align:top;padding:1px;">' +
-			'<input style="display:block" title="Previous dataset (Shortcut: &uarr;)" id="prevDataset" type="button" value="&uarr;" onclick="prevDataset()" disabled="true"/>' +
-			'<input title="Next dataset (Shortcut: &darr;)" id="nextDataset" type="button" value="&darr;" onclick="nextDataset()"/><br/></td>' +
-			'<td style="padding-top:1px;vertical-align:top"><input title="Switch to the last dataset that was viewed (Shortcut: TAB)" id="lastDataset" type="button" style="font:11px Times new roman" value="last" onclick="selectLastDataset()"/></td></tr></table>';
+			'</select></div>' +
+			'<input title="Previous dataset (Shortcut: &uarr;)" id="prevDataset" type="button" value="&uarr;" onclick="prevDataset()" disabled="true"/>' +
+			'<input title="Switch to the last dataset that was viewed (Shortcut: TAB)" id="lastDataset" type="button" style="font:11px Times new roman" value="last" onclick="selectLastDataset()"/>' +
+			'<br/><input title="Next dataset (Shortcut: &darr;)" id="nextDataset" type="button" value="&darr;" onclick="nextDataset()"/><br/>';
 		
 		position = addOptionElement(position + 5, select);
 		
@@ -3491,14 +3366,12 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 		datasetButtonLast = document.getElementById('lastDataset');
 		datasetButtonPrev = document.getElementById('prevDataset');
 		datasetButtonNext = document.getElementById('nextDataset');
-		
-		position += datasetDropDown.clientHeight;
 	}
 	
 	position = addOptionElement
 	(
 		position + 5,
-'<input type="button" id="maxAbsoluteDepthDecrease" value="-"/>\
+'&nbsp;<input type="button" id="maxAbsoluteDepthDecrease" value="-"/>\
 <span id="maxAbsoluteDepth"></span>\
 &nbsp;<input type="button" id="maxAbsoluteDepthIncrease" value="+"/> Max depth',
 'Maximum depth to display, counted from the top level \
@@ -3508,34 +3381,27 @@ and including collapsed wedges.'
 	position = addOptionElement
 	(
 		position,
-'<input type="button" id="fontSizeDecrease" value="-"/>\
+'&nbsp;<input type="button" id="fontSizeDecrease" value="-"/>\
 <span id="fontSize"></span>\
 &nbsp;<input type="button" id="fontSizeIncrease" value="+"/> Font size'
 	);
 	
-	position = addOptionElement
-	(
-		position,
-'<input type="button" id="radiusDecrease" value="-"/>\
-<input type="button" id="radiusIncrease" value="+"/> Chart size'
-	);
-	
 	if ( hueName )
 	{
-		hueDisplayName = attributes[attributeIndex(hueName)].displayName;
+		hueDisplayName = attributeDisplayNames[attributeIndex(hueName)];
 		
 		position = addOptionElement
 		(
 			position + 5,
+			'<div style="float:left">&nbsp;</div>' +
 			'<input type="checkbox" id="useHue" style="float:left" ' +
-			'/><div>Color by<br/>' + hueDisplayName +
+			'/><div style="float:left">Color by<br/>' + hueDisplayName +
 			'</div>'
 		);
 		
 		useHueCheckBox = document.getElementById('useHue');
 		useHueCheckBox.checked = hueDefault;
 		useHueCheckBox.onclick = handleResize;
-		useHueCheckBox.onmousedown = suppressEvent;
 	}
 	/*
 	position = addOptionElement
@@ -3555,14 +3421,14 @@ and including collapsed wedges.'
 	position = addOptionElement
 	(
 		position,
-		'<input type="checkbox" id="collapse" checked="checked" />Collapse',
+		'&nbsp;<input type="checkbox" id="collapse" checked="checked" />Collapse',
 		'Collapse wedges that are redundant (entirely composed of another wedge)'
 	);
 	
 	position = addOptionElement
 	(
 		position + 5,
-		'<input type="button" id="snapshot" value="Snapshot"/>',
+		'&nbsp;<input type="button" id="snapshot" value="Snapshot"/>',
 'Render the current view as SVG (Scalable Vector Graphics), a publication-\
 quality format that can be printed and saved (see Help for browser compatibility)'
 	);
@@ -3570,7 +3436,7 @@ quality format that can be printed and saved (see Help for browser compatibility
 	position = addOptionElement
 	(
 		position + 5,
-'<input type="button" id="linkButton" value="Link"/>\
+'&nbsp;<input type="button" id="linkButton" value="Link"/>\
 <input type="text" size="30" id="linkText"/>',
 'Show a link to this view that can be copied for bookmarking or sharing'
 	);
@@ -3578,7 +3444,7 @@ quality format that can be printed and saved (see Help for browser compatibility
 	position = addOptionElement
 	(
 		position + 5,
-'<input type="button" id="help" value="?"\
+'&nbsp;<input type="button" id="help" value="?"\
 onclick="window.open(\'https://sourceforge.net/p/krona/wiki/Browsing%20Krona%20charts/\', \'help\')"/>',
 'Help'
 	);
@@ -3682,11 +3548,11 @@ function arrow(angleStart, angleEnd, radiusInner)
 	context.stroke();
 }
 
-function attributeIndex(aname)
+function attributeIndex(name)
 {
-	for ( var i = 0 ; i < attributes.length; i++ )
+	for ( var i = 0 ; i < attributeNames.length; i++ )
 	{
-		if ( aname == attributes[i].name )
+		if ( name == attributeNames[i] )
 		{
 			return i;
 		}
@@ -3770,11 +3636,8 @@ function checkSelectedCollapse()
 
 function clearSearch()
 {
-	if ( search.value != '' )
-	{
-		search.value = '';
-		onSearchChange();
-	}
+	search.value = '';
+	onSearchChange();
 }
 
 function createSVG()
@@ -4160,24 +4023,19 @@ function drawSearchHighlights(label, bubbleX, bubbleY, rotation, center)
 	while ( index != -1 && index < labelLength );
 }
 
-function drawText(text, x, y, angle, anchor, bold, color)
+function drawText(text, x, y, angle, anchor, bold)
 {
-	if ( color == undefined )
-	{
-		color = 'black';
-	}
-	
 	if ( snapshotMode )
 	{
 		svg +=
 			'<text x="' + (centerX + x) + '" y="' + (centerY + y) +
-			'" text-anchor="' + anchor + '" style="font-color:' + color + ';font-weight:' + (bold ? 'bold' : 'normal') +
+			'" text-anchor="' + anchor + '" style="font-weight:' + (bold ? 'bold' : 'normal') +
 			'" transform="rotate(' + degrees(angle) + ',' + centerX + ',' + centerY + ')">' +
 			text + '</text>';
 	}
 	else
 	{
-		context.fillStyle = color;
+		context.fillStyle = 'black';
 		context.textAlign = anchor;
 		context.font = bold ? fontBold : fontNormal;
 		context.rotate(angle);
@@ -4514,29 +4372,6 @@ function showLink()
 //	document.location = urlHalves[0] + '?' + getVariables.join('&');
 }
 
-function getFirstChild(element)
-{
-	element = element.firstChild;
-	
-	if ( element && element.nodeType != 1 )
-	{
-		element = getNextSibling(element);
-	}
-	
-	return element;
-}
-
-function getNextSibling(element)
-{
-	do
-	{
-		element = element.nextSibling;
-	}
-	while ( element && element.nodeType != 1 );
-	
-	return element;
-}
-
 function getPercentage(fraction)
 {
 	return round(fraction * 100);
@@ -4602,17 +4437,11 @@ function hslToRgb(h, s, l)
 function hueToRgb(m1, m2, hue)
 {
 	var v;
-	
-	while (hue < 0)
-	{
+	if (hue < 0)
 		hue += 1;
-	}
-	
-	while (hue > 1)
-	{
+	else if (hue > 1)
 		hue -= 1;
-	}
-	
+
 	if (6 * hue < 1)
 		v = m1 + (m2 - m1) * hue * 6;
 	else if (2 * hue < 1)
@@ -4728,20 +4557,8 @@ function lerp(value, fromStart, fromEnd, toStart, toEnd)
 		toStart;
 }
 
-function createCanvas()
-{
-	canvas = document.createElement('canvas');
-	document.body.appendChild(canvas);
-	context = canvas.getContext('2d');
-}
-
 function load()
 {
-	document.body.style.overflow = "hidden";
-	document.body.style.margin = 0;
-	
-	createCanvas();
-	
 	if ( context == undefined )
 	{
 		document.body.innerHTML = '\
@@ -4762,9 +4579,9 @@ function load()
 	
 	resize();
 	
-	var kronaElement = document.getElementsByTagName('krona')[0];
-	
+	var xmlElements = document.getElementsByTagName('krona');
 	var magnitudeName;
+	
 	var hueName;
 	var hueDefault;
 	var hueStart;
@@ -4772,115 +4589,41 @@ function load()
 	var valueStart;
 	var valueEnd;
 	
-	if ( kronaElement.getAttribute('collapse') != undefined )
+	for ( var element = xmlElements[0].firstChild; element; element = element.nextSibling )
 	{
-		collapse = kronaElement.getAttribute('collapse') == 'true';
-	}
-	
-	if ( kronaElement.getAttribute('key') != undefined )
-	{
-		showKeys = kronaElement.getAttribute('key') == 'true';
-	}
-	
-	for
-	(
-		var element = getFirstChild(kronaElement);
-		element;
-		element = getNextSibling(element)
-	)
-	{
+		if ( element.nodeType != 1 )
+		{
+			continue;
+		}
+		
 		switch ( element.tagName.toLowerCase() )
 		{
-			case 'attributes':
-				magnitudeName = element.getAttribute('magnitude');
-				//
-				for
-				(
-					var attributeElement = getFirstChild(element);
-					attributeElement;
-					attributeElement = getNextSibling(attributeElement)
-				)
+			case 'options':
+				for ( var i = 0; i < element.attributes.length; i++ )
 				{
-					var tag = attributeElement.tagName.toLowerCase();
-					
-					if ( tag == 'attribute' )
+					switch ( element.attributes[i].nodeName )
 					{
-						var attribute = new Attribute();
-						attribute.name = attributeElement.firstChild.nodeValue.toLowerCase();
-						attribute.displayName = attributeElement.getAttribute('display');
-						
-						if ( attributeElement.getAttribute('hrefBase') )
-						{
-							attribute.hrefBase = attributeElement.getAttribute('hrefBase');
-						}
-						
-						if ( attributeElement.getAttribute('target') )
-						{
-							attribute.target = attributeElement.getAttribute('target');
-						}
-						
-						if ( attribute.name == magnitudeName )
-						{
-							magnitudeIndex = attributes.length;
-						}
-						
-						if ( attributeElement.getAttribute('listAll') )
-						{
-							attribute.listAll = attributeElement.getAttribute('listAll').toLowerCase();
-						}
-						else if ( attributeElement.getAttribute('listNode') )
-						{
-							attribute.listNode = attributeElement.getAttribute('listNode').toLowerCase();
-						}
-						else if ( attributeElement.getAttribute('dataAll') )
-						{
-							attribute.dataAll = attributeElement.getAttribute('dataAll').toLowerCase();
-						}
-						else if ( attributeElement.getAttribute('dataNode') )
-						{
-							attribute.dataNode = attributeElement.getAttribute('dataNode').toLowerCase();
-						}
-						
-						if ( attributeElement.getAttribute('postUrl') )
-						{
-							attribute.postUrl = attributeElement.getAttribute('postUrl');
-						}
-						
-						if ( attributeElement.getAttribute('postVar') )
-						{
-							attribute.postVar = attributeElement.getAttribute('postVar');
-						}
-						
-						if ( attributeElement.getAttribute('mono') )
-						{
-							attribute.mono = true;
-						}
-						
-						attributes.push(attribute);
+						case 'collapse':
+							collapse =
+								element.attributes[i].nodeValue == 'true';
+							break;
+						case 'key':
+							showKeys =
+								element.attributes[i].nodeValue == 'true';
+							break;
 					}
-					else if ( tag == 'list' )
-					{
-						var attribute = new Attribute();
-						
-						attribute.name = attributeElement.firstChild.nodeValue;
-						attribute.list = true;
-						attributes.push(attribute);
-					}
-					else if ( tag == 'data' )
-					{
-						var attribute = new Attribute();
-						
-						attribute.name = attributeElement.firstChild.nodeValue;
-						attribute.data = true;
-						attributes.push(attribute);
-						
-						var enableScript = document.createElement('script');
-						var date = new Date();
-						enableScript.src =
-							attributeElement.getAttribute('enable') + '?' +
-							date.getTime();
-						document.body.appendChild(enableScript);
-					}
+				}
+				break;
+				
+			case 'magnitude':
+				magnitudeName = element.getAttribute('attribute');
+				break;
+			
+			case 'attributes':
+				for ( var i = 0; i < element.attributes.length; i++ )
+				{
+					attributeNames.push(element.attributes[i].nodeName);
+					attributeDisplayNames.push(element.attributes[i].nodeValue);
 				}
 				break;
 			
@@ -4900,12 +4643,7 @@ function load()
 				break;
 			
 			case 'datasets':
-				datasetNames = new Array();
-				//
-				for ( j = getFirstChild(element); j; j = getNextSibling(j) )
-				{
-					datasetNames.push(j.firstChild.nodeValue);
-				}
+				datasetNames = element.getAttribute('names').split(',');
 				datasets = datasetNames.length;
 				break;
 			
@@ -4976,6 +4714,17 @@ function load()
 		}
 	}
 	
+	// set magnitudeIndex
+	//
+	for ( var i = 0; i < attributeNames.length; i++ )
+	{
+		if ( attributeNames[i] == magnitudeName )
+		{
+			magnitudeIndex = i;
+			break;
+		}
+	}
+	
 	addOptionElements(hueName, hueDefault);
 	setCallBacks();
 	
@@ -5014,26 +4763,78 @@ function loadTreeDOM
 {
 	var newNode = new Node();
 	
-	newNode.name = domNode.getAttribute('name');
-	
-	if ( domNode.getAttribute('href') )
+	for ( var i = 0; i < domNode.attributes.length; i++ )
 	{
-		newNode.href = domNode.getAttribute('href');
-	}
-	
-	if ( hueName )
-	{
-		newNode.hues = new Array();
-	}
-	
-	for ( var i = getFirstChild(domNode); i; i = getNextSibling(i) )
-	{
-		switch ( i.tagName.toLowerCase() )
+		var attributeCurrent = domNode.attributes[i];
+		
+		if ( attributeCurrent.nodeName == 'name' )
 		{
-		case 'node': 
+			newNode.name = attributeCurrent.nodeValue;
+		}
+		else if ( attributeCurrent.nodeName == 'href' )
+		{
+			newNode.href = attributeCurrent.nodeValue;
+		}
+		else
+		{
+			var attributeValues = attributeCurrent.nodeValue.split(',');
+			if
+			(
+				attributeCurrent.nodeName == magnitudeName ||
+				attributeCurrent.nodeName == hueName
+			)
+			{
+				for ( var j = 0; j < attributeValues.length; j++ )
+				{
+					attributeValues[j] = Number(attributeValues[j]);
+				}
+				
+				while ( attributeValues.length < datasets )
+				{
+					attributeValues.push(0);
+				}
+			}
+			
+			newNode.attributes[attributeIndex(attributeCurrent.nodeName)] =
+				attributeValues;
+			
+			if ( attributeCurrent.nodeName == hueName && newNode.hue == null )
+			{
+				newNode.hues = new Array();
+				
+				for ( var j = 0; j < attributeValues.length; j++ )
+				{
+					newNode.hues.push(lerp
+					(
+						attributeValues[j],
+						valueStart,
+						valueEnd,
+						hueStart,
+						hueEnd
+					));
+					
+					if ( newNode.hues[j] < hueStart == hueStart < hueEnd )
+					{
+						newNode.hues[j] = hueStart;
+					}
+					else if ( newNode.hues[j] > hueEnd == hueStart < hueEnd )
+					{
+						newNode.hues[j] = hueEnd;
+					}
+				}
+				
+				newNode.hue = new Tween(newNode.hues[0], newNode.hues[0]);
+			}
+		}
+	}
+	
+	for ( var child = domNode.firstChild; child; child = child.nextSibling )
+	{
+		if ( child.nodeType == 1 )
+		{
 			var newChild = loadTreeDOM
 			(
-				i,
+				child,
 				magnitudeName,
 				hueName,
 				hueStart,
@@ -5043,87 +4844,6 @@ function loadTreeDOM
 			);
 			newChild.parent = newNode;
 			newNode.children.push(newChild);
-			break;
-			
-		default:
-			var attributeName = i.tagName.toLowerCase();
-			var index = attributeIndex(attributeName);
-			//
-			newNode.attributes[index] = new Array();
-			//
-			for ( var j = getFirstChild(i); j; j = getNextSibling(j) )
-			{
-				if ( attributes[index] == undefined )
-				{
-					var x = 5;
-				}
-				if ( attributes[index].list )
-				{
-					newNode.attributes[index].push(new Array());
-					
-					for ( var k = getFirstChild(j); k; k = getNextSibling(k) )
-					{
-						newNode.attributes[index][newNode.attributes[index].length - 1].push(k.firstChild.nodeValue);
-					}
-				}
-				else
-				{
-					var value = j.firstChild ? j.firstChild.nodeValue : '';
-					
-					if ( j.getAttribute('href') )
-					{
-						var target;
-						
-						if ( attributes[index].target )
-						{
-							target = ' target="' + attributes[index].target + '"';
-						}
-						
-						value = '<a href="' + attributes[index].hrefBase + j.getAttribute('href') + '"' + target + '>' + value + '</a>';
-					}
-					
-					newNode.attributes[index].push(value);
-				}
-			}
-			//
-			if ( attributeName == magnitudeName || attributeName == hueName )
-			{
-				for ( j = 0; j < datasets; j++ )
-				{
-					var value = newNode.attributes[index][j] == undefined ? 0 : Number(newNode.attributes[index][j]);
-					
-					newNode.attributes[index][j] = value;
-					
-					if ( attributeName == hueName )
-					{
-						var hue = lerp
-						(
-							value,
-							valueStart,
-							valueEnd,
-							hueStart,
-							hueEnd
-						);
-						
-						if ( hue < hueStart == hueStart < hueEnd )
-						{
-							hue = hueStart;
-						}
-						else if ( hue > hueEnd == hueStart < hueEnd )
-						{
-							hue = hueEnd;
-						}
-						
-						newNode.hues[j] = hue;
-					}
-				}
-				
-				if ( attributeName == hueName )
-				{
-					newNode.hue = new Tween(newNode.hues[0], newNode.hues[0]);
-				}
-			}
-			break;
 		}
 	}
 	
@@ -5338,37 +5058,15 @@ function onKeyDown(event)
 	}
 	else if ( event.keyCode == 83 )
 	{
-		progress += .2;
+		progress += .01;
 	}
 	else if ( event.keyCode == 66 )
 	{
-		progress -= .2;
+		progress -= .01;
 	}
 	else if ( event.keyCode == 70 )
 	{
 		progress = 1;
-	}
-}
-
-function onKeyPress(event)
-{
-	if ( event.keyCode == 38 && datasets > 1 )
-	{
-//		prevDataset();
-		
-		//if ( document.activeElement.id == 'datasets' )
-		{
-			event.preventDefault();
-		}
-	}
-	else if ( event.keyCode == 40 && datasets > 1 )
-	{
-//		nextDataset();
-		
-		//if ( document.activeElement.id == 'datasets' )
-		{
-			event.preventDefault();
-		}
 	}
 }
 
@@ -5378,24 +5076,6 @@ function onKeyUp(event)
 	{
 		search.value = '';
 		onSearchChange();
-	}
-	else if ( event.keyCode == 38 && datasets > 1 )
-	{
-//		prevDataset();
-		
-		//if ( document.activeElement.id == 'datasets' )
-		{
-			event.preventDefault();
-		}
-	}
-	else if ( event.keyCode == 40 && datasets > 1 )
-	{
-//		nextDataset();
-		
-		//if ( document.activeElement.id == 'datasets' )
-		{
-			event.preventDefault();
-		}
 	}
 }
 
@@ -5417,36 +5097,6 @@ function onSearchChange()
 	draw();
 }
 
-function post(url, variable, value, postWindow)
-{
-	var form = document.createElement('form');
-	var input = document.createElement('input');
-	var inputDataset = document.createElement('input');
-	
-	form.appendChild(input);
-	form.appendChild(inputDataset);
-	
-	form.method = "POST";
-	form.action = url;
-	
-	if ( postWindow == undefined )
-	{
-		form.target = '_blank';
-		postWindow = window;
-	}
-	
-	input.type = 'hidden';
-	input.name = variable;
-	input.value = value;
-	
-	inputDataset.type = 'hidden';
-	inputDataset.name = 'dataset';
-	inputDataset.value = currentDataset;
-	
-	postWindow.document.body.appendChild(form);
-	form.submit();
-}
-
 function prevDataset()
 {
 	var newDataset = currentDataset;
@@ -5465,24 +5115,6 @@ function prevDataset()
 	while ( datasetDropDown.options[newDataset].disabled );
 	
 	selectDataset(newDataset);
-}
-
-function radiusDecrease()
-{
-	if ( bufferFactor < .309 )
-	{
-		bufferFactor += .03;
-		updateViewNeeded = true;
-	}
-}
-
-function radiusIncrease()
-{
-	if ( bufferFactor > .041 )
-	{
-		bufferFactor -= .03;
-		updateViewNeeded = true;
-	}
 }
 
 function resetKeyOffset()
@@ -5564,7 +5196,6 @@ function searchResultString(results)
 function setCallBacks()
 {
 	canvas.onselectstart = function(){return false;} // prevent unwanted highlighting
-	options.onselectstart = function(){return false;} // prevent unwanted highlighting
 	document.onmousemove = mouseMove;
 	window.onblur = focusLost;
 	window.onmouseout = focusLost;
@@ -5576,68 +5207,38 @@ function setCallBacks()
 	collapseCheckBox = document.getElementById('collapse');
 	collapseCheckBox.checked = collapse;
 	collapseCheckBox.onclick = handleResize;
-	collapseCheckBox.onmousedown = suppressEvent;
 	maxAbsoluteDepthText = document.getElementById('maxAbsoluteDepth');
 	maxAbsoluteDepthButtonDecrease = document.getElementById('maxAbsoluteDepthDecrease');
 	maxAbsoluteDepthButtonIncrease = document.getElementById('maxAbsoluteDepthIncrease');
 	maxAbsoluteDepthButtonDecrease.onclick = maxAbsoluteDepthDecrease;
 	maxAbsoluteDepthButtonIncrease.onclick = maxAbsoluteDepthIncrease;
-	maxAbsoluteDepthButtonDecrease.onmousedown = suppressEvent;
-	maxAbsoluteDepthButtonIncrease.onmousedown = suppressEvent;
 	fontSizeText = document.getElementById('fontSize');
 	fontSizeButtonDecrease = document.getElementById('fontSizeDecrease');
 	fontSizeButtonIncrease = document.getElementById('fontSizeIncrease');
 	fontSizeButtonDecrease.onclick = fontSizeDecrease;
 	fontSizeButtonIncrease.onclick = fontSizeIncrease;
-	fontSizeButtonDecrease.onmousedown = suppressEvent;
-	fontSizeButtonIncrease.onmousedown = suppressEvent;
-	radiusButtonDecrease = document.getElementById('radiusDecrease');
-	radiusButtonIncrease = document.getElementById('radiusIncrease');
-	radiusButtonDecrease.onclick = radiusDecrease;
-	radiusButtonIncrease.onclick = radiusIncrease;
-	radiusButtonDecrease.onmousedown = suppressEvent;
-	radiusButtonIncrease.onmousedown = suppressEvent;
 	maxAbsoluteDepth = 0;
 	backButton = document.getElementById('back');
 	backButton.onclick = navigateBack;
-	backButton.onmousedown = suppressEvent;
 	forwardButton = document.getElementById('forward');
 	forwardButton.onclick = navigateForward;
-	forwardButton.onmousedown = suppressEvent;
 	snapshotButton = document.getElementById('snapshot');
 	snapshotButton.onclick = snapshot;
-	snapshotButton.onmousedown = suppressEvent;
+	details = document.getElementById('details');
 	detailsName = document.getElementById('detailsName');
 	detailsExpand = document.getElementById('detailsExpand');
 	detailsInfo = document.getElementById('detailsInfo');
 	search = document.getElementById('search');
 	search.onkeyup = onSearchChange;
-	search.onmousedown = suppressEvent;
 	searchResults = document.getElementById('searchResults');
 	useHueDiv = document.getElementById('useHueDiv');
 	linkButton = document.getElementById('linkButton');
 	linkButton.onclick = showLink;
-	linkButton.onmousedown = suppressEvent;
 	linkText = document.getElementById('linkText');
 	linkText.onblur = hideLink;
-	linkText.onmousedown = suppressEvent;
 	hide(linkText);
-	var helpButton = document.getElementById('help');
-	helpButton.onmousedown = suppressEvent;
-	var searchClear = document.getElementById('searchClear');
-	searchClear.onmousedown = suppressEvent;
-	if ( datasets > 1 )
-	{
-		datasetDropDown.onmousedown = suppressEvent;
-		var prevDatasetButton = document.getElementById('prevDataset');
-		prevDatasetButton.onmousedown = suppressEvent;
-		var nextDatasetButton = document.getElementById('nextDataset');
-		nextDatasetButton.onmousedown = suppressEvent;
-		var lastDatasetButton = document.getElementById('lastDataset');
-		lastDatasetButton.onmousedown = suppressEvent;
-	}
 	
-	image = document.getElementById('hiddenImage');
+	/*image = document.getElementById('hiddenImage');
 	
 	if ( image.complete )
 	{
@@ -5649,14 +5250,7 @@ function setCallBacks()
 		{
 			hiddenPattern = context.createPattern(image, 'repeat');
 		}
-	}
-	
-	var loadingImageElement = document.getElementById('loadingImage');
-	
-	if ( loadingImageElement )
-	{
-		loadingImage = loadingImageElement.src;
-	}
+	}*/
 }
 
 function selectDataset(newDataset)
@@ -5705,11 +5299,6 @@ function selectNode(newNode)
 
 function setFocus(node)
 {
-	if ( node == focusNode )
-	{
-//		return;
-	}
-	
 	focusNode = node;
 	
 	if ( node.href )
@@ -5724,55 +5313,24 @@ function setFocus(node)
 	
 	var table = '<table>';
 	
-	table += '<tr><td></td></tr>';
-	
 	for ( var i = 0; i < node.attributes.length; i++ )
 	{
-		if ( attributes[i].displayName && node.attributes[i] != undefined )
+		if ( node.attributes[i] != undefined )
 		{
-			var index = node.attributes[i].length == 1 && attributes[i].mono ? 0 : currentDataset;
+			var value;
 			
-			if ( typeof node.attributes[i][currentDataset] == 'number' || node.attributes[i][index] != undefined && node.attributes[i][currentDataset] != '' )
+			if ( node.attributes[i].length > 1 )
 			{
-				var value = node.attributes[i][index];
-				
-				if ( attributes[i].listNode != undefined )
-				{
-					value =
-						'<a href="" onclick="showList(' +
-						attributeIndex(attributes[i].listNode) + ',' + i +
-						',false);return false;" title="Show list">' +
-						value + '</a>';
-				}
-				else if ( attributes[i].listAll != undefined )
-				{
-					value =
-						'<a href="" onclick="showList(' +
-						attributeIndex(attributes[i].listAll) + ',' + i +
-						',true);return false;" title="Show list">' +
-						value + '</a>';
-				}
-				else if ( attributes[i].dataNode != undefined && dataEnabled )
-				{
-					value =
-						'<a href="" onclick="showData(' +
-						attributeIndex(attributes[i].dataNode) + ',' + i +
-						',false);return false;" title="Show data">' +
-						value + '</a>';
-				}
-				else if ( attributes[i].dataAll != undefined && dataEnabled )
-				{
-					value =
-						'<a href="" onclick="showData(' +
-						attributeIndex(attributes[i].dataAll) + ',' + i +
-						',true);return false;" title="Show data">' +
-						value + '</a>';
-				}
-				
-				table +=
-					'<tr><td><strong>' + attributes[i].displayName + ':</strong></td><td>' +
-					value + '</td></tr>';
+				value = node.attributes[i][currentDataset]
 			}
+			else
+			{
+				value = node.attributes[i][0];
+			}
+			
+			table +=
+				'<tr><td><strong>' + attributeDisplayNames[i] + ':</strong></td><td>' +
+				value + '</td></tr>';
 		}
 	}
 	
@@ -5780,6 +5338,7 @@ function setFocus(node)
 	detailsInfo.innerHTML = table;
 	
 	detailsExpand.disabled = !focusNode.hasChildren() || focusNode == selectedNode;
+//	document.body.style.cursor='ew-resize';
 }
 
 function setSelectedNode(newNode)
@@ -5795,139 +5354,7 @@ function setSelectedNode(newNode)
 	
 	selectedNodeLast = selectedNode;
 	selectedNode = newNode;
-	
-	//if ( focusNode != selectedNode )
-	{
-		setFocus(selectedNode);
-	}
-}
-
-function waitForData(dataWindow, target, title, time, postUrl, postVar)
-{
-	if ( nodeData.length == target )
-	{
-		if ( postUrl != undefined )
-		{
-			for ( var i = 0; i < nodeData.length; i++ )
-			{
-				nodeData[i] = nodeData[i].replace(/\n/g, ',');
-			}
-			
-			var postString = nodeData.join('');
-			postString = postString.slice(0, -1);
-			
-			dataWindow.document.body.removeChild(dataWindow.document.getElementById('loading'));
-			document.body.removeChild(document.getElementById('data'));
-			
-			post(postUrl, postVar, postString, dataWindow);
-		}
-		else
-		{
-			//dataWindow.document.body.removeChild(dataWindow.document.getElementById('loading'));
-			//document.body.removeChild(document.getElementById('data'));
-			
-			dataWindow.document.open();
-			dataWindow.document.write('<pre>' + nodeData.join('') + '</pre>');
-			dataWindow.document.close();
-		}
-		
-		dataWindow.document.title = title; // replace after document.write()
-	}
-	else
-	{
-		var date = new Date();
-		
-		if ( date.getTime() - time > 10000 )
-		{
-			dataWindow.document.body.removeChild(dataWindow.document.getElementById('loading'));
-			document.body.removeChild(document.getElementById('data'));
-			dataWindow.document.body.innerHTML =
-				'Timed out loading supplemental files for:<br/>' + document.location;
-		}
-		else
-		{
-			setTimeout(function() {waitForData(dataWindow, target, title, time, postUrl, postVar);}, 100);
-		}
-	}
-}
-
-function data(newData)
-{
-	nodeData.push(newData);
-}
-
-function enableData()
-{
-	dataEnabled = true;
-}
-
-function showData(indexData, indexAttribute, summary)
-{
-	var dataWindow = window.open('', '_blank');
-	var title = 'Krona - ' + attributes[indexAttribute].displayName + ' - ' + focusNode.name;
-	dataWindow.document.title = title;
-	
-	nodeData = new Array();
-	
-	if ( dataWindow && dataWindow.document && dataWindow.document.body != null )
-	{
-		//var loadImage = document.createElement('img');
-		//loadImage.src = "file://localhost/Users/ondovb/Krona/KronaTools/img/loading.gif";
-		//loadImage.id = "loading";
-		//loadImage.alt = "Loading...";
-		//dataWindow.document.body.appendChild(loadImage);
-		dataWindow.document.body.innerHTML =
-			'<img id="loading" src="' + loadingImage + '" alt="Loading..."></img>';
-	}
-	
-	var scripts = document.createElement('div');
-	scripts.id = 'data';
-	document.body.appendChild(scripts);
-	
-	var files = focusNode.getData(indexData, summary);
-	
-	var date = new Date();
-	var time = date.getTime();
-	
-	for ( var i = 0; i < files.length; i++ )
-	{
-		var script = document.createElement('script');
-		script.src = files[i] + '?' + time;
-		scripts.appendChild(script);
-	}
-	
-	waitForData(dataWindow, files.length, title, time, attributes[indexAttribute].postUrl, attributes[indexAttribute].postVar);
-	
-	return false;
-}
-
-function showList(indexList, indexAttribute, summary)
-{
-	var list = focusNode.getList(indexList, summary);
-	
-	if ( attributes[indexAttribute].postUrl != undefined )
-	{
-		post(attributes[indexAttribute].postUrl, attributes[indexAttribute].postVar, list.join(','));
-	}
-	else
-	{
-		var dataWindow = window.open('', '_blank');
-		
-		if ( true || navigator.appName == 'Microsoft Internet Explorer' ) // :(
-		{
-			dataWindow.document.open();
-			dataWindow.document.write('<pre>' + list.join('\n') + '</pre>');
-			dataWindow.document.close();
-		}
-		else
-		{
-			var pre = document.createElement('pre');
-			dataWindow.document.body.appendChild(pre);
-			pre.innerHTML = list;
-		}
-		
-		dataWindow.document.title = 'Krona - ' + attributes[indexAttribute].displayName + ' - ' + focusNode.name;
-	}
+	setFocus(selectedNode);
 }
 
 function snapshot()
@@ -5961,24 +5388,6 @@ function snapshot()
 		'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg),
 		'_blank'
 	);
-/*	var data = window.open('data:text/plain;charset=utf-8,hello', '_blank');
-	var data = window.open('', '_blank');
-	data.document.open('text/plain');
-	data.document.write('hello');
-	data.document.close();
-	var button = document.createElement('input');
-	button.type = 'button';
-	button.value = 'save';
-	button.onclick = save;
-	data.document.body.appendChild(button);
-//	snapshotWindow.document.write(svg);
-//	snapshotWindow.document.close();
-*/	
-}
-
-function save()
-{
-	alert(document.body.innerHTML);
 }
 
 function spacer()
@@ -5991,12 +5400,6 @@ function spacer()
 	{
 		return '   ';
 	}
-}
-
-function suppressEvent(e)
-{
-	e.cancelBubble = true;
-	if (e.stopPropagation) e.stopPropagation();
 }
 
 function svgFooter()
@@ -6041,20 +5444,15 @@ x="0" y="0" width="' + patternWidth + '" height="' + patternWidth + '">\
 ';
 }
 
-function svgText(text, x, y, anchor, bold, color)
+function svgText(text, x, y, anchor, bold)
 {
 	if ( typeof(anchor) == 'undefined' )
 	{
 		anchor = 'start';
 	}
 	
-	if ( color == undefined )
-	{
-		color = 'black';
-	}
-	
 	return '<text x="' + x + '" y="' + y +
-		'" style="font-color:' + color + ';font-weight:' + (bold ? 'bold' : 'normal') +
+		'" style="font-weight:' + (bold ? 'bold' : 'normal') +
 		'" text-anchor="' + anchor + '">' + text + '</text>';
 }
 
@@ -6062,7 +5460,7 @@ function toggleKeys()
 {
 	if ( showKeys )
 	{
-		keyControl.value = '…';
+		keyControl.value = 'â€¦';
 		showKeys = false;
 	}
 	else
@@ -6138,7 +5536,7 @@ function update()
 	
 	if ( progress != progressLast )
 	{
-		tweenFactor =// progress;
+		tweenFactor =
 			(1 / (1 + Math.exp(-tweenCurvature * (progress - .5))) - .5) /
 			(tweenMax - .5) / 2 + .5;
 		
