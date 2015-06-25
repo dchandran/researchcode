@@ -1,5 +1,5 @@
-install.packages("cluster")
-install.packages("fpc")
-install.packages("seqinr")    
+install.packages("cluster",repos='http://cran.us.r-project.org')
+install.packages("fpc",repos='http://cran.us.r-project.org')
+install.packages("seqinr",repos='http://cran.us.r-project.org')
 source("http://bioconductor.org/biocLite.R")
 biocLite()

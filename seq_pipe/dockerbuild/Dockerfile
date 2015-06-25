@@ -9,10 +9,10 @@ RUN git clone https://github.com/dchandran/cdhit.git
 RUN cd cdhit && make all && make install
 RUN cd / && git clone https://github.com/dchandran/velvet.git
 RUN cd velvet && make
-RUN cd / && mv -R velvet /usr/share/
+RUN cd / && mv velvet /usr/share/
 RUN ln -s /usr/share/velvet/velveth /usr/bin/velveth
 RUN ln -s /usr/share/velvet/velvetg /usr/bin/velvetg
 RUN git clone https://github.com/tseemann/VelvetOptimiser.git
 RUN cd VelvetOptimiser
 COPY install_packages.r /install_packages.r
-RUN R CMD BATCH /install_packages.r
+RUN R < install_packages.r --no-save
