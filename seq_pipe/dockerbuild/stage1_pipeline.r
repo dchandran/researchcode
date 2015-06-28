@@ -55,12 +55,14 @@ for (i in 1:n) {
 
 
 ##STEP 4 cont'd: for each cluster, create contigs
-velvetcmd = "~/VelvetOptimiser/VelvetOptimiser.pl"
-velvetargs = "-t 2 -s 27 -e 41 -f '-short -fasta ~/temp.fasta'"
+velvetcmd = "perl"
+velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/temp.fasta'"
 for (i in 1:numClusters) {
     write.fasta(fastaSeqs[[i]], fastaNames[[i]], "temp.fasta")
     ret = system2(velvetcmd, velvetargs, stdout=TRUE, stderr=TRUE)
+    m = regexpr("Assembly output files are in the following directory:.*\\s*.*/(auto_data_[\d+])", ret, perl=TRUE)
 }
+
 
 save.image(".RData")
 
