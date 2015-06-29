@@ -61,7 +61,7 @@ velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -
 pwd = getwd()
 
 #For parallel proc
-callVelvetPar = function(i) {
+callVelvetPar = function(i, pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs) {
   
   wd = paste(pwd, "/iter_", i, sep="")
   system2("mkdir", wd)
@@ -80,11 +80,11 @@ callVelvetPar = function(i) {
     contig_file = paste(ret[j],"/contigs.fa", sep="")
     write(contig_file, stdout())
   }
+  return (True)
 }
 
-m = matrix(1:numClusters, nrow=1)
 cl = makeCluster(4, outfile="/tmp/output")
-parApply(cl, m, 4, callVelvetPar)
+parApply(cl, 1:numClusters, callVelvetPar, MoreArgs=c(pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs))
 stopCluster(cl)
 
 save.image(".RData")
