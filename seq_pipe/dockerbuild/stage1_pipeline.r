@@ -36,7 +36,7 @@ plot(explainedVar)
 
 #STEP 3 cont'd: Final clustering
 numClusters = 50
-finalClusters = kmeans( kmers, numClusters , 100);
+finalClusters = kmeans( kmers, numClusters , 100)
 
 #STEP 4: Group FASTA sequences
 fastaSeqs = list()
