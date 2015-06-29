@@ -84,7 +84,7 @@ callVelvetPar = function(i, pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs) {
 }
 
 cl = makeCluster(4, outfile="/tmp/output")
-parApply(cl, 1:numClusters, callVelvetPar, MoreArgs=c(pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs))
+parLapply(cl, 1:numClusters, callVelvetPar, MoreArgs=c(pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs))
 stopCluster(cl)
 
 save.image(".RData")
