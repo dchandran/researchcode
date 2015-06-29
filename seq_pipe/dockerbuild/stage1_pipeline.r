@@ -10,6 +10,7 @@
 library("seqinr")
 library("cluster")
 library("fpc")
+library("parallel")
 
 #STEP 1: load fasta and count k-mers
 fas <- read.fasta(file = "reads.fasta")
@@ -57,12 +58,34 @@ for (i in 1:n) {
 ##STEP 4 cont'd: for each cluster, create contigs
 velvetcmd = "perl"
 velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/temp.fasta'"
-for (i in 1:numClusters) {
-    write.fasta(fastaSeqs[[i]], fastaNames[[i]], "temp.fasta")
-    ret = system2(velvetcmd, velvetargs, stdout=TRUE, stderr=TRUE)
-    m = regexpr("Assembly output files are in the following directory:.*\\s*.*/(auto_data_[\d+])", ret, perl=TRUE)
+pwd = getwd()
+
+#For parallel proc
+callVelvetPar = function(i) {
+  
+  wd = paste(pwd, "/iter_", i, sep="")
+  system2("mkdir", wd)
+  setwd(wd)
+
+  write.fasta(fastaSeqs[[i]], fastaNames[[i]], "temp.fasta")
+  ret = system2(velvetcmd, velvetargs, stdout=TRUE, stderr=TRUE)
+  j = 0
+  for (i in 1:length(ret)) {
+    if (ret[i] == "Assembly output files are in the following directory:") {
+      j = i + 1
+      break;
+    }
+  }
+  if (j > 0) {
+    contig_file = paste(ret[j],"/contigs.fa", sep="")
+    write(contig_file, stdout())
+  }
 }
 
+m = matrix(1:numClusters, nrow=1)
+cl = makeCluster(4, outfile="/tmp/output")
+parApply(cl, m, 4, callVelvetPar)
+stopCluster(cl)
 
 save.image(".RData")
 
