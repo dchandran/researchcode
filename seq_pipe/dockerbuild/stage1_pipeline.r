@@ -97,7 +97,7 @@ save.image(".RData")
 callPythonPar = function(i, contigs) {
   filename = contigs[[i]]
   cmd = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
-  system(cmd, "")
+  system(cmd)
 }
 
 cl = makeCluster(4, outfile="/tmp/output")
