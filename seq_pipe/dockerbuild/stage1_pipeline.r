@@ -93,9 +93,14 @@ stopCluster(cl)
 
 save.image(".RData")
 
-#print the contig file names
-for (i in 1:length(contigs)) { 
-  cat(contigs[[i]])
-  cat("\n") 
+#For parallel proc python script
+callPythonPar = function(i, contigs) {
+  filename = contigs[[i]]
+  cmd = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
+  system(cmd, "")
 }
+
+cl = makeCluster(4, outfile="/tmp/output")
+parLapply(cl, 1:length(contigs), callPythonPar, contigs)
+stopCluster(cl)
 
