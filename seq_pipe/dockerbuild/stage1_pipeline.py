@@ -17,7 +17,7 @@ for line in lines:
         os.system("prodigal -i " + contig_file + " -f gff -p meta -o " + file_prefix + ".gff")
 
         #convert the gff output from prodigal to fasta sequences 
-        os.system("bedtools getfasta -fi " + contig_file +  " -bed prod.gff -fo " + file_prefix + ".fa")
+        os.system("bedtools getfasta -fi " + contig_file +  " -bed " + file_prefix + ".gff -fo " + file_prefix + ".fa")
 
         #cluster all the sequences to extract unique CDS
         os.system("cd-hit -i " + file_prefix + ".fa -o " +  file_prefix + ".fasta")
