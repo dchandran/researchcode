@@ -93,7 +93,9 @@ stopCluster(cl)
 
 save.image(".RData")
 
+#print the contig file names
 for (i in 1:length(contigs)) { 
-  print(contigs[[i]]); 
+  cat(contigs[[i]])
+  cat("\n") 
 }
 
