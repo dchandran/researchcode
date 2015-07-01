@@ -96,8 +96,10 @@ save.image(".RData")
 #For parallel proc python script
 callPythonPar = function(i, contigs) {
   filename = contigs[[i]]
-  cmd = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
-  system(cmd)
+  cmd1 = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
+  cmd2 = paste("blastx -outfmt '\"6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids\"' -db env_nr -max_target_seqs 10 -query prod",i,".fasta > blast.",i,".out",sep="")
+  system(cmd1)
+  system(cmd2)
 }
 
 cl = makeCluster(4, outfile="/tmp/output")
