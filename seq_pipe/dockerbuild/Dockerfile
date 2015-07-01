@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y python3 python3-pip r-base git gcc binutils make linux-source build-essential bedtools blast2
+RUN apt-get install -y python3 python3-pip r-base git gcc binutils make linux-source build-essential bedtools blast2 wget
 RUN pip3 install numpy
 RUN pip3 install scipy
 RUN git clone https://github.com/dchandran/Prodigal.git
@@ -17,7 +17,5 @@ RUN cd VelvetOptimiser
 COPY install_packages.r /install_packages.r
 COPY stage1_pipeline.r /stage1_pipeline.r
 COPY reads.fasta /reads.fasta
-COPY get_dbs.sh /get_dbs.sh
 RUN mkdir /blastdb
-RUN cd /blastdb && source /get_dbs.sh
-RUN R < install_packages.r --no-save
+COPY get_dbs.sh /blastdb/get_dbs.sh

@@ -15,7 +15,7 @@ do
     do
        cmd="wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/nr.$i$j.tar.gz"
        eval $cmd
-       cmd="tar xzf nt.$i$j.tar.gz"
+       cmd="tar xzf nr.$i$j.tar.gz"
        eval $cmd
     done
 done
