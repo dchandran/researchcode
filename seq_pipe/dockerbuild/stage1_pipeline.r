@@ -97,7 +97,7 @@ save.image(".RData")
 callPythonPar = function(i, contigs) {
   filename = contigs[[i]]
   cmd1 = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
-  cmd2 = paste("blastx -outfmt '\"6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids\"' -db env_nr -max_target_seqs 10 -query prod",i,".fasta > blast.",i,".out",sep="")
+  cmd2 = paste("blastx -outfmt '6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids' -db blastdb/env_nr -max_target_seqs 10 -query prod",i,".fasta > blast.",i,".out",sep="")
   system(cmd1)
   system(cmd2)
 }
