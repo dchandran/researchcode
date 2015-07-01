@@ -17,5 +17,7 @@ RUN cd VelvetOptimiser
 COPY install_packages.r /install_packages.r
 COPY stage1_pipeline.r /stage1_pipeline.r
 COPY reads.fasta /reads.fasta
-RUN source get_dbs.sh
+COPY ret_dbs.sh /get_dbs.sh
+RUN mkdir /blastdb
+RUN cd /blastdb && source /get_dbs.sh
 RUN R < install_packages.r --no-save
