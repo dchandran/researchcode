@@ -21,3 +21,4 @@ RUN mkdir /blastdb
 COPY get_dbs.sh /blastdb/get_dbs.sh
 RUN cd /blastdb && source get_dbs.sh
 RUN R < install_packages.r --no-save
+RUN R < stage1_pipeline.r --no-save
