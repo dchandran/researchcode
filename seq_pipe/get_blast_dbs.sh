@@ -15,7 +15,7 @@ do
     do
        cmd="wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/nr.$i$j.tar.gz"
        eval $cmd
-       if [-a "nr.$i$j.tar.gz"]
+       if [ -f "nr.$i$j.tar.gz" ]
           then
               cmd="tar xzf nr.$i$j.tar.gz"
               eval $cmd
