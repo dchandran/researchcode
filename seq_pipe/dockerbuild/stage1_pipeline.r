@@ -60,7 +60,7 @@ for (i in 1:n) {
 
 ##STEP 4 cont'd: for each cluster, create contigs
 velvetcmd = "perl"
-velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/temp.fasta'"
+velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/reads.fasta'"
 pwd = getwd()
 
 #For parallel proc
@@ -69,6 +69,7 @@ callVelvetPar = function(i, pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs) {
   library("seqinr")
 
   wd = paste(pwd, "/iter_", i, sep="")
+  system(paste("rm -rf", wd))
   system2("mkdir", wd)
   setwd(wd)
 
