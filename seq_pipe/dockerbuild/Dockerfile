@@ -20,4 +20,3 @@ COPY install_packages.r /install_packages.r
 COPY stage1_pipeline.r /stage1_pipeline.r
 COPY reads.fasta /reads.fasta
 RUN R < install_packages.r --no-save
-RUN R < stage1_pipeline.r --no-save
