@@ -60,7 +60,7 @@ for (i in 1:n) {
 
 ##STEP 4 cont'd: for each cluster, create contigs
 velvetcmd = "perl"
-velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/temp.fasta'"
+velvetargs = "~/VelvetOptimiser/VelvetOptimiser.pl -t 2 -s 27 -e 41 -f '-short -fasta ~/reads.fasta'"
 pwd = getwd()
 
 #For parallel proc
@@ -69,6 +69,7 @@ callVelvetPar = function(i, pwd, fastaSeqs, fastaNames, velvetcmd, velvetargs) {
   library("seqinr")
 
   wd = paste(pwd, "/iter_", i, sep="")
+  system(paste("rm -rf", wd))
   system2("mkdir", wd)
   setwd(wd)
 
@@ -97,7 +98,7 @@ save.image(".RData")
 callPythonPar = function(i, contigs) {
   filename = contigs[[i]]
   cmd1 = paste("echo ", filename, " | python3 stage1_pipeline.py prod", i, sep="")
-  cmd2 = paste("blastx -outfmt '6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids' -db blastdb/env_nr -max_target_seqs 10 -query prod",i,".fasta > blast.",i,".out",sep="")
+  cmd2 = paste("blastx -outfmt '6 qacc qlen sacc slen mismatch bitscore length pident evalue staxids' -db /blastdb/nr -max_target_seqs 10 -query prod",i,".fasta > blast.",i,".out",sep="")
   system(cmd1)
   system(cmd2)
 }
