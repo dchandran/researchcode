@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>EaselJS: Protein Chomp</title>
+
+	<script src="../third-party/easeljs/easeljs-NEXT.combined.js"></script>
+	<!-- We also provide hosted minified versions of all CreateJS libraries.
+	  http://code.createjs.com -->
+
+<script id="editable">
+	var stage;
+	var percentActiveMembranes = 0.0;
+	function init() {
+
+		// create a new stage and point it at our canvas:
+		stage = new createjs.Stage(document.getElementById("testCanvas"));
+
+		 var g = new createjs.Shape();
+		 g.graphics.setStrokeStyle(1);
+		 g.graphics.beginStroke("#888888");
+		 g.graphics.beginFill("#888888");
+		 g.graphics.drawRect(0,100,stage.canvas.width, 30);
+		 stage.addChild(g);
+
+		var proteinChompSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["protein_chomp.png"],
+				"frames": {"regX": 0, "height": 51, "count": 17, "regY": 0, "width": 65},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"active": [0, 15, "active", 0.5],
+					"bind": [0, 8, "bound", 0.7],
+					"bound": 8,
+					"inert": 16,
+				}
+			});
+
+		var membraneChompSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["membrane_protein_chomp.png"],
+				"frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},				
+				"animations": {
+					"active": [0, 9, "active", 0.5],
+					"inert": 10
+				}
+			});
+
+		var n = 5;
+		var receptors = [];
+		var recp;
+		for (var i=0; i < n; ++i) {
+			recp = new createjs.Sprite(membraneChompSheet, "inert");
+			recp.bounds = {left: 0, right: stage.canvas.width, bottom: 70, top: 70};
+			recp.x = recp.bounds.left + (recp.bounds.right - recp.bounds.left)*(Math.random());
+			recp.y = recp.bounds.top + (recp.bounds.bottom - recp.bounds.top)*(Math.random());
+			recp.scaleX = recp.scaleY = 1;
+			recp.velX = 2*(Math.random() - 0.5);
+			recp.velY = 0;
+			recp.velTheta = 0;
+
+			// Add Grant to the stage, and add it as a listener to Ticker to get updates each frame.
+			stage.addChild(recp);
+			receptors.push(recp);
+		}
+
+		n = 20;
+		var tfs = [];
+		var tf;
+		for (var i=0; i < n; ++i) {
+			tf = new createjs.Sprite(proteinChompSheet, "inert");
+			tf.bounds = {left: 0, right: stage.canvas.width, bottom: 260, top: 160};
+			tf.x = tf.bounds.left + (tf.bounds.right - tf.bounds.left)*(Math.random());
+			tf.y = tf.bounds.top + (tf.bounds.bottom - tf.bounds.top)*(Math.random());
+			tf.scaleX = tf.scaleY = 1;
+			tf.rotation = 360*Math.random();
+			tf.velX = 0.7*(Math.random() - 0.5);
+			tf.velY = 0.7*(Math.random() - 0.5);
+			tf.velTheta = (Math.random() - 0.5);
+			
+
+			// Add Grant to the stage, and add it as a listener to Ticker to get updates each frame.
+			stage.addChild(tf);			
+			tfs.push(tf);
+		}
+
+		tick = function(event) {
+			var tf, rec;
+			var percentActiveTFs = percentActiveMembranes;
+
+			for (var i=0; i < receptors.length; ++i) {
+				rec = receptors[i];
+
+				if (rec.currentAnimation !== 'active' && i < percentActiveMembranes*receptors.length) {
+					rec.gotoAndPlay('active');
+				}
+
+				rec.x = rec.x + rec.velX;
+				rec.y = rec.y + rec.velY;
+
+				if (rec.x > rec.bounds.right) {
+					rec.x = rec.bounds.right;
+					rec.velX = - rec.velX;
+				}
+				if (rec.x < rec.bounds.left) {
+					rec.x = rec.bounds.left;
+					rec.velX = - rec.velX;
+				}
+				if (rec.y < rec.bounds.top) {
+					rec.y = rec.bounds.top;
+					rec.velY = - rec.velY;
+				}
+				if (rec.y > rec.bounds.bottom) {
+					rec.y = rec.bounds.bottom;
+					rec.velY = - rec.velY;
+				}
+			}
+
+			for (var i=0; i < tfs.length; ++i) {				
+				tf = tfs[i];
+
+				if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
+					tf.gotoAndPlay('active');
+					tf.bounds.bottom = stage.canvas.height;
+				}
+
+				tf.rotation = tf.rotation + tf.velTheta;
+				if (tf.rotation < 0) tf.rotation = 360;
+				if (tf.rotation > 360) tf.rotation = 0;
+
+				if (Math.random() < 0.01) {
+					tf.velTheta = Math.random() - 0.5;
+				}
+
+				tf.x = tf.x + tf.velX;
+				tf.y = tf.y + tf.velY;
+
+				if (tf.x > tf.bounds.right) {
+					tf.x = tf.bounds.right;
+					tf.velX = - tf.velX;
+				}
+				if (tf.x < tf.bounds.left) {
+					tf.x = tf.bounds.left;
+					tf.velX = - tf.velX;
+				}
+				if (tf.y < tf.bounds.top) {
+					tf.y = tf.bounds.top;
+					tf.velY = - tf.velY;
+				}
+				if (tf.y > tf.bounds.bottom) {
+					tf.y = tf.bounds.bottom;
+					tf.velY = - tf.velY;
+				}
+			}
+		};
+
+		createjs.Ticker.timingMode = createjs.Ticker.RAF;
+		createjs.Ticker.addEventListener("tick", stage);
+		createjs.Ticker.addEventListener("tick", tick);
+	}
+
+</script>
+</head>
+
+<body onload="init();">
+
+<div>
+	<canvas id="testCanvas" width="800" height="600"></canvas>
+</div>
+</body>
+</html>
