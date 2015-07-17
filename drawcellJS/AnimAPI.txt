@@ -1,0 +1,44 @@
+Anim API
+========
+
+primitives
+----------
+var - name, value
+geom - name, copies, parent, movement
+
+creating scene
+--------------
+createCompartment(name, geom)
+createMembraneMolecule(name, geom, cell, copies)
+createDiffusedMolecule(name, geom, cell, copies)
+createRelationship(indep, dep, func)
+   only allowed between: geom copies or var values
+createEffect(name, func)
+   name must be: geom copies or var values
+   e.g. promoter glows when on
+
+updating scene
+--------------
+updateCopies(name, copies)
+updateVar(name, value)
+
+events
+------
+varChanged(name, value)
+copiesChanged(name, value)
+
+
+Code API
+========
+
+eqns = autoGenDiffEqs(moduleName)
+autoGen
+
+
+
+
+
+
+
+
+
