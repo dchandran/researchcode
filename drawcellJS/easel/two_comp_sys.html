@@ -15,13 +15,23 @@
 
 		// create a new stage and point it at our canvas:
 		stage = new createjs.Stage(document.getElementById("testCanvas"));
+		
+		var bilayerSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["bilayer.png"],
+				"frames": {"regX": 0, "height": 53, "count": 1, "regY": 0, "width": 9},
+				"animations": {
+					"normal": 0
+				}
+			});
 
-		 var g = new createjs.Shape();
-		 g.graphics.setStrokeStyle(1);
-		 g.graphics.beginStroke("#888888");
-		 g.graphics.beginFill("#888888");
-		 g.graphics.drawRect(0,100,stage.canvas.width, 30);
-		 stage.addChild(g);
+		var bilayer;
+		for (var i=0; i <= stage.canvas.width; i = i + 9) {
+			bilayer = new createjs.Sprite(bilayerSheet, "normal");
+			bilayer.x = i;
+			bilayer.y = 100;
+			stage.addChild(bilayer);
+		}
 
 		var proteinChompSheet = new createjs.SpriteSheet({
 				framerate: 30,
