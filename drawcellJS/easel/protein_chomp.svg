@@ -163,6 +163,38 @@
          stdDeviation="0.32951796"
          id="feGaussianBlur3780-49" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter6062">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.1349067"
+         id="feGaussianBlur6064" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter6074"
+       x="-0.21883328"
+       width="1.4376666"
+       y="-0.28446123"
+       height="1.5689225">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="5.9267347"
+         id="feGaussianBlur6076" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter6086"
+       x="-0.31847227"
+       width="1.6369445"
+       y="-0.41398187"
+       height="1.8279637">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="8.6252905"
+         id="feGaussianBlur6088" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -172,16 +204,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="63.191812"
-     inkscape:cy="839.44421"
+     inkscape:cx="242.49389"
+     inkscape:cy="884.90107"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1568"
-     inkscape:window-height="862"
-     inkscape:window-x="350"
-     inkscape:window-y="254"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1173"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -190,7 +222,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

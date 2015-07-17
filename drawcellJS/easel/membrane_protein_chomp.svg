@@ -110,6 +110,50 @@
          stdDeviation="0.32951796"
          id="feGaussianBlur3780-4-5" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter5980"
+       x="-0.33113286"
+       width="1.6622657"
+       y="-0.13792467"
+       height="1.2758493">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="6.8986013"
+         id="feGaussianBlur5982" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter5988"
+       x="-0.48148507"
+       width="1.9629701"
+       y="-0.20054993"
+       height="1.4010999">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="10.030939"
+         id="feGaussianBlur5990" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter5996"
+       x="-0.40809888"
+       width="1.8161978"
+       y="-0.16998284"
+       height="1.3399657">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="8.50206"
+         id="feGaussianBlur5998" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter6000">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.3051408"
+         id="feGaussianBlur6002" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -118,15 +162,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="257.33666"
-     inkscape:cy="708.17789"
+     inkscape:zoom="2.8"
+     inkscape:cx="167.91083"
+     inkscape:cy="584.2151"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1173"
-     inkscape:window-x="0"
+     inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
@@ -137,7 +181,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
