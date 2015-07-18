@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>EaselJS: Protein Chomp</title>
+
+	<script src="../third-party/easeljs/easeljs-NEXT.combined.js"></script>
+	<!-- We also provide hosted minified versions of all CreateJS libraries.
+	  http://code.createjs.com -->
+
+<script id="editable">
+	var stage;
+	var percentActiveMembranes = 0.0;
+	function init() {
+
+		// create a new stage and point it at our canvas:
+		stage = new createjs.Stage(document.getElementById("testCanvas"));
+		
+		var dnaSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["DNA.png"],
+				"frames": {"regX": 0, "height": 50, "count": 1, "regY": 0, "width": 90},
+				"animations": {
+					"normal": 0
+				}
+			});
+
+		var dnaStrand;
+		for (var i=0; i <= stage.canvas.width; i = i + 90*0.3) {
+			dnaStrand = new createjs.Sprite(dnaSheet, "normal");
+			dnaStrand.x = i;
+			dnaStrand.y = 100;
+			dnaStrand.scaleY = 0.3;
+			dnaStrand.scaleX = 0.3;
+			stage.addChild(dnaStrand);
+		}
+
+		var mrnaSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["mrna_wiggle.png"],
+				"frames": {"regX": 0, "height": 50, "count": 1, "regY": 0, "width": 90},
+				"animations": {
+					"normal": 0
+				}
+			});
+
+		tick = function(event) {
+		};
+
+		createjs.Ticker.timingMode = createjs.Ticker.RAF;
+		createjs.Ticker.addEventListener("tick", stage);
+		createjs.Ticker.addEventListener("tick", tick);
+	}
+
+</script>
+</head>
+
+<body onload="init();">
+
+<div>
+	<canvas id="testCanvas" width="800" height="600"></canvas>
+</div>
+</body>
+</html>
