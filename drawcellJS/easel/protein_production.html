@@ -38,13 +38,22 @@
 		var mrnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["mrna_wiggle.png"],
-				"frames": {"regX": 0, "height": 50, "count": 1, "regY": 0, "width": 90},
+				"frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
 				"animations": {
-					"normal": 0
+					"wiggle": [0,9,"wiggle",1.0]
 				}
 			});
 
+		var gene = "ON";
+		var mrnas = [];
+
 		tick = function(event) {
+			for (var i=0; i <= stage.canvas.width; i = i + 9) {
+				bilayer = new createjs.Sprite(mrnaSheet, "wiggle");
+				bilayer.x = i;
+				bilayer.y = 100;
+				stage.addChild(bilayer);
+			}
 		};
 
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
