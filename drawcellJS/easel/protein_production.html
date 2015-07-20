@@ -10,11 +10,65 @@
 
 <script id="editable">
 	var stage;
+	var burstRNA = 0, burstProt = 0;
+	var i;
 	var percentActiveMembranes = 0.0;
+
+	function initDiffusableMolecule(m, bounds, rotate) {
+		if (rotate===undefined) {
+			rotate = true;
+		}
+
+		if (rotate) {
+			m.rotation = 360*Math.random();
+		}
+
+		m.allowRotation = rotate;
+		m.velX = 0.7*(Math.random() - 0.5);
+		m.velY = 0.7*(Math.random() - 0.5);
+		m.velTheta = (Math.random() - 0.5);
+		m.bounds = bounds;
+	}
+
+	function moveDiffusableMolecule(m) {
+		m.x = m.x + m.velX;
+		m.y = m.y + m.velY;
+		var right = m.bounds.left + m.bounds.width;
+		var bottom = m.bounds.top + m.bounds.height;
+
+		if (m.x > right) {
+			m.x = right;
+			m.velX = - m.velX;
+		}
+		if (m.x < m.bounds.left) {
+			m.x = m.bounds.left;
+			m.velX = - m.velX;
+		}
+		if (m.y < m.bounds.top) {
+			m.y = m.bounds.top;
+			m.velY = - m.velY;
+		}
+		if (m.y > bottom) {
+			m.y = bottom;
+			m.velY = - m.velY;
+		}
+
+		if (m.allowRotation) {
+			m.rotation = m.rotation + m.velTheta;
+			if (m.rotation < 0) m.rotation = 360;
+			if (m.rotation > 360) m.rotation = 0;
+
+			if (Math.random() < 0.01) {
+				m.velTheta = Math.random() - 0.5;
+			}
+		}
+	}
+
 	function init() {
 
 		// create a new stage and point it at our canvas:
 		stage = new createjs.Stage(document.getElementById("testCanvas"));
+		var scene = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height};
 		
 		var dnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
@@ -26,34 +80,90 @@
 			});
 
 		var dnaStrand;
-		for (var i=0; i <= stage.canvas.width; i = i + 90*0.3) {
+		for (i=0; i <= scene.width; i = i + 90*0.3) {
 			dnaStrand = new createjs.Sprite(dnaSheet, "normal");
-			dnaStrand.x = i;
-			dnaStrand.y = 100;
+			dnaStrand.x = scene.left + i;
+			dnaStrand.y = scene.top + scene.height*0.5;
 			dnaStrand.scaleY = 0.3;
 			dnaStrand.scaleX = 0.3;
 			stage.addChild(dnaStrand);
 		}
+
+		
 
 		var mrnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["mrna_wiggle.png"],
 				"frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
 				"animations": {
-					"wiggle": [0,9,"wiggle",1.0]
+					"wiggle": [0, 9, "wiggle", 0.3]
 				}
 			});
 
-		var gene = "ON";
+		var protSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["protein_green_grey.png"],
+				"frames": {"regX": 0, "height": 50, "count": 10, "regY": 0, "width": 60.5},
+				"animations": {
+					"grey": [0,0,"green", 0.02],
+					"green": 1
+				}
+			});
+
+		var mrna;
+		var prot;
 		var mrnas = [];
+		var prots = [];
+		var delayRNA = 11, delayProt = 6;
 
 		tick = function(event) {
-			for (var i=0; i <= stage.canvas.width; i = i + 9) {
-				bilayer = new createjs.Sprite(mrnaSheet, "wiggle");
-				bilayer.x = i;
-				bilayer.y = 100;
-				stage.addChild(bilayer);
+			if (mrnas.length < burstRNA && delayRNA > 10) {
+				mrna = new createjs.Sprite(mrnaSheet, "wiggle");
+				mrna.x = scene.width/2 + Math.random()*20;
+				mrna.y = scene.top + scene.height*0.5;
+				mrna.scaleY = 0.5;
+				mrna.scaleX = 0.5;
+				stage.addChild(mrna);
+				mrnas.push(mrna);
+				delayRNA = 0;
 			}
+
+			if (mrnas.length > 3 && prots.length < burstProt && delayProt > 5) {
+				prot = new createjs.Sprite(protSheet, "grey");
+				prot.x = mrnas[mrnas.length-1].x + 5;
+				prot.y = mrnas[mrnas.length-1].y;
+				prot.scaleY = 0.5;
+				prot.scaleX = 0.5;
+				stage.addChild(prot);
+				prots.push(prot);
+				delayProt = 0;
+
+				initDiffusableMolecule(prot, scene);
+			}
+
+			
+
+			delayRNA = delayRNA + 1;
+			delayProt = delayProt + 1;
+
+			for (i=0; i < mrnas.length; ++i) {
+				mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
+				mrnas[i].y = mrnas[i].y - Math.random() * 2;
+
+				if (mrnas[i].y < scene.height*0.4) {
+
+					mrnas[i].alpha = 0.5;
+
+					if (mrnas[i].y < scene.height*0.10) {
+						stage.removeChild(mrnas[i]);
+					}
+				}
+			}
+
+			for (i=0; i < prots.length; ++i) {
+				moveDiffusableMolecule(prots[i]);
+			}
+
 		};
 
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;

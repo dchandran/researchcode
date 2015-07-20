@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg3096"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="protein_green_grey.svg"
+   inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/protein_green_grey.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3098">
+    <linearGradient
+       id="linearGradient3936">
+      <stop
+         style="stop-color:#dddedd;stop-opacity:1;"
+         offset="0"
+         id="stop3938" />
+      <stop
+         style="stop-color:#929e90;stop-opacity:1;"
+         offset="1"
+         id="stop3940" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3928">
+      <stop
+         style="stop-color:#d8fca0;stop-opacity:1;"
+         offset="0"
+         id="stop3930" />
+      <stop
+         style="stop-color:#26b311;stop-opacity:1;"
+         offset="1"
+         id="stop3932" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3918">
+      <stop
+         style="stop-color:#38790f;stop-opacity:1;"
+         offset="0"
+         id="stop3920" />
+      <stop
+         style="stop-color:#38790f;stop-opacity:0;"
+         offset="1"
+         id="stop3922" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3918"
+       id="radialGradient3926"
+       cx="154.54106"
+       cy="502.94305"
+       fx="154.54106"
+       fy="502.94305"
+       r="30.000002"
+       gradientTransform="matrix(-0.0761581,0.78762951,-1.1724228,-0.11336479,751.835,418.61144)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3928"
+       id="radialGradient3934"
+       cx="154.54108"
+       cy="499.16019"
+       fx="154.54108"
+       fy="499.16019"
+       r="30.000003"
+       gradientTransform="matrix(-0.07615816,0.78762957,-1.1724228,-0.11336486,747.39989,418.18261)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3936"
+       id="radialGradient3942"
+       cx="90.913704"
+       cy="484.83173"
+       fx="90.913704"
+       fy="484.83173"
+       r="30"
+       gradientTransform="matrix(1.0841794,0,0,0.83333341,-7.6530591,81.310328)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="197.21315"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1241"
+     inkscape:window-height="767"
+     inkscape:window-x="478"
+     inkscape:window-y="169"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata3101">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:url(#radialGradient3942);fill-opacity:1;stroke:#787878;stroke-width:0.98199539999999996;stroke-opacity:1"
+       d="m 120.97486,503.99284 c -14.33491,8.25183 -23.14661,9.17203 -36.437054,7.92402 -9.190886,-0.86306 -14.546809,-9.72134 -14.546809,-24.663 0,-14.94168 9.301847,-25.47744 24.064304,-23.70651 17.590529,2.1102 50.067049,27.12075 26.919559,40.44549 z"
+       id="path3111"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/protein_green_grey.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:url(#radialGradient3934);fill-opacity:1;stroke:url(#radialGradient3926);stroke-width:0.98199999999999998;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 181.47487,503.99284 c -14.33492,8.25183 -23.14662,9.17203 -36.43706,7.92402 -9.19089,-0.86306 -14.54681,-9.72134 -14.54681,-24.663 0,-14.94168 9.30185,-25.47744 24.06431,-23.70651 17.59052,2.1102 50.06704,27.12075 26.91956,40.44549 z"
+       id="path3111-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/protein_green_grey.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>
