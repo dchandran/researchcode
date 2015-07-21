@@ -61,7 +61,7 @@
 		}
 	}
 
-	function drawMembrane(stage, scene) {
+	function lipid_bilayer(stage, scene) {
 		var bilayerSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["bilayer.png"],
@@ -80,7 +80,7 @@
 		}
 	}
 
-	function drawDNA(stage, scene) {
+	function dna_template(stage, scene) {
 		var dnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["DNA.png"],
@@ -134,7 +134,7 @@
 		var recp;
 		for (i=0; i < n; ++i) {
 			recp = new createjs.Sprite(membraneChompSheet, "inert", false);
-			initDiffusableMolecule(recp, {left: scene.left, width: scene.width, height: 0, top: scene.top}, false)
+			initDiffusableMolecule(recp, {left: scene.left, width: scene.width, height: 0, top: scene.top+70}, false)
 			recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
 			recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
 			recp.scaleX = recp.scaleY = 1;
@@ -151,7 +151,7 @@
 		var tf;
 		for (i=0; i < n; ++i) {
 			tf = new createjs.Sprite(proteinChompSheet, "inert");
-			initDiffusableMolecule(tf, {left: scene.left, width: scene.width, height: scene.height/2, top: scene.top+200});
+			initDiffusableMolecule(tf, {left: scene.left, width: scene.width, height: scene.height/4, top: scene.top+240});
 			tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
 			tf.y = tf.bounds.top + tf.bounds.height*(Math.random());
 			tf.scaleX = tf.scaleY = 1;
@@ -191,6 +191,65 @@
 		return tick;
 	}
 
+	function sbol_parts(stage, scene) {
+
+		var partTypeSpriteHash = {
+			'promoter': new createjs.SpriteSheet({
+							framerate: 30,
+							"images": ["SBOL/promoter.png"],
+							"frames": {"regX": 0, "height": 220, "count": 2, "regY": 0, "width": 170},
+							"animations": {
+								"off": 0,
+								"on": 1
+							}
+						}),
+			'cds': 		new createjs.SpriteSheet({
+							framerate: 30,
+							"images": ["SBOL/CDS.png"],
+							"frames": {"regX": 0, "height": 101, "count": 2, "regY": 0, "width": 225},
+							"animations": {
+								"off": 0,
+								"on": 1
+							}
+						})
+		};
+
+		var parts = [];		
+
+		function tick(event) {
+			var part, desc, i, sheet, x=0;
+			var partDesc = parameters.sbol.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
+
+			if (partDesc) {
+				for (i in partDesc) {
+					desc = partDesc[i];
+					if (desc) {						
+						x += 100;
+						part = parts[i];
+						if (part) {
+							state = desc.state;
+							if (state)
+								part.gotoAndPlay(state);
+						} else {
+							sheet = partTypeSpriteHash[desc.type];
+							state = desc.state;
+							if (sheet && state) {
+								part = 	new createjs.Sprite(sheet, state);								
+								part.x = scene.left + x;
+								part.y = scene.top + scene.height*0.5;
+								part.setBounds() = part.scaleX = 0.3;
+								stage.addChild(part);
+								parts[i] = part;
+							}
+						}
+					}					
+				}
+			}
+		}
+
+		return tick;
+	}
+
 	function protein_bursts(stage, scene) {
 
 		var mrnaSheet = new createjs.SpriteSheet({
@@ -223,8 +282,8 @@
 				mrna = new createjs.Sprite(mrnaSheet, "wiggle");
 				mrna.x = scene.width/2 + Math.random()*20;
 				mrna.y = scene.top + scene.height*0.5;
-				mrna.scaleY = 0.5;
-				mrna.scaleX = 0.5;
+				mrna.scaleY = 1;
+				mrna.scaleX = 1;
 				stage.addChild(mrna);
 				mrnas.push(mrna);
 				delayRNA = 0;
@@ -234,8 +293,8 @@
 				prot = new createjs.Sprite(protSheet, "grey");
 				prot.x = mrnas[mrnas.length-1].x + 5;
 				prot.y = mrnas[mrnas.length-1].y;
-				prot.scaleY = 0.5;
-				prot.scaleX = 0.5;
+				prot.scaleY = 1;
+				prot.scaleX = 1;
 				stage.addChild(prot);
 				prots.push(prot);
 				delayProt = 0;
@@ -250,11 +309,11 @@
 				mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
 				mrnas[i].y = mrnas[i].y - Math.random() * 2;
 
-				if (mrnas[i].y < scene.height*0.4) {
+				if (mrnas[i].y < scene.top + scene.height*0.6) {
 
 					mrnas[i].alpha = 0.5;
 
-					if (mrnas[i].y < scene.height*0.10) {
+					if (mrnas[i].y < scene.top + scene.height*0.10) {
 						stage.removeChild(mrnas[i]);
 					}
 				}
@@ -275,19 +334,27 @@
 		var rect1 = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height/2};
 		var rect2 = {left:0, top:stage.canvas.width/2, width: stage.canvas.width, height: stage.canvas.height/2};
 
-		parameters.two_component = {percentActiveMembranes: 0}
+		//parameters
+		parameters.two_component = {percentActiveMembranes: 0};
 		parameters.protein_bursts = {burstRNA:0, burstProt:0};
-		
-		drawMembrane(stage, rect1);`
-		drawDNA(stage, rect2);
-
-		var tick1 = two_component(stage, rect1);		
-		var tick2 = protein_bursts(stage, rect2);
+		parameters.sbol = {};
 
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.addEventListener("tick", stage);
-		createjs.Ticker.addEventListener("tick", tick1);
-		createjs.Ticker.addEventListener("tick", tick2);
+
+		var modules = [
+			lipid_bilayer(stage, rect1),
+			dna_template(stage, rect2),
+			two_component(stage, rect1),
+			protein_bursts(stage, rect2),
+			sbol_parts(stage, rect2)
+		];
+
+		for (var i=0; i < modules.length; ++i) {
+			if (modules[i]) {
+				createjs.Ticker.addEventListener("tick", modules[i]);
+			}
+		}
 	}
 
 </script>
@@ -296,7 +363,7 @@
 <body onload="init();">
 
 <div>
-	<canvas id="testCanvas" width="800" height="600"></canvas>
+	<canvas id="testCanvas" width="1000" height="800"></canvas>
 </div>
 </body>
 </html>
