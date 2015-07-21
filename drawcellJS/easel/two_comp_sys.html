@@ -134,7 +134,7 @@
 		var recp;
 		for (i=0; i < n; ++i) {
 			recp = new createjs.Sprite(membraneChompSheet, "inert", false);
-			initDiffusableMolecule(recp, {left: 0, width: scene.width, height: 0, top: 70}, false)
+			initDiffusableMolecule(recp, {left: scene.left, width: scene.width, height: 0, top: scene.top}, false)
 			recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
 			recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
 			recp.scaleX = recp.scaleY = 1;
@@ -151,7 +151,7 @@
 		var tf;
 		for (i=0; i < n; ++i) {
 			tf = new createjs.Sprite(proteinChompSheet, "inert");
-			initDiffusableMolecule(tf, {left: 0, width: scene.width, height: 100, top: 200});
+			initDiffusableMolecule(tf, {left: scene.left, width: scene.width, height: scene.height/2, top: scene.top+200});
 			tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
 			tf.y = tf.bounds.top + tf.bounds.height*(Math.random());
 			tf.scaleX = tf.scaleY = 1;
@@ -272,15 +272,17 @@
 
 		// create a new stage and point it at our canvas:
 		stage = new createjs.Stage(document.getElementById("testCanvas"));
-		var scene = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height};
+		var rect1 = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height/2};
+		var rect2 = {left:0, top:stage.canvas.width/2, width: stage.canvas.width, height: stage.canvas.height/2};
 
 		parameters.two_component = {percentActiveMembranes: 0}
 		parameters.protein_bursts = {burstRNA:0, burstProt:0};
 		
-		drawMembrane(stage, scene);
-		drawDNA(stage, scene);
-		var tick1 = two_component(stage, scene);		
-		var tick2 = protein_bursts(stage, scene);
+		drawMembrane(stage, rect1);`
+		drawDNA(stage, rect2);
+
+		var tick1 = two_component(stage, rect1);		
+		var tick2 = protein_bursts(stage, rect2);
 
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.addEventListener("tick", stage);
