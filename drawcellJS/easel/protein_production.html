@@ -117,6 +117,7 @@
 		var delayRNA = 11, delayProt = 6;
 
 		tick = function(event) {
+
 			if (mrnas.length < burstRNA && delayRNA > 10) {
 				mrna = new createjs.Sprite(mrnaSheet, "wiggle");
 				mrna.x = scene.width/2 + Math.random()*20;

@@ -10,7 +10,6 @@
 
 <script id="editable">
 	var stage;
-	var percentActiveMembranes = 0.0;
 
 	function initDiffusableMolecule(m, bounds, rotate) {
 		if (rotate===undefined) {
@@ -62,12 +61,7 @@
 		}
 	}
 
-	function init() {
-
-		// create a new stage and point it at our canvas:
-		stage = new createjs.Stage(document.getElementById("testCanvas"));
-		var scene = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height};
-		
+	function drawMembrane(stage, scene) {
 		var bilayerSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["bilayer.png"],
@@ -84,6 +78,33 @@
 			bilayer.y = 100;
 			stage.addChild(bilayer);
 		}
+	}
+
+	function drawDNA(stage, scene) {
+		var dnaSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["DNA.png"],
+				"frames": {"regX": 0, "height": 50, "count": 1, "regY": 0, "width": 90},
+				"animations": {
+					"normal": 0
+				}
+			});
+
+		var dnaStrand;
+		for (i=0; i <= scene.width; i = i + 90*0.3) {
+			dnaStrand = new createjs.Sprite(dnaSheet, "normal");
+			dnaStrand.x = scene.left + i;
+			dnaStrand.y = scene.top + scene.height*0.5;
+			dnaStrand.scaleY = 0.3;
+			dnaStrand.scaleX = 0.3;
+			stage.addChild(dnaStrand);
+		}
+	}
+
+	var parameters = {};
+
+	function two_component(stage, scene) {
+		var i;
 
 		var proteinChompSheet = new createjs.SpriteSheet({
 				framerate: 30,
@@ -111,7 +132,7 @@
 		var n = 5;
 		var receptors = [];
 		var recp;
-		for (var i=0; i < n; ++i) {
+		for (i=0; i < n; ++i) {
 			recp = new createjs.Sprite(membraneChompSheet, "inert", false);
 			initDiffusableMolecule(recp, {left: 0, width: scene.width, height: 0, top: 70}, false)
 			recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
@@ -128,7 +149,7 @@
 		n = 20;
 		var tfs = [];
 		var tf;
-		for (var i=0; i < n; ++i) {
+		for (i=0; i < n; ++i) {
 			tf = new createjs.Sprite(proteinChompSheet, "inert");
 			initDiffusableMolecule(tf, {left: 0, width: scene.width, height: 100, top: 200});
 			tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
@@ -139,15 +160,14 @@
 			stage.addChild(tf);			
 			tfs.push(tf);
 		}
-
-		tick = function(event) {
+		function tick(event) {
 			var tf, rec;
-			var percentActiveTFs = percentActiveMembranes;
+			var percentActiveTFs = parameters.two_component.percentActiveMembranes;
 
 			for (var i=0; i < receptors.length; ++i) {
 				rec = receptors[i];
 
-				if (rec.currentAnimation !== 'active' && i < percentActiveMembranes*receptors.length) {
+				if (rec.currentAnimation !== 'active' && i < parameters.two_component.percentActiveMembranes*receptors.length) {
 					rec.gotoAndPlay('active');
 				}
 
@@ -166,11 +186,106 @@
 
 				moveDiffusableMolecule(tf);
 			}
-		};
+		}
+
+		return tick;
+	}
+
+	function protein_bursts(stage, scene) {
+
+		var mrnaSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["mrna_wiggle.png"],
+				"frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
+				"animations": {
+					"wiggle": [0, 9, "wiggle", 0.3]
+				}
+			});
+
+		var protSheet = new createjs.SpriteSheet({
+				framerate: 30,
+				"images": ["protein_green_grey.png"],
+				"frames": {"regX": 0, "height": 50, "count": 10, "regY": 0, "width": 60.5},
+				"animations": {
+					"grey": [0,0,"green", 0.02],
+					"green": 1
+				}
+			});
+
+		var mrna;
+		var prot;
+		var mrnas = [];
+		var prots = [];
+		var delayRNA = 11, delayProt = 6;
+
+		function tick(event) {
+			if (mrnas.length < parameters.protein_bursts.burstRNA && delayRNA > 10) {
+				mrna = new createjs.Sprite(mrnaSheet, "wiggle");
+				mrna.x = scene.width/2 + Math.random()*20;
+				mrna.y = scene.top + scene.height*0.5;
+				mrna.scaleY = 0.5;
+				mrna.scaleX = 0.5;
+				stage.addChild(mrna);
+				mrnas.push(mrna);
+				delayRNA = 0;
+			}
+
+			if (mrnas.length > 3 && prots.length < parameters.protein_bursts.burstProt && delayProt > 5) {
+				prot = new createjs.Sprite(protSheet, "grey");
+				prot.x = mrnas[mrnas.length-1].x + 5;
+				prot.y = mrnas[mrnas.length-1].y;
+				prot.scaleY = 0.5;
+				prot.scaleX = 0.5;
+				stage.addChild(prot);
+				prots.push(prot);
+				delayProt = 0;
+
+				initDiffusableMolecule(prot, scene);
+			}
+
+			delayRNA = delayRNA + 1;
+			delayProt = delayProt + 1;
+
+			for (i=0; i < mrnas.length; ++i) {
+				mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
+				mrnas[i].y = mrnas[i].y - Math.random() * 2;
+
+				if (mrnas[i].y < scene.height*0.4) {
+
+					mrnas[i].alpha = 0.5;
+
+					if (mrnas[i].y < scene.height*0.10) {
+						stage.removeChild(mrnas[i]);
+					}
+				}
+			}
+
+			for (i=0; i < prots.length; ++i) {
+				moveDiffusableMolecule(prots[i]);
+			}
+
+		}
+		return tick;
+	}
+
+	function init() {
+
+		// create a new stage and point it at our canvas:
+		stage = new createjs.Stage(document.getElementById("testCanvas"));
+		var scene = {left:0, top:0, width: stage.canvas.width, height: stage.canvas.height};
+
+		parameters.two_component = {percentActiveMembranes: 0}
+		parameters.protein_bursts = {burstRNA:0, burstProt:0};
+		
+		drawMembrane(stage, scene);
+		drawDNA(stage, scene);
+		var tick1 = two_component(stage, scene);		
+		var tick2 = protein_bursts(stage, scene);
 
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
 		createjs.Ticker.addEventListener("tick", stage);
-		createjs.Ticker.addEventListener("tick", tick);
+		createjs.Ticker.addEventListener("tick", tick1);
+		createjs.Ticker.addEventListener("tick", tick2);
 	}
 
 </script>
