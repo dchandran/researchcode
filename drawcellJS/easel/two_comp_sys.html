@@ -375,9 +375,11 @@
 
 		for (var i=0; i < modules.length; ++i) {
 			if (modules[i]) {
-				createjs.Ticker.addEventListener("tick", modules[i]);
+				createjs.Ticker.addEventListener("tick", modules[i].tick);
 			}
 		}
+
+		
 	}
 
 </script>
