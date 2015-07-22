@@ -239,14 +239,14 @@
 								parts[i] = part;
 							}
 						}
-						part.x = scene.left + x;
+						part.x = x;
 						x = x + part.getBounds().width * 0.3;
 						part.y = scene.top + scene.height*0.5 - part.getBounds().height*0.3;
-					}					
+					}
 				}
 			}
 
-			parameters.sbol.right = x;
+			parameters.protein_bursts.location.x = x - 100;
 		}
 
 		return tick;
