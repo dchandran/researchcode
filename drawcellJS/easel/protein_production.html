@@ -5,64 +5,14 @@
 	<title>EaselJS: Protein Chomp</title>
 
 	<script src="../third-party/easeljs/easeljs-NEXT.combined.js"></script>
-	<!-- We also provide hosted minified versions of all CreateJS libraries.
-	  http://code.createjs.com -->
+	<script src="generic_functions.js"></script>
+		
 
 <script id="editable">
 	var stage;
 	var burstRNA = 0, burstProt = 0;
 	var i;
 	var percentActiveMembranes = 0.0;
-
-	function initDiffusableMolecule(m, bounds, rotate) {
-		if (rotate===undefined) {
-			rotate = true;
-		}
-
-		if (rotate) {
-			m.rotation = 360*Math.random();
-		}
-
-		m.allowRotation = rotate;
-		m.velX = 0.7*(Math.random() - 0.5);
-		m.velY = 0.7*(Math.random() - 0.5);
-		m.velTheta = (Math.random() - 0.5);
-		m.bounds = bounds;
-	}
-
-	function moveDiffusableMolecule(m) {
-		m.x = m.x + m.velX;
-		m.y = m.y + m.velY;
-		var right = m.bounds.left + m.bounds.width;
-		var bottom = m.bounds.top + m.bounds.height;
-
-		if (m.x > right) {
-			m.x = right;
-			m.velX = - m.velX;
-		}
-		if (m.x < m.bounds.left) {
-			m.x = m.bounds.left;
-			m.velX = - m.velX;
-		}
-		if (m.y < m.bounds.top) {
-			m.y = m.bounds.top;
-			m.velY = - m.velY;
-		}
-		if (m.y > bottom) {
-			m.y = bottom;
-			m.velY = - m.velY;
-		}
-
-		if (m.allowRotation) {
-			m.rotation = m.rotation + m.velTheta;
-			if (m.rotation < 0) m.rotation = 360;
-			if (m.rotation > 360) m.rotation = 0;
-
-			if (Math.random() < 0.01) {
-				m.velTheta = Math.random() - 0.5;
-			}
-		}
-	}
 
 	function init() {
 
@@ -171,6 +121,20 @@
 		createjs.Ticker.addEventListener("tick", stage);
 		createjs.Ticker.addEventListener("tick", tick);
 	}
+
+	/*
+
+	Connections between modules
+	   scene -> bilayer bounds -> cellular molecules' bounds
+       scene -> bilayer bounds -> DNA bounds -> SBOL parts bounds
+	   
+	   DNA bounds -> SBOL parts location -> location for RNA burst
+	   DNA bounds -> SBOL parts location -> target point for active TFs
+
+	   data -> TF bindind and Gene state (sync)
+	   data -> Gene state and CDS state (sync)
+	   data -> CDS state and RNA burst size (sync)
+	*/
 
 </script>
 </head>
