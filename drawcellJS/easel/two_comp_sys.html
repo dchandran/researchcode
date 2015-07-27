@@ -5,62 +5,17 @@
 	<title>EaselJS: Protein Chomp</title>
 
 	<script src="../third-party/easeljs/easeljs-NEXT.combined.js"></script>
+	<script src="generic_functions.js"></script>
 	
-<script id="editable">
-	function initDiffusableMolecule(m, bounds, rotate) {
-	    if (rotate===undefined) {
-	        rotate = true;
-	    }
-
-	    if (rotate) {
-	        m.rotation = 360*Math.random();
-	    }
-
-	    m.allowRotation = rotate;
-	    m.velX = 0.7*(Math.random() - 0.5);
-	    m.velY = 0.7*(Math.random() - 0.5);
-	    m.velTheta = (Math.random() - 0.5);
-	    m.bounds = bounds;
-	}
-
-	function moveDiffusableMolecule(m) {
-	    m.x = m.x + m.velX;
-	    m.y = m.y + m.velY;
-	    var right = m.bounds.left + m.bounds.width;
-	    var bottom = m.bounds.top + m.bounds.height;
-
-	    if (m.x > right) {
-	        m.x = right;
-	        m.velX = - m.velX;
-	    }
-	    if (m.x < m.bounds.left) {
-	        m.x = m.bounds.left;
-	        m.velX = - m.velX;
-	    }
-	    if (m.y < m.bounds.top) {
-	        m.y = m.bounds.top;
-	        m.velY = - m.velY;
-	    }
-	    if (m.y > bottom) {
-	        m.y = bottom;
-	        m.velY = - m.velY;
-	    }
-
-	    if (m.allowRotation) {
-	        m.rotation = m.rotation + m.velTheta;
-	        if (m.rotation < 0) m.rotation = 360;
-	        if (m.rotation > 360) m.rotation = 0;
-
-	        if (Math.random() < 0.01) {
-	            m.velTheta = Math.random() - 0.5;
-	        }
-	    }
-	}
+<script id="editable">	
 	var stage;
 
-	//Module: init(), tick(), input, output
+	var lipid_bilayer = createAnimModule("lipid bilayer");
+	var dna_template = createAnimModule("dna template");
+	var two_component = createAnimModule("two component");
+	var sbol_parts = createAnimModule("sbol parts");
 
-	function lipid_bilayer(stage, scene) {
+	lipid_bilayer.init = function(stage, scene) {
 		var bilayerSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["bilayer.png"],
@@ -77,9 +32,9 @@
 			bilayer.y = 100;
 			stage.addChild(bilayer);
 		}
-	}
+	};	
 
-	function dna_template(stage, scene) {
+	dna_template.init = function(stage, scene) {
 		var dnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["DNA.png"],
@@ -98,14 +53,12 @@
 			dnaStrand.scaleX = 0.3;
 			stage.addChild(dnaStrand);
 		}
-	}
+	};
 
-	var parameters = {};
-
-	function two_component(stage, scene) {
+	two_component.init = function(stage, scene) {
 		var i;
 
-		var proteinChompSheet = new createjs.SpriteSheet({
+		this.proteinChompSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["protein_chomp.png"],
 				"frames": {"regX": 0, "height": 51, "count": 17, "regY": 0, "width": 65},
@@ -118,7 +71,7 @@
 				}
 			});
 
-		var membraneChompSheet = new createjs.SpriteSheet({
+		this.membraneChompSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["membrane_protein_chomp.png"],
 				"frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},				
@@ -128,8 +81,9 @@
 				}
 			});
 
-		var n = 5;
-		var receptors = [];
+		this.n = 5;
+		this.receptors = [];
+		receptors = this.receptors;
 		var recp;
 		for (i=0; i < n; ++i) {
 			recp = new createjs.Sprite(membraneChompSheet, "inert", false);
@@ -146,7 +100,8 @@
 		}
 
 		n = 20;
-		var tfs = [];
+		this.tfs = [];
+		var tfs = this.tfs;
 		var tf;
 		for (i=0; i < n; ++i) {
 			tf = new createjs.Sprite(proteinChompSheet, "inert");
@@ -159,40 +114,39 @@
 			stage.addChild(tf);			
 			tfs.push(tf);
 		}
-		function tick(event) {
-			var tf, rec;
-			var percentActiveTFs = parameters.two_component.percentActiveMembranes;
+	};
 
-			for (var i=0; i < receptors.length; ++i) {
-				rec = receptors[i];
+	two_component.tick = function(event) {
+		var tf, rec, recp;
+		var percentActiveTFs = parameters.two_component.percentActiveMembranes;
 
-				if (rec.currentAnimation !== 'active' && i < parameters.two_component.percentActiveMembranes*receptors.length) {
-					rec.gotoAndPlay('active');
-				}
+		for (var i=0; i < receptors.length; ++i) {
+			rec = receptors[i];
 
-				moveDiffusableMolecule(rec);
+			if (rec.currentAnimation !== 'active' && i < parameters.two_component.percentActiveMembranes*receptors.length) {
+				rec.gotoAndPlay('active');
 			}
 
-			for (var i=0; i < tfs.length; ++i) {
-				tf = tfs[i];
-
-				if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
-					tf.gotoAndPlay('active');
-					tf.velX *= 3;
-					tf.velY *= 3;
-					tf.bounds.height = scene.height;
-				}
-
-				moveDiffusableMolecule(tf);
-			}
+			moveDiffusableMolecule(rec);
 		}
 
-		return {tick:tick, input:null, output:null};
-	}
+		for (var i=0; i < tfs.length; ++i) {
+			tf = tfs[i];
 
-	function sbol_parts(stage, scene) {
+			if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
+				tf.gotoAndPlay('active');
+				tf.velX *= 3;
+				tf.velY *= 3;
+				tf.bounds.height = scene.height;
+			}
 
-		var partTypeSpriteHash = {
+			moveDiffusableMolecule(tf);
+		}
+	};
+
+	sbol_parts.init = function(stage, scene) {
+
+		sbol_parts.partTypeSpriteHash = {
 			'promoter': new createjs.SpriteSheet({
 							framerate: 30,
 							"images": ["SBOL/promoter.png"],
@@ -213,46 +167,46 @@
 						})
 		};
 
-		var parts = [];		
+		this.parts = [];
+	};
 
-		function tick(event) {
-			var part, desc, i, sheet, x=scene.left + 100;
-			var partDesc = parameters.sbol.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
+	sbol_parts.tick = function(event) {
+		var part, desc, i, sheet, x=scene.left + 100;
+		var partDesc = this.inputs.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
+		var partTypeSpriteHash = this.partTypeSpriteHash;
+		var parts = this.parts;
 
-			if (partDesc) {
-				for (i in partDesc) {
-					desc = partDesc[i];
-					if (desc) {	
-						part = parts[i];
-						if (part) {
-							state = desc.state;
-							if (state)
-								part.gotoAndPlay(state);
-						} else {
-							sheet = partTypeSpriteHash[desc.type];
-							state = desc.state;
-							if (sheet && state) {
-								part = 	new createjs.Sprite(sheet, state);								
-								part.scaleY = part.scaleX = 0.3;
-								stage.addChild(part);
-								parts[i] = part;
-							}
+		if (partDesc) {
+			for (i in partDesc) {
+				desc = partDesc[i];
+				if (desc) {	
+					part = parts[i];
+					if (part) {
+						state = desc.state;
+						if (state)
+							part.gotoAndPlay(state);
+					} else {
+						sheet = partTypeSpriteHash[desc.type];
+						state = desc.state;
+						if (sheet && state) {
+							part = 	new createjs.Sprite(sheet, state);								
+							part.scaleY = part.scaleX = 0.3;
+							stage.addChild(part);
+							parts[i] = part;
 						}
-						part.x = x;
-						x = x + part.getBounds().width * 0.3;
-						part.y = scene.top + scene.height*0.5 - part.getBounds().height*0.3;
 					}
+					part.x = x;
+					x = x + part.getBounds().width * 0.3;
+					part.y = scene.top + scene.height*0.5 - part.getBounds().height*0.3;
 				}
 			}
-
-			parameters.protein_bursts.location.x = x - 100;
 		}
 
-		return {tick:tick, input:null, output:null};
-	}
+		this.location.x = x - 100;
+	};
 
-	function protein_bursts(stage, scene) {
-		var mrnaSheet = new createjs.SpriteSheet({
+	protein_bursts.init = function(stage, scene) {
+		this.mrnaSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["mrna_wiggle.png"],
 				"frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
@@ -261,7 +215,7 @@
 				}
 			});
 
-		var protSheet = new createjs.SpriteSheet({
+		this.protSheet = new createjs.SpriteSheet({
 				framerate: 30,
 				"images": ["protein_green_grey.png"],
 				"frames": {"regX": 0, "height": 50, "count": 10, "regY": 0, "width": 60.5},
@@ -271,83 +225,86 @@
 				}
 			});
 
+		this.mrnas = [];
+		this.existingProts = [];
+		this.newProts = [];		
+	};
+
+	protein_bursts.tick = function(event) {
+		var mrnas = this.mrnas;
+		var existingProts = this.existingProts;
+		var newProts = this.newProts;
 		var mrna;
 		var prot;
-		var mrnas = [];
-		var existingProts = [];
-		var newProts = [];
 		var delayRNA = 26, delayProt = 11;
+		var location = parameters.protein_bursts.location;
+		if (!location) return;
 
-		function tick(event) {
-			var location = parameters.protein_bursts.location;
-			if (!location) return;
+		if (mrnas.length < parameters.protein_bursts.burstRNA && delayRNA > 25) {
+			mrna = new createjs.Sprite(mrnaSheet, "wiggle");
+			mrna.x = location.x + Math.random()*20;
+			mrna.y = location.y
+			mrna.scaleY = 1;
+			mrna.scaleX = 1;
+			stage.addChild(mrna);
+			mrnas.push(mrna);
+			delayRNA = 0;
+		}
 
-			if (mrnas.length < parameters.protein_bursts.burstRNA && delayRNA > 25) {
-				mrna = new createjs.Sprite(mrnaSheet, "wiggle");
-				mrna.x = location.x + Math.random()*20;
-				mrna.y = location.y
-				mrna.scaleY = 1;
-				mrna.scaleX = 1;
-				stage.addChild(mrna);
-				mrnas.push(mrna);
-				delayRNA = 0;
-			}
+		if (mrnas.length > 3 && newProts.length < parameters.protein_bursts.burstProt && delayProt > 10) {
+			prot = new createjs.Sprite(protSheet, "grey");
+			prot.x = mrnas[mrnas.length-1].x + 5;
+			prot.y = mrnas[mrnas.length-1].y;
+			prot.scaleY = 1;
+			prot.scaleX = 1;
+			stage.addChild(prot);
+			newProts.push(prot);
+			delayProt = 0;
 
-			if (mrnas.length > 3 && newProts.length < parameters.protein_bursts.burstProt && delayProt > 10) {
-				prot = new createjs.Sprite(protSheet, "grey");
-				prot.x = mrnas[mrnas.length-1].x + 5;
-				prot.y = mrnas[mrnas.length-1].y;
-				prot.scaleY = 1;
-				prot.scaleX = 1;
-				stage.addChild(prot);
-				newProts.push(prot);
-				delayProt = 0;
+			initDiffusableMolecule(prot, scene);
+		}
 
-				initDiffusableMolecule(prot, scene);
-			}
+		delayRNA = delayRNA + 1;
+		delayProt = delayProt + 1;
+		var allRNADead = true;
 
-			delayRNA = delayRNA + 1;
-			delayProt = delayProt + 1;
-			var allRNADead = true;
+		for (i=0; i < mrnas.length; ++i) {
 
-			for (i=0; i < mrnas.length; ++i) {
+			if (mrnas[i]) {
+				allRNADead = false;
+				mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
+				mrnas[i].y = mrnas[i].y - Math.random() * 2;
 
-				if (mrnas[i]) {
-					allRNADead = false;
-					mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
-					mrnas[i].y = mrnas[i].y - Math.random() * 2;
+				if (mrnas[i].y < scene.top + scene.height*0.6) {
 
-					if (mrnas[i].y < scene.top + scene.height*0.6) {
+					mrnas[i].alpha = 0.5;
 
-						mrnas[i].alpha = 0.5;
-
-						if (mrnas[i].y < scene.top + scene.height*0.10) {
-							stage.removeChild(mrnas[i]);
-							mrnas[i] = undefined;
-						}
+					if (mrnas[i].y < scene.top + scene.height*0.10) {
+						stage.removeChild(mrnas[i]);
+						mrnas[i] = undefined;
 					}
 				}
 			}
 
-			if (allRNADead && mrnas.length > 0) {
-				mrnas.length = 0;
-				existingProts = existingProts.concat(newProts);
-				newProts.length = 0;
-				parameters.protein_bursts.burstRNA = 0;
-				delayRNA = 11;
-				delayProt = 6;
-			}
-
-			for (i=0; i < existingProts.length; ++i) {
-				moveDiffusableMolecule(existingProts[i]);
-			}
-
-			for (i=0; i < newProts.length; ++i) {
-				moveDiffusableMolecule(newProts[i]);
-			}
 		}
-		return {tick:tick, input:null, output:null};
-	}
+
+		if (allRNADead && mrnas.length > 0) {
+			mrnas.length = 0;
+			existingProts = existingProts.concat(newProts);
+			newProts.length = 0;
+			parameters.protein_bursts.burstRNA = 0;
+			delayRNA = 11;
+			delayProt = 6;
+		}
+
+		for (i=0; i < existingProts.length; ++i) {
+			moveDiffusableMolecule(existingProts[i]);
+		}
+
+		for (i=0; i < newProts.length; ++i) {
+			moveDiffusableMolecule(newProts[i]);
+		}
+	};
 
 	function init() {
 

@@ -1,3 +1,16 @@
+var _MODULES = {};
+
+function createAnimModule(name) {
+    _MODULES[name] = {
+        name:name, 
+        inputs: {}, 
+        outputs: {},
+        init: {},
+        tick: {}
+    };
+    return _MODULES[name];
+}
+
 function initDiffusableMolecule(m, bounds, rotate) {
     if (rotate===undefined) {
         rotate = true;
