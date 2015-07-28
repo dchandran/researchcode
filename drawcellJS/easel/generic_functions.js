@@ -1,12 +1,20 @@
 var _MODULES = {};
 
+function getAllModules() {
+    var lst = [];
+    for (var i in _MODULES) {
+        lst.push(_MODULES[i]);
+    }
+    return lst;
+}
+
 function createAnimModule(name) {
     _MODULES[name] = {
-        name:name, 
+        name: name, 
         inputs: {}, 
         outputs: {},
-        init: {},
-        tick: {}
+        init: undefined,
+        tick: undefined
     };
     return _MODULES[name];
 }

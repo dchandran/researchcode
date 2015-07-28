@@ -6,375 +6,42 @@
 
     <script src="../third-party/easeljs/easeljs-NEXT.combined.js"></script>
     <script src="generic_functions.js"></script>
+    <script src="protein_burst.js"></script>
+    <script src="expression_cassette.js"></script>
+    <script src="lipid_bilayer.js"></script>
+    <script src="dna_template.js"></script>
+    <script src="two_component.js"></script>
+
     
 <script id="editable">
     var _EASEL_STAGE;
 
-    /*
-    Creates a lipid bilayer and specify the size of the inner cell space
-    */
-
-    var lipid_bilayer = createAnimModule("lipid bilayer");
-
-    lipid_bilayer.init = function() {
-
-        var scene = this.inputs.bounds;
-
-        var bilayerSheet = new createjs.SpriteSheet({
-                framerate: 30,
-                "images": ["bilayer.png"],
-                "frames": {"regX": 0, "height": 53, "count": 1, "regY": 0, "width": 9},
-                "animations": {
-                    "normal": 0
-                }
-            });
-
-        var bilayer;
-        for (var i=0; i <= scene.width; i = i + 9) {
-            bilayer = new createjs.Sprite(bilayerSheet, "normal");
-            bilayer.x = i;
-            bilayer.y = scene.top + 100;
-            _EASEL_STAGE.addChild(bilayer);
-        }
-
-        this.outputs.bounds = scene;
-        this.outputs.bounds.top = scene.top + 150;
-        this.outputs.bounds.height = scene.height - 150;
-    };
-
-    /*
-    Create a DNA strand and specify the y location for DNA parts
-    */
-    var dna_template = createAnimModule("dna template");
-
-    dna_template.init = function() {
-
-        var scene = this.inputs.bounds;
-
-        var dnaSheet = new createjs.SpriteSheet({
-                framerate: 30,
-                "images": ["DNA.png"],
-                "frames": {"regX": 0, "height": 50, "count": 1, "regY": 0, "width": 90},
-                "animations": {
-                    "normal": 0
-                }
-            });
-
-        var dnaStrand;
-        var y = scene.bottom - scene.height*0.25;
-
-        for (i=0; i <= scene.width; i = i + 90*0.3) {
-            dnaStrand = new createjs.Sprite(this.dnaSheet, "normal");
-            dnaStrand.x = scene.left + i;
-            dnaStrand.y = y;            
-            dnaStrand.scaleY = 0.3;
-            dnaStrand.scaleX = 0.3;
-            _EASEL_STAGE.addChild(dnaStrand);
-        }
-
-        this.outputs.location = {x: scene.left, y: y};
-    };
-
-    /*
-    Two component system. No outputs. Just anim
-    */
-    var two_component = createAnimModule("two component");
-    
-    two_component.init = function() {
-        var i;
-        var scene = this.inputs.bounds;
-        this.inputs.numReceptors = 5;
-        this.inputs.numTfs = 10;
-
-        this.proteinChompSheet = new createjs.SpriteSheet({
-            framerate: 30,
-            "images": ["protein_chomp.png"],
-            "frames": {"regX": 0, "height": 51, "count": 17, "regY": 0, "width": 65},
-            // define two animations, run (loops, 1.5x speed) and jump (returns to run):
-            "animations": {
-                "active": [0, 15, "active", 0.5],
-                "bind": [0, 8, "bound", 0.7],
-                "bound": 8,
-                "inert": 16,
-            }
-        });
-
-        this.membraneChompSheet = new createjs.SpriteSheet({
-            framerate: 30,
-            "images": ["membrane_protein_chomp.png"],
-            "frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},              
-            "animations": {
-                "active": [0, 9, "active", 0.5],
-                "inert": 10
-            }
-        });
-
-        
-        var n = this.numReceptors;
-        this.receptors = [];
-        receptors = this.receptors;
-        var recp;
-        for (i=0; i < n; ++i) {
-            recp = new createjs.Sprite(membraneChompSheet, "inert", false);
-            initDiffusableMolecule(recp, {left: scene.left, width: scene.width, height: 0, top: scene.top+70}, false)
-            recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
-            recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
-            recp.scaleX = recp.scaleY = 1;
-            recp.velY = 0;
-            recp.velTheta = 0;
-
-            // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
-            _EASEL_STAGE.addChild(recp);
-            receptors.push(recp);
-        }
-
-        n = this.numTfs;
-        this.tfs = [];
-        var tfs = this.tfs;
-        var tf;
-        for (i=0; i < n; ++i) {
-            tf = new createjs.Sprite(proteinChompSheet, "inert");
-            initDiffusableMolecule(tf, {left: scene.left, width: scene.width, height: scene.height/4, top: scene.top+240});
-            tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
-            tf.y = tf.bounds.top + tf.bounds.height*(Math.random());
-            tf.scaleX = tf.scaleY = 1;
-
-            // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
-            _EASEL_STAGE.addChild(tf);          
-            tfs.push(tf);
-        }
-    };
-
-    two_component.tick = function(event) {
-        var tf, rec, recp;
-        var percentActiveTFs = this.inputs.percentActiveTFs;
-        var percentActiveMembranes = this.inputs.percentActiveMembranes;
-
-        for (var i=0; i < receptors.length; ++i) {
-            rec = receptors[i];
-
-            if (rec.currentAnimation !== 'active' && i < percentActiveMembranes*receptors.length) {
-                rec.gotoAndPlay('active');
-            }
-
-            moveDiffusableMolecule(rec);
-        }
-
-        for (var i=0; i < tfs.length; ++i) {
-            tf = tfs[i];
-
-            if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
-                tf.gotoAndPlay('active');
-                tf.velX *= 3;
-                tf.velY *= 3;
-                tf.bounds.height = scene.height;
-            }
-
-            moveDiffusableMolecule(tf);
-        }
-    };
-
-    /*
-    Draw SBOL parts for expression cassetta starting at
-    the given input location (assumed to be where the DNA template is located)
-    outputs final location
-    */
-    var expression_cassette = createAnimModule("expression cassette");
-
-    expression_cassette.init = function(_EASEL_STAGE, scene) {
-
-        this.partTypeSpriteHash = {
-            'promoter': new createjs.SpriteSheet({
-                            framerate: 30,
-                            "images": ["SBOL/promoter.png"],
-                            "frames": {"regX": 0, "height": 220, "count": 2, "regY": 0, "width": 170},
-                            "animations": {
-                                "off": 0,
-                                "on": 1
-                            }
-                        }),
-            'cds':      new createjs.SpriteSheet({
-                            framerate: 30,
-                            "images": ["SBOL/CDS.png"],
-                            "frames": {"regX": 0, "height": 101, "count": 2, "regY": 0, "width": 225},
-                            "animations": {
-                                "off": 0,
-                                "on": 1
-                            }
-                        })
-        };
-
-        this.parts = [];
-        this.inputs.startLocation = {x:0,y:0};
-    };
-
-    expression_cassette.tick = function(event) {
-        var location = this.inputs.startLocation;
-        var part, desc, i, sheet;
-        var partDesc = this.inputs.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
-        var partTypeSpriteHash = this.partTypeSpriteHash;
-        var parts = this.parts;
-        var x = location.x;
-
-        if (partDesc) {
-            for (i in partDesc) {
-                desc = partDesc[i];
-                if (desc) { 
-                    part = parts[i];
-                    if (part) {
-                        state = desc.state;
-                        if (state)
-                            part.gotoAndPlay(state);
-                    } else {
-                        sheet = partTypeSpriteHash[desc.type];
-                        state = desc.state;
-                        if (sheet && state) {
-                            part =  new createjs.Sprite(sheet, state);                              
-                            part.scaleY = part.scaleX = 0.3;
-                            _EASEL_STAGE.addChild(part);
-                            parts[i] = part;
-                        }
-                    }
-                    part.x = x;
-                    x = x + part.getBounds().width * 0.3;
-                    part.y = location.y;
-                }
-            }
-        }
-
-        this.outputs.endLocation = {x: x - 100, y: location.y - 20};
-    };
-
-    /*
-    */
-    var protein_bursts = createAnimModule("protein bursts");
-
-    protein_bursts.init = function(_EASEL_STAGE, scene) {
-        this.mrnaSheet = new createjs.SpriteSheet({
-                framerate: 30,
-                "images": ["mrna_wiggle.png"],
-                "frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
-                "animations": {
-                    "wiggle": [0, 9, "wiggle", 0.3]
-                }
-            });
-
-        this.protSheet = new createjs.SpriteSheet({
-                framerate: 30,
-                "images": ["protein_green_grey.png"],
-                "frames": {"regX": 0, "height": 50, "count": 10, "regY": 0, "width": 60.5},
-                "animations": {
-                    "grey": [0,0,"green", 0.02],
-                    "green": 1
-                }
-            });
-
-        this.mrnas = [];
-        this.existingProts = [];
-        this.newProts = [];
-        this.inputs.startLocation = {x:0, y:0};
-        this.inputs.burstRNA = 5;
-        this.inputs.burstProt = 12;
-    };
-
-    protein_bursts.tick = function(event) {
-        var mrnas = this.mrnas;
-        var existingProts = this.existingProts;
-        var newProts = this.newProts;
-        var mrna;
-        var prot;
-        var delayRNA = 26, delayProt = 11;
-        var location = this.inputs.startLocation;
-        var burstRNA = this.inputs.burstRNA;
-        var burstProt = this.inputs.burstProt;
-        if (!location) return;
-
-        if (mrnas.length < burstRNA && delayRNA > 25) {
-            mrna = new createjs.Sprite(mrnaSheet, "wiggle");
-            mrna.x = location.x + Math.random()*20;
-            mrna.y = location.y
-            mrna.scaleY = 1;
-            mrna.scaleX = 1;
-            _EASEL_STAGE.addChild(mrna);
-            mrnas.push(mrna);
-            delayRNA = 0;
-        }
-
-        if (mrnas.length > 3 && newProts.length < burstProt && delayProt > 10) {
-            prot = new createjs.Sprite(protSheet, "grey");
-            prot.x = mrnas[mrnas.length-1].x + 5;
-            prot.y = mrnas[mrnas.length-1].y;
-            prot.scaleY = 1;
-            prot.scaleX = 1;
-            _EASEL_STAGE.addChild(prot);
-            newProts.push(prot);
-            delayProt = 0;
-
-            initDiffusableMolecule(prot, scene);
-        }
-
-        delayRNA = delayRNA + 1;
-        delayProt = delayProt + 1;
-        var allRNADead = true;
-
-        for (i=0; i < mrnas.length; ++i) {
-
-            if (mrnas[i]) {
-                allRNADead = false;
-                mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
-                mrnas[i].y = mrnas[i].y - Math.random() * 2;
-
-                if (mrnas[i].y < scene.top + scene.height*0.6) {
-
-                    mrnas[i].alpha = 0.5;
-
-                    if (mrnas[i].y < scene.top + scene.height*0.10) {
-                        _EASEL_STAGE.removeChild(mrnas[i]);
-                        mrnas[i] = undefined;
-                    }
-                }
-            }
-
-        }
-
-        if (allRNADead && mrnas.length > 0) {
-            mrnas.length = 0;
-            existingProts = existingProts.concat(newProts);
-            newProts.length = 0;
-            parameters.protein_bursts.burstRNA = 0;
-            delayRNA = 11;
-            delayProt = 6;
-        }
-
-        for (i=0; i < existingProts.length; ++i) {
-            moveDiffusableMolecule(existingProts[i]);
-        }
-
-        for (i=0; i < newProts.length; ++i) {
-            moveDiffusableMolecule(newProts[i]);
-        }
-    };
 
     function init() {
 
-        // create a new _EASEL_STAGE and point it at our canvas:
-        _EASEL_STAGE = new createjs._EASEL_STAGE(document.getElementById("testCanvas"));
-        var rect1 = {left:0, top:0, width: _EASEL_STAGE.canvas.width, height: _EASEL_STAGE.canvas.height};
-        var rect2 = {left:0, top:_EASEL_STAGE.canvas.width/2, width: _EASEL_STAGE.canvas.width, height: _EASEL_STAGE.canvas.height/2};
+        // create a new stage and point it at our canvas:
+        _EASEL_STAGE = new createjs.Stage(document.getElementById("testCanvas"));
+
+        lipid_bilayer.inputs.bounds = {left:0, top:0, width: _EASEL_STAGE.canvas.width, height: _EASEL_STAGE.canvas.height};
+        lipid_bilayer.init();
+
+        dna_template.inputs.bounds = lipid_bilayer.outputs.bounds;
+        two_component.inputs.bounds = lipid_bilayer.outputs.bounds;
+        two_component.inputs.numReceptors = 5;
+        two_component.inputs.numTfs = 10;
+        two_component.inputs.percentActiveTFs = 0.0;
+        two_component.inputs.percentActiveMembranes = 0.0;
+        expression_cassette.inputs.startLocation = {x:0,y:0};
+
+        dna_template.init();
+        two_component.init();
 
         createjs.Ticker.timingMode = createjs.Ticker.RAF;
         createjs.Ticker.addEventListener("tick", _EASEL_STAGE);
 
-        var modules = [
-            lipid_bilayer(_EASEL_STAGE, rect1),
-            dna_template(_EASEL_STAGE, rect2),
-            two_component(_EASEL_STAGE, rect1),
-            protein_bursts(_EASEL_STAGE, rect1),
-            sbol_parts(_EASEL_STAGE, rect2)
-        ];
-
-        for (var i=0; i < modules.length; ++i) {
-            if (modules[i]) {
+        var modules = getAllModules();
+        for (var i=0; i < 3; ++i) {
+            if (modules[i].tick) {
                 createjs.Ticker.addEventListener("tick", modules[i].tick);
             }
         }
