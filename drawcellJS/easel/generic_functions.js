@@ -8,18 +8,43 @@ function getAllModules() {
     return lst;
 }
 
-function createAnimModule(name) {
-    _MODULES[name] = {
-        name: name, 
-        inputs: {}, 
-        outputs: {},
-        init: undefined,
-        tick: undefined
-    };
-    return _MODULES[name];
+function AnimModule(name) {
+    this.name = name;
+    this.inputs = {};
+    this.outputs = {};
+    this.init = null;
+    this.tick = null;
+
+    this.connections = [];
+
+    _MODULES[name] = this;
+    return this;
 }
 
-function initDiffusableMolecule(m, bounds, rotate) {
+AnimModule.prototype = {
+    connect: function(output, targetModule, input) {
+        if (targetModule) {
+            this.connections.push({ 
+                output: output, 
+                targetModule: targetModule,
+                input: input
+              });
+            targetModule.inputs[input] = this.outputs[output];
+        }
+    },
+
+    updateDownstream: function() {
+        var targetModule, input, output;
+        for (var i=0; i < this.connections.length; ++i) {
+            targetModule = this.connections[i].targetModule;
+            input = this.connections[i].input;
+            output = this.connections[i].output;
+            targetModule.inputs[input] = this.outputs[output];
+        }
+    }
+};
+
+function initDiffusableMolecule(m, bounds, rotate, speed) {
     if (rotate===undefined) {
         rotate = true;
     }
@@ -28,34 +53,50 @@ function initDiffusableMolecule(m, bounds, rotate) {
         m.rotation = 360*Math.random();
     }
 
+    if (!speed) {
+        speed = 1.0;
+    }
+
     m.allowRotation = rotate;
-    m.velX = 0.7*(Math.random() - 0.5);
-    m.velY = 0.7*(Math.random() - 0.5);
+    m.velX = speed*(Math.random() - 0.5);
+    m.velY = speed*(Math.random() - 0.5);
     m.velTheta = (Math.random() - 0.5);
     m.bounds = bounds;
 }
 
 function moveDiffusableMolecule(m) {
-    m.x = m.x + m.velX;
-    m.y = m.y + m.velY;
     var right = m.bounds.left + m.bounds.width;
     var bottom = m.bounds.top + m.bounds.height;
+    var outside = false;
+    var vX = m.velX, vY = m.velY;
 
     if (m.x > right) {
-        m.x = right;
-        m.velX = - m.velX;
+        m.velX = - Math.abs(m.velX);
+        vX = m.velX - 0.2;
+        outside = true;
     }
     if (m.x < m.bounds.left) {
-        m.x = m.bounds.left;
-        m.velX = - m.velX;
+        m.velX = Math.abs(m.velX);
+        vX = m.velX + 0.2;
+        outside = true;
     }
     if (m.y < m.bounds.top) {
-        m.y = m.bounds.top;
-        m.velY = - m.velY;
+        m.velY = Math.abs(m.velY);
+        vY = m.velY + 0.2;
+        outside = true;
     }
     if (m.y > bottom) {
-        m.y = bottom;
-        m.velY = - m.velY;
+        m.velY = - Math.abs(m.velY);
+        vY = m.velY - 0.2;
+        outside = true;
+    }
+
+    if (outside) {
+        m.x = m.x + 5*vX;
+        m.y = m.y + 5*vY;
+    } else {
+        m.x = m.x + vX;
+        m.y = m.y + vY;
     }
 
     if (m.allowRotation) {
@@ -68,3 +109,4 @@ function moveDiffusableMolecule(m) {
         }
     }
 }
+

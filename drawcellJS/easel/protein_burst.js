@@ -1,6 +1,6 @@
-var protein_bursts = createAnimModule("protein bursts");
+var protein_bursts = new AnimModule("protein bursts");
 
-protein_bursts.init = function(_EASEL_STAGE, scene) {
+protein_bursts.init = function() {
 
     var self = protein_bursts;
     self.mrnaSheet = new createjs.SpriteSheet({
@@ -26,8 +26,10 @@ protein_bursts.init = function(_EASEL_STAGE, scene) {
     self.existingProts = [];
     self.newProts = [];
     self.inputs.startLocation = {x:0, y:0};
-    self.inputs.burstRNA = 5;
-    self.inputs.burstProt = 12;
+    self.inputs.burstRNA = 0;
+    self.inputs.burstProt = 0;
+    self.delayRNA = 26;
+    self.delayProt = 11;
 };
 
 protein_bursts.tick = function(event) {
@@ -38,54 +40,61 @@ protein_bursts.tick = function(event) {
     var newProts = self.newProts;
     var mrna;
     var prot;
-    var delayRNA = 26, delayProt = 11;
-    var location = self.inputs.startLocation;
+    var rnaStartBounds = self.inputs.rnaStartBounds;
     var burstRNA = self.inputs.burstRNA;
     var burstProt = self.inputs.burstProt;
-    if (!location) return;
+    var bounds = self.inputs.bounds;
+    if (!rnaStartBounds) return;
 
-    if (mrnas.length < burstRNA && delayRNA > 25) {
-        mrna = new createjs.Sprite(mrnaSheet, "wiggle");
-        mrna.x = location.x + Math.random()*20;
-        mrna.y = location.y
+    if (mrnas.length < burstRNA && self.delayRNA > 25) {
+        mrna = new createjs.Sprite(self.mrnaSheet, "wiggle");
+        mrna.x = rnaStartBounds.left + Math.random()*20;
+        mrna.y = rnaStartBounds.top;
         mrna.scaleY = 1;
         mrna.scaleX = 1;
         _EASEL_STAGE.addChild(mrna);
         mrnas.push(mrna);
-        delayRNA = 0;
+        self.delayRNA = 0;
+
+        initDiffusableMolecule(mrna, bounds, false);
+        mrna.velY = - Math.abs(mrna.velY) - 0.7;
     }
 
-    if (mrnas.length > 3 && newProts.length < burstProt && delayProt > 10) {
-        prot = new createjs.Sprite(protSheet, "grey");
+    if (mrnas.length > 3 && newProts.length < burstProt && self.delayProt > 10) {
+        prot = new createjs.Sprite(self.protSheet, "grey");
         prot.x = mrnas[mrnas.length-1].x + 5;
         prot.y = mrnas[mrnas.length-1].y;
         prot.scaleY = 1;
         prot.scaleX = 1;
         _EASEL_STAGE.addChild(prot);
         newProts.push(prot);
-        delayProt = 0;
+        self.delayProt = 0;
 
-        initDiffusableMolecule(prot, scene);
+        initDiffusableMolecule(prot, bounds);
     }
 
-    delayRNA = delayRNA + 1;
-    delayProt = delayProt + 1;
+    self.delayRNA = self.delayRNA + 1;
+    self.delayProt = self.delayProt + 1;
     var allRNADead = true;
 
     for (i=0; i < mrnas.length; ++i) {
 
         if (mrnas[i]) {
             allRNADead = false;
-            mrnas[i].x = mrnas[i].x + (Math.random()-0.5) * 4;
-            mrnas[i].y = mrnas[i].y - Math.random() * 2;
+            moveDiffusableMolecule(self.mrnas[i]);
 
-            if (mrnas[i].y < scene.top + scene.height*0.6) {
+            if (mrnas[i].y < bounds.top + bounds.height*0.7) {
 
                 mrnas[i].alpha = 0.5;
 
-                if (mrnas[i].y < scene.top + scene.height*0.10) {
-                    _EASEL_STAGE.removeChild(mrnas[i]);
-                    mrnas[i] = undefined;
+                if (mrnas[i].y < bounds.top + bounds.height*0.6) {
+
+                    mrnas[i].alpha = 0.2;
+
+                    if (mrnas[i].y < bounds.top + bounds.height*0.5) {
+                        _EASEL_STAGE.removeChild(mrnas[i]);
+                        mrnas[i] = undefined;
+                    }
                 }
             }
         }
@@ -94,18 +103,18 @@ protein_bursts.tick = function(event) {
 
     if (allRNADead && mrnas.length > 0) {
         mrnas.length = 0;
-        existingProts = existingProts.concat(newProts);
-        newProts.length = 0;
-        parameters.protein_bursts.burstRNA = 0;
-        delayRNA = 11;
-        delayProt = 6;
+        self.existingProts = self.existingProts.concat(newProts);
+        self.newProts.length = 0;
+        self.inputs.burstRNA = 0;
+        self.delayRNA = 11;
+        self.delayProt = 6;
     }
 
-    for (i=0; i < existingProts.length; ++i) {
-        moveDiffusableMolecule(existingProts[i]);
+    for (i=0; i < self.existingProts.length; ++i) {
+        moveDiffusableMolecule(self.existingProts[i]);
     }
 
-    for (i=0; i < newProts.length; ++i) {
-        moveDiffusableMolecule(newProts[i]);
+    for (i=0; i < self.newProts.length; ++i) {
+        moveDiffusableMolecule(self.newProts[i]);
     }
 };

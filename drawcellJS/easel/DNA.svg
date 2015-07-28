@@ -27,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="151.55835"
-     inkscape:cy="555.27188"
+     inkscape:zoom="1.4"
+     inkscape:cx="331.76149"
+     inkscape:cy="685.86897"
      inkscape:document-units="px"
      inkscape:current-layer="g4639"
      showgrid="false"
-     inkscape:window-width="1361"
-     inkscape:window-height="835"
-     inkscape:window-x="65"
-     inkscape:window-y="24"
+     inkscape:window-width="1120"
+     inkscape:window-height="639"
+     inkscape:window-x="2354"
+     inkscape:window-y="471"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4088">
@@ -46,6 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -106,6 +107,84 @@
          id="path5415"
          inkscape:connector-curvature="0"
          style="fill:#f16032;stroke:#010101;stroke-width:0.249" />
+      <rect
+         style="fill:#d9dee4;fill-opacity:1;stroke:none"
+         id="rect5376"
+         width="8.586297"
+         height="75.761444"
+         x="344.12793"
+         y="2.9443171"
+         transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+         rx="12.952381"
+         ry="7.5761442"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
+      <rect
+         style="fill:#d9dee4;fill-opacity:1;stroke:none"
+         id="rect5376-3"
+         width="8.586297"
+         height="75.761444"
+         x="354.48203"
+         y="2.4392316"
+         rx="12.952381"
+         ry="7.0710678"
+         transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#879dad;fill-opacity:1;stroke:none"
+         id="path5356"
+         sodipodi:cx="499.01535"
+         sodipodi:cy="308.88992"
+         sodipodi:rx="24.243662"
+         sodipodi:ry="24.243662"
+         d="m 523.25901,308.88992 a 24.243662,24.243662 0 1 1 -48.48732,0 24.243662,24.243662 0 1 1 48.48732,0 z"
+         transform="matrix(0.57169012,-0.57169012,0.57169012,0.57169012,-211.26612,-140.02018)"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
+      <rect
+         style="fill:#d9dee4;fill-opacity:1;stroke:none"
+         id="rect5376-9"
+         width="8.586297"
+         height="75.761444"
+         x="-363.26999"
+         y="-154.58754"
+         rx="12.952381"
+         ry="7.5761442"
+         transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
+      <rect
+         style="fill:#d9dee4;fill-opacity:1;stroke:none"
+         id="rect5376-3-5"
+         width="8.586297"
+         height="75.761444"
+         x="-352.91589"
+         y="-155.09264"
+         rx="12.952381"
+         ry="7.0710678"
+         transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#879dad;fill-opacity:1;stroke:none"
+         id="path5356-1"
+         sodipodi:cx="499.01535"
+         sodipodi:cy="308.88992"
+         sodipodi:rx="24.243662"
+         sodipodi:ry="24.243662"
+         d="m 523.25901,308.88992 a 24.243662,24.243662 0 1 1 -48.48732,0 24.243662,24.243662 0 1 1 48.48732,0 z"
+         transform="matrix(-0.57169012,0.57169012,-0.57169012,-0.57169012,822.86383,-248.79384)"
+         inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/bilayer.png"
+         inkscape:export-xdpi="20.021393"
+         inkscape:export-ydpi="20.021393" />
     </g>
   </g>
 </svg>

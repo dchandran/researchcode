@@ -1,4 +1,4 @@
-var dna_template = createAnimModule("dna template");
+var dna_template = new AnimModule("dna template");
 
 dna_template.init = function() {
     var self = dna_template;
@@ -15,6 +15,8 @@ dna_template.init = function() {
 
     var dnaStrand;
     var y = scene.top + scene.height*0.75;
+    scene.left = scene.left + 100;
+    scene.width = scene.width - 200;
 
     for (var i=0; i <= scene.width; i = i + 90*0.3) {
         dnaStrand = new createjs.Sprite(dnaSheet, "normal");
@@ -25,5 +27,5 @@ dna_template.init = function() {
         _EASEL_STAGE.addChild(dnaStrand);
     }
 
-    self.outputs.location = {x: scene.left, y: y};
+    self.outputs.bounds = {left: scene.left, width: scene.width, top: y, height:10};
 };

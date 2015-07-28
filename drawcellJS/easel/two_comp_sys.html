@@ -11,51 +11,13 @@
     <script src="lipid_bilayer.js"></script>
     <script src="dna_template.js"></script>
     <script src="two_component.js"></script>
-
-    
-<script id="editable">
-    var _EASEL_STAGE;
-
-
-    function init() {
-
-        // create a new stage and point it at our canvas:
-        _EASEL_STAGE = new createjs.Stage(document.getElementById("testCanvas"));
-
-        lipid_bilayer.inputs.bounds = {left:0, top:0, width: _EASEL_STAGE.canvas.width, height: _EASEL_STAGE.canvas.height};
-        lipid_bilayer.init();
-
-        dna_template.inputs.bounds = lipid_bilayer.outputs.bounds;
-        two_component.inputs.bounds = lipid_bilayer.outputs.bounds;
-        two_component.inputs.numReceptors = 5;
-        two_component.inputs.numTfs = 10;
-        two_component.inputs.percentActiveTFs = 0.0;
-        two_component.inputs.percentActiveMembranes = 0.0;
-        expression_cassette.inputs.startLocation = {x:0,y:0};
-
-        dna_template.init();
-        two_component.init();
-
-        createjs.Ticker.timingMode = createjs.Ticker.RAF;
-        createjs.Ticker.addEventListener("tick", _EASEL_STAGE);
-
-        var modules = getAllModules();
-        for (var i=0; i < 3; ++i) {
-            if (modules[i].tick) {
-                createjs.Ticker.addEventListener("tick", modules[i].tick);
-            }
-        }
-
-        
-    }
-
-</script>
+    <script src="main.js"></script>
 </head>
 
-<body onload="init();">
+<body onload="main();">
 
-<div>
-    <canvas id="testCanvas" width="1000" height="800"></canvas>
-</div>
+	<div>
+	    <canvas id="canvas" width="1000" height="800"></canvas>
+	</div>
 </body>
 </html>

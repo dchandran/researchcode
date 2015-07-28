@@ -1136,15 +1136,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="154.7936"
+     inkscape:cx="6.3011083"
      inkscape:cy="685.42254"
      inkscape:document-units="px"
      inkscape:current-layer="g4627"
      showgrid="false"
      inkscape:window-width="1327"
      inkscape:window-height="820"
-     inkscape:window-x="92"
-     inkscape:window-y="62"
+     inkscape:window-x="2254"
+     inkscape:window-y="192"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
@@ -1154,7 +1154,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1163,7 +1163,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:#7ca4bb;fill-opacity:1;stroke:#416072;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#97bace;fill-opacity:1;stroke:#416072;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 2.5,495.65718 153.84975,0 59.09108,48.2684 -59.09108,45.38672 -153.84975,0 z"
        id="rect4622"
        inkscape:connector-curvature="0"
@@ -1180,7 +1180,7 @@
       <path
          id="rect4612-1"
          d="m 201.03125,69.15625 0,24.625 -68.875,0 0,0.71875 0,24.28125 0,66.4375 25.71875,0 0,-66.4375 43.15625,0 0,21.0625 L 231.625,122.1875 262.25,104.5 231.625,86.84375 201.03125,69.15625 z"
-         style="fill:#198341;fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:6.28834610000000005;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#2ae26f;fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:6.28834610000000005;stroke-miterlimit:4;stroke-dasharray:none"
          inkscape:connector-curvature="0"
          inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/SBOL/promoter.png"
          inkscape:export-xdpi="90"
@@ -1207,7 +1207,7 @@
       <path
          id="rect4612"
          d="m 201.03125,69.15625 0,24.625 -68.875,0 0,0.71875 0,24.28125 0,66.4375 25.71875,0 0,-66.4375 43.15625,0 0,21.0625 L 231.625,122.1875 262.25,104.5 231.625,86.84375 201.03125,69.15625 z"
-         style="fill:#416072;fill-opacity:1;stroke:none"
+         style="fill:#a4c1d2;fill-opacity:1;stroke:none"
          inkscape:connector-curvature="0"
          inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/SBOL/promoter.png"
          inkscape:export-xdpi="90"
@@ -1220,7 +1220,7 @@
          height="102.85714"
          width="102.85714"
          id="rect3837"
-         style="fill:#7ca4bb;fill-opacity:1;stroke:#416072;stroke-width:6.28834610000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         style="fill:#97bace;fill-opacity:1;stroke:#416072;stroke-width:6.28834610000000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/SBOL/promoter.png"
          inkscape:export-xdpi="90"
          inkscape:export-ydpi="90" />

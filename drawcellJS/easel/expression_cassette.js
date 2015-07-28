@@ -1,4 +1,4 @@
-var expression_cassette = createAnimModule("expression cassette");
+var expression_cassette = new AnimModule("expression cassette");
 
 expression_cassette.init = function(_EASEL_STAGE, scene) {
 
@@ -24,18 +24,19 @@ expression_cassette.init = function(_EASEL_STAGE, scene) {
                     })
     };
 
-    self.parts = [];    
+    self.parts = [];
 };
 
 expression_cassette.tick = function(event) {
 
     var self = expression_cassette;
-    var location = self.inputs.startLocation;
+    var bounds = self.inputs.bounds;
     var part, desc, i, sheet;
     var partDesc = self.inputs.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
     var partTypeSpriteHash = self.partTypeSpriteHash;
     var parts = self.parts;
-    var x = location.x;
+    var x = bounds.left, y = bounds.top;
+    var j = 0, n = Object.keys(partDesc).length;
 
     if (partDesc) {
         for (i in partDesc) {
@@ -57,11 +58,32 @@ expression_cassette.tick = function(event) {
                     }
                 }
                 part.x = x;
-                x = x + part.getBounds().width * 0.3;
-                part.y = location.y;
+                bounds = part.getBounds();
+                if (bounds) {
+                    if (j == 0) {
+                        self.outputs.firstPartBounds = {
+                            left: x, 
+                            top: y,
+                            width: bounds.width * 0.3,
+                            height: bounds.height * 0.3
+                        };
+                        self.updateDownstream();
+                    } else {
+                        if (j == (n-1)) {
+                            self.outputs.lastPartBounds = {
+                                left: x, 
+                                top: y,
+                                width: bounds.width * 0.3,
+                                height: bounds.height * 0.3
+                            };
+                        }
+                        self.updateDownstream();
+                    }
+                    x = x + bounds.width * 0.3;
+                    part.y = y - bounds.height * 0.3;
+                }
             }
+            j = j + 1;
         }
     }
-
-    self.outputs.endLocation = {x: x - 100, y: location.y - 20};
 };

@@ -1,9 +1,9 @@
-var two_component = createAnimModule("two component");
+var two_component = new AnimModule("two component");
     
 two_component.init = function() {
     var i;
     var self = two_component;
-    var scene = self.inputs.bounds;
+    var bounds = self.inputs.inactiveBounds;
             
     self.proteinChompSheet = new createjs.SpriteSheet({
         framerate: 30,
@@ -34,7 +34,7 @@ two_component.init = function() {
     var recp;
     for (i=0; i < n; ++i) {
         recp = new createjs.Sprite(self.membraneChompSheet, "inert", false);
-        initDiffusableMolecule(recp, {left: scene.left, width: scene.width, height: 0, top: scene.top-75}, false);
+        initDiffusableMolecule(recp, {left: bounds.left, width: bounds.width, height: 0, top: bounds.top-140}, false);
         recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
         recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
         recp.scaleX = recp.scaleY = 1;
@@ -52,9 +52,9 @@ two_component.init = function() {
     var tf;
     for (i=0; i < n; ++i) {
         tf = new createjs.Sprite(self.proteinChompSheet, "inert");
-        initDiffusableMolecule(tf, {left: scene.left, width: scene.width, height: scene.height/4, top: scene.top+70});
+        initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
         tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
-        tf.y = tf.bounds.top + tf.bounds.height*(Math.random());
+        tf.y = tf.bounds.top;// + (Math.random());
         tf.scaleX = tf.scaleY = 1;
 
         // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
@@ -70,6 +70,7 @@ two_component.tick = function(event) {
     var percentActiveMembranes = self.inputs.percentActiveMembranes;
     var receptors = self.receptors;
     var tfs = self.tfs;
+    var bounds = self.inputs.activeBounds;
 
     for (i=0; i < receptors.length; ++i) {
         rec = receptors[i];
@@ -86,9 +87,7 @@ two_component.tick = function(event) {
 
         if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
             tf.gotoAndPlay('active');
-            tf.velX *= 3;
-            tf.velY *= 3;
-            tf.bounds.height = scene.height;
+            initDiffusableMolecule(tf, bounds);
         }
 
         moveDiffusableMolecule(tf);
