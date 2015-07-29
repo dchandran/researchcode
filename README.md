@@ -2,4 +2,4 @@
 Research related stuff
 
 
-![alt tag](https://raw.github.com/username/projectname/branch/path/to/img.png)
+![alt tag](https://bitbucket.org/dchandran/researchcode/drawcellJS/screenshots/2015-07-28.jpg)
