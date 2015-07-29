@@ -57,6 +57,8 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
         speed = 1.0;
     }
 
+    m.speed = speed;
+
     m.allowRotation = rotate;
     m.velX = speed*(Math.random() - 0.5);
     m.velY = speed*(Math.random() - 0.5);
@@ -106,6 +108,13 @@ function moveDiffusableMolecule(m) {
 
         if (Math.random() < 0.01) {
             m.velTheta = Math.random() - 0.5;
+        }
+
+        if (Math.random() < 0.01) {
+            if (m.velX !== 0)
+                m.velX = m.speed*(Math.random() - 0.5);
+            if (m.velY !== 0)
+                m.velY = m.speed*(Math.random() - 0.5);
         }
     }
 }

@@ -70,24 +70,35 @@ two_component.tick = function(event) {
     var percentActiveMembranes = self.inputs.percentActiveMembranes;
     var receptors = self.receptors;
     var tfs = self.tfs;
-    var bounds = self.inputs.activeBounds;
 
     for (i=0; i < receptors.length; ++i) {
         rec = receptors[i];
 
         if (rec.currentAnimation !== 'active' && i < percentActiveMembranes*receptors.length) {
             rec.gotoAndPlay('active');
+        } else {
+            if (rec.currentAnimation !== 'inert' && i >= percentActiveMembranes*receptors.length) {
+                rec.gotoAndPlay('inert');
+            }
         }
 
         moveDiffusableMolecule(rec);
     }
 
+    var bounds;
     for (i=0; i < tfs.length; ++i) {
         tf = tfs[i];
 
         if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
             tf.gotoAndPlay('active');
+            bounds = self.inputs.activeBounds;
             initDiffusableMolecule(tf, bounds);
+        } else {
+            if (tf.currentAnimation !== 'inert' && i >= percentActiveTFs*tfs.length) {
+                tf.gotoAndPlay('inert');
+                bounds = self.inputs.inactiveBounds;
+                initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
+            }
         }
 
         moveDiffusableMolecule(tf);
