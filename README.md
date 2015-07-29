@@ -2,4 +2,4 @@
 Research related stuff
 
 
-![image missing](https://bytebucket.org/dchandran/researchcode/raw/67d69da78aae97a7a4e62d7b741eb9878b4c3970/drawcellJS/screenshots/2015-07-28.png?token=cc454f3b55f0581775f0eb86f491bdb518cd0da2 =70x)
+![image missing](https://bytebucket.org/dchandran/researchcode/raw/8d66c8120c463cc628df5ffc76b667714ecdf844/drawcellJS/screenshots/2015-07-28.png?token=58d697d4fe18cc0f1daa39f9a7f6fd80186bd08c =70x)
