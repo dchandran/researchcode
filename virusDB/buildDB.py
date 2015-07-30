@@ -35,8 +35,9 @@ def get_virus_data(accession):
     proteins = []
     entry = None
 
-    orgn_pattern = re.compile("<organism rdf:resource=\"([^\"]+)\"\\s")
-    host_pattern = re.compile("<host rdf:resource=\"([^\"]+)\"\\s")
+    orgn_pattern = re.compile("<organism rdf:resource=\"([^\"]+)\"")
+    host_pattern = re.compile("<host rdf:resource=\"([^\"]+)\"")
+    host_name_pattern = re.compile("<scientificName>([^<]+)")
 
     for entry in GenBank.parse(handle):
         break
@@ -57,6 +58,7 @@ def get_virus_data(accession):
         protein_id = None
         organism_url = None
         host_url = None
+        host = None
 
         for feature in entry.features:
             for quals in feature.qualifiers:
@@ -89,17 +91,32 @@ def get_virus_data(accession):
                        break
                 f.close()
 
+            if host_url:
+                filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
+                f = open(filename)
+                for line in f.readlines():
+                    m = host_name_pattern.match(line)
+                    if m:
+                       host_name = m.group(1)
+                       break
+                f.close()
+
         virus['organism_url'] = organism_url
         virus['host_url'] = host_url
+        virus['host'] = host_name
+
         return virus
 
 acc_lst = get_all_virus_accession_numbers()
 virus_table = []
 
-for acc in acc_lst:
-    print ("parsing " + acc + "\n")
-    dat = get_virus_data(acc)
-    virus_table.append(dat)
-    if dat and dat['host_url']:
-        break
+acc = "NC_001416"  #for phage lambda
+dat = get_virus_data(acc)
+
+#for acc in acc_lst:
+#    print ("parsing " + acc + "\n")
+#    dat = get_virus_data(acc)
+#    virus_table.append(dat)
+#    if dat and dat['host_url']:
+#        print ("host entry exists for " + acc)
 
