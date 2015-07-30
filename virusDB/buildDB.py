@@ -107,6 +107,8 @@ def get_virus_data(accession):
 
         return virus
 
+
+#MAIN
 acc_lst = get_all_virus_accession_numbers()
 virus_table = []
 
