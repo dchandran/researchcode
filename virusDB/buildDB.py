@@ -1,3 +1,5 @@
+import os
+import sys
 import wget
 import csv
 import rdflib
@@ -23,6 +25,7 @@ def get_all_virus_accession_numbers():
             acc = row[0].split(',')[0]  #just in case there are multiple acc num
             if acc[0:2]=='NC':
                 acc_lst[acc] = True
+    os.remove(filename)
     return list(acc_lst.keys())
 
 def get_virus_data(accession):
@@ -80,6 +83,7 @@ def get_virus_data(accession):
                     break
 
             f.close()
+            os.remove(filename)
 
             if organism_url:
                 filename = wget.download(organism_url+".rdf",out="uniprot.taxonomy.out")
@@ -90,6 +94,7 @@ def get_virus_data(accession):
                        host_url = m.group(1)
                        break
                 f.close()
+                os.remove(filename)
 
             if host_url:
                 filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
@@ -100,6 +105,7 @@ def get_virus_data(accession):
                        host_name = m.group(1)
                        break
                 f.close()
+                os.remove(filename)
 
         virus['organism_url'] = organism_url
         virus['host_url'] = host_url
@@ -115,10 +121,10 @@ virus_table = []
 acc = "NC_001416"  #for phage lambda
 dat = get_virus_data(acc)
 
-#for acc in acc_lst:
-#    print ("parsing " + acc + "\n")
-#    dat = get_virus_data(acc)
-#    virus_table.append(dat)
-#    if dat and dat['host_url']:
-#        print ("host entry exists for " + acc)
+for acc in acc_lst:
+   print ("parsing " + acc + "\n")
+   dat = get_virus_data(acc)
+   virus_table.append(dat)
+   if dat and dat['host_url']:
+       print ("host entry exists for " + acc)
 
