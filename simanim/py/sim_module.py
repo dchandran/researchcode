@@ -26,13 +26,26 @@ class sim_module(object):
 class sim_connection(object):
     """
     """
-    def __init__(self):
-        self.input_module = None
+    def __init__(self, input_module=None, input=None, output_module=None, output=None):
+        self.input_module = input_module
+        self.output_module = output_module
+
         self.input_parameter = None
         self.input_species = None
-        self.output_module = None
+
         self.output_parameter = None
         self.output_species = None
+
+        if input_module:
+            if input_module.parameters.get(input) != None:
+                self.input_parameter = input
+            elif input_module.species.get(input) != None:
+                self.input_species = input
+        if output_module:
+            if output_module.parameters.get(output) != None:
+                self.output_parameter = output
+            elif output_module.species.get(output) != None:
+                self.output_species = output
 
 def combine_modules(modules, connections):
     """
@@ -50,63 +63,67 @@ def combine_modules(modules, connections):
 
     for c in connections:
         if c.output_species and c.output_module:
-            if not output_species.get(c.output_species):
-                output_species = []
-            output_species.append(c.output_module)
+            if output_species.get(c.output_species) == None:
+                output_species[c.output_species] = []
+            output_species[c.output_species].append(c.output_module)
         if c.output_parameter and c.output_module:
-            if not output_params.get(c.output_parameter):
-                output_params = []
-            output_params.append(c.output_parameter)
+            if output_params.get(c.output_parameter) == None:
+                output_params[c.output_parameter] = []
+            output_params[c.output_parameter].append(c.output_module)
 
 
     collisions = []
 
     def replace_name(module, old, new):
-        if module.parameters.get(old):
+        if module.parameters.get(old) != None:
             module.parameters[new] = module.parameters[old]
             del module.parameters[old]
-        if module.species.get(old):
+        if module.species.get(old) != None:
             module.species[new] = module.species[old]
             del module.species[old]
         for r in module.reactions:
-            module.reactions[r] = re.sub(old, new, module.reactions[r])
+            module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"([^a-zA-Z0-9_])", r"\1"+new+r"\2", module.reactions[r])
+            module.reactions[r] = re.sub(r"^" + old + r"([^a-zA-Z0-9_])", new + r"\2", module.reactions[r])
+            module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"$", r"\1" + new, module.reactions[r])
+            module.reactions[r] = re.sub(r"^" + old + r"$", new, module.reactions[r])
+
+    for c in connections:
+        if c.output_module:
+            if c.output_species and c.input_species:
+                del c.output_module.species[c.output_species]
+            elif c.output_parameter and c.input_parameter:
+                del c.output_module.parameters[c.output_parameter]
 
 
     for i in range(0,len(modules)):
         for p in modules[i].parameters:
-            if existing_params.get(p):
-                if not (output_params.get(p) and output_params[p].count(modules[i]) > 0):
-                    collisions.append( {'module1': existing_params[p], 'module2': modules[i], 'name': p} )
+            if existing_params.get(p) != None:
+                if not (output_params.get(p) != None and output_params[p].count(modules[i]) > 0):
+                    collisions.append( {'module': modules[i], 'name': p} )
             else:
                 existing_params[p] = modules[i]
 
         for s in modules[i].species:
-            if existing_species.get(s):
-                if not (output_species.get(s) and output_species[s].count(modules[i]) > 0):
-                    collisions.append( {'module1': existing_species[s], 'module2': modules[i], 'name': s} )
+            if existing_species.get(s) != None:
+                if not (output_species.get(s) != None and output_species[s].count(modules[i]) > 0):
+                    collisions.append( {'module': modules[i], 'name': s} )
             else:
                 existing_species[s] = modules[i]
 
-        for collision in collisions:
-            module1 = collision['module1']
-            module2 = collision['module2']
-            name = collision['name']
+    for collision in collisions:
+        module = collision['module']
+        name = collision['name']            
+        replace_name(module, name, module.name + '_' + name)
 
-            replace_name(module1, name, module1.name + '_' + name)
-            replace_name(module2, name, module2.name + '_' + name)
-
-            for c in connections:
-                if c.input_parameter == name:
-                    if c.input_module == module1:
-                        c.input_parameter = module1.name + '_' + name
-                    if c.input_module == module2:
-                        c.input_parameter = module2.name + '_' + name
-                if c.input_species == name:
-                    if c.input_module == module1:
-                        c.input_species = module1.name + '_' + name
-                    if c.input_module == module2:
-                        c.input_species = module2.name + '_' + name
-
+        #existing species/parameters are not listed in collision because
+        #they are the first items in the existing_ hashtable, but we 
+        #need to replace their names as well, just to be fair
+        if existing_params.get(name):
+            replace_name(existing_params[name], name, existing_params[name].name + '_' + name)
+            del existing_params[name]
+        if existing_species.get(name):
+            replace_name(existing_species[name], name, existing_species[name].name + '_' + name)
+            del existing_species[name]
 
     for c in connections:
         if c.output_module:
