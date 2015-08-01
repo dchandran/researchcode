@@ -118,13 +118,11 @@ def get_virus_data(accession):
 acc_lst = get_all_virus_accession_numbers()
 virus_table = []
 
-acc = "NC_001416"  #for phage lambda
-dat = get_virus_data(acc)
+# acc = "NC_001416"  #for phage lambda
+# dat = get_virus_data(acc)
 
 for acc in acc_lst:
    print ("parsing " + acc + "\n")
    dat = get_virus_data(acc)
    virus_table.append(dat)
-   if dat and dat['host_url']:
-       print ("host entry exists for " + acc)
 
