@@ -18,4 +18,4 @@ smod.Model('temp.psc','.')
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.SSA.species_names
 smod.data_stochsim.time
-smod.data_stochsim.species[200,:]
+smod.data_stochsim.species
