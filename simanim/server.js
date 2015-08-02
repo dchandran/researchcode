@@ -32,12 +32,18 @@ http.createServer(function (request, response) {
             try {
                 code = decodeURI(chunk);
                 fs.writeFile("temp.py", code, function(err) {
-                    if(err) {
-                        console.log("Write File Error:" + err);
-                    }
+                    if(err) console.log("Write File Error:" + err);
+
                     exec('python3 temp.py', function (error, stdout, stderr) {
                       console.log(stdout);
-                      console.log("Python Error: " + stderr);
+                      console.log(stderr);
+                      fs.readFile('temp.out', function (err, data) {
+                          if (err) console.log("Read File Error:" + err);
+                          console.log(data);
+                          response.writeHead(200, {'Content-Type': 'text/plain' });
+                          response.write("Hello Back");        
+                          response.end();
+                        });
                     });
                 }); 
                 
@@ -45,9 +51,5 @@ http.createServer(function (request, response) {
                 console.log("Exception: " + err);
             }
         }
-        
-        response.writeHead(200, {'Content-Type': 'text/plain' });
-        response.write("Hello Back");        
-        response.end();
     });
 }).listen(1337, '127.0.0.1');

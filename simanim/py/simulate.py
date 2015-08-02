@@ -1,5 +1,6 @@
 from sim_module import *
 import stochpy
+import json
 
 m1 = sim_module("two_component") 
 m2 = sim_module("protein_burst")
@@ -16,6 +17,9 @@ f.close()
 smod = stochpy.SSA()
 smod.Model('temp.psc','.')
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
-smod.SSA.species_names
-smod.data_stochsim.time
-smod.data_stochsim.species
+
+obj = {'headers': ['time']+smod.SSA.species_names.aslist(),
+        'time': smod.data_stochsim.time.aslist(),
+        'species': smod.data_stochsim.species.aslist()};
+
+json.dump(obj, open('temp.out','w'))
