@@ -51,7 +51,7 @@ function main() {
     canvas.top = 0;
 
     var bg = new createjs.Shape();
-    bg.graphics.beginFill("#222222").drawRect(canvas.left, canvas.top, canvas.width, canvas.height);
+    bg.graphics.beginFill("#000000").drawRect(canvas.left, canvas.top, canvas.width, canvas.height);
     _EASEL_STAGE.addChild(bg);
 
     lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};

@@ -6,7 +6,7 @@ lipid_bilayer.init = function() {
     var scene = self.inputs.bounds;
 
     var bg = new createjs.Shape();
-    bg.graphics.beginFill("#333333").drawRect(scene.left, scene.top + 100, scene.width, scene.height);
+    bg.graphics.beginFill("#222233").drawRect(scene.left, scene.top + 100, scene.width, scene.height);
     _EASEL_STAGE.addChild(bg);    
 
     var bilayerSheet = new createjs.SpriteSheet({
