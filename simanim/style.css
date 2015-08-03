@@ -59,13 +59,13 @@ ul.tabs a {
 }
 
 ul.tabs a:hover {
-    color:yellow;
+    color:#88bbff;
 }
 
 ul.tabs a.current, ul.tabs a.current:hover, ul.tabs li.current a {
     font-size: 14px;
     cursor:default !important;
-    color:yellow;
+    color:#88bbff;
 }
 
 
