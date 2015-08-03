@@ -31,10 +31,11 @@ http.createServer(function (request, response) {
         if (parsedUrl.pathname==='/api') {
             try {
                 code = decodeURI(chunk);
-                fs.writeFile("temp.py", code, function(err) {
+                console.log(code);
+                fs.writeFile("py/temp.py", code, function(err) {
                     if(err) console.log("Write File Error:" + err);
 
-                    exec('python3 temp.py', function (error, stdout, stderr) {
+                    exec('python3 py/temp.py', function (error, stdout, stderr) {
                       console.log(stdout);
                       console.log(stderr);
                       fs.readFile('temp.out', function (err, data) {

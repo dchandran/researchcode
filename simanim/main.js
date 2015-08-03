@@ -9,6 +9,25 @@ function fitToContainer(canvas){
   canvas.height = canvas.offsetHeight;
 }
 
+function runPyCode(code) {
+    $.ajax({
+        type: 'POST',
+        url: '/api',
+        data: encodeURI(code),
+        success: function(data) {
+            debugger;
+        }
+    });
+}
+
+function updatePscModel(txt) {
+    
+}
+
+function updateModules(txt) {
+    
+}
+
 function initGUI() {
     $("ul.tabs").tabs("div.panes > div");
 
@@ -23,7 +42,7 @@ function initGUI() {
     //var theme = "ace/theme/monokai"
     var theme = "ace/theme/clouds_midnight"
 
-    function setupCodeEditor(id, language, url) {
+    function setupCodeEditor(id, language, url, callback) {
         var editor = ace.edit(id);
         editor.setFontSize('16px');
         editor.setTheme(theme);
@@ -37,11 +56,21 @@ function initGUI() {
                 editor.setValue(data);
             }
           });
+
+        if (callback)
+            editor.commands.addCommand({
+                name: 'ExScript',
+                bindKey: 'Shift-Enter',
+                exec: function(editor) {
+                    callback(editor.getValue());
+                },
+                readOnly: true
+            });
     }
 
-    setupCodeEditor("modelpane", "python", 'example.psc');
-    setupCodeEditor("codepane", "python", 'py/simulate.py');
-    setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml');
+    setupCodeEditor("modelpane", "python", 'example.psc', updatePscModel);
+    setupCodeEditor("codepane", "python", 'py/simulate.py', runPyCode);
+    setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
 }
 
 function main() {

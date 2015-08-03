@@ -1,4 +1,4 @@
-import yaml
+from pyaml import yaml
 import re
 class sim_module(object):
     """
