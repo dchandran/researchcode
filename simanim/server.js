@@ -39,9 +39,8 @@ http.createServer(function (request, response) {
                       console.log(stderr);
                       fs.readFile('temp.out', function (err, data) {
                           if (err) console.log("Read File Error:" + err);
-                          console.log(data);
                           response.writeHead(200, {'Content-Type': 'text/plain' });
-                          response.write("Hello Back");        
+                          response.write(JSON.stringify(data));
                           response.end();
                         });
                     });

@@ -1,13 +1,47 @@
 var _EASEL_STAGE;
 
-function main() {
-    var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-    var cdiv = document.getElementById("canvas");
-    cdiv.width = dimension[0];
-    cdiv.height = dimension[1];
+function fitToContainer(canvas){
+  // Make it visually fill the positioned parent
+  canvas.style.width ='100%';
+  canvas.style.height='100%';
+  // ...then set the internal size to match
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
 
+function initGUI() {
+    var canvas = document.getElementById("canvas");
+    fitToContainer(canvas);
+    
     // create a new stage and point it at our canvas:
-    _EASEL_STAGE = new createjs.Stage(cdiv);
+    _EASEL_STAGE = new createjs.Stage(canvas);
+
+    //setup code editors
+
+    function setupCodeEditor(id) {
+        var editor = CodeMirror.fromTextArea(document.getElementById(id), {
+            lineNumbers: true,
+            matchBrackets: true,
+            continueComments: "Enter",
+            extraKeys: {"Ctrl-Q": "toggleComment"}
+          });
+
+        editor.on('blur', function(e) {
+        });
+
+        editor.setSize('100%','100%');
+        editor.setOption("theme", "monokai");
+    }
+
+    setupCodeEditor("modeltext");
+    setupCodeEditor("codetext");
+    setupCodeEditor("yamltext");
+
+    pureTabs.init('tabs__link', 'tabs__link--active');
+}
+
+function main() {
+    initGUI();
     var canvas = _EASEL_STAGE.canvas;
     canvas.left = 0;
     canvas.top = 0;
