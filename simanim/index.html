@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #container {
+            width:100%;
+        }
+
+        #center {
+            display: inline-block;
+            margin:0 auto;
+            width: 70%;
+            height: 800px;
+        }
+
+        #right {
+            float:right;
+            width:30%;
+            height: 800px;
+        }
+
+        .panes>div {
+            display:none;
+            padding:15px 10px;
+            border-top :0px;
+            height:800px;
+            font-size:14px;
+        }
+
+         ul.tabs {
+            list-style:none;
+            margin:0 !important;
+            padding:0;
+            height:30px;
+            background:#000;
+        }
+
+        ul.tabs li {
+            float:left;
+            text-indent:0;
+            padding:0;
+            margin:0 !important;
+        }
+
+        ul.tabs a {
+            font-size:11px;
+            display:block;
+            height: 30px;
+            line-height:30px;
+            width: 134px;
+            text-align:center;
+            text-decoration:none;
+            padding:0px;
+            margin:0px;
+            position:relative;
+            top:1px;
+            color:white;
+        }
+
+         ul.tabs a:active {
+            outline:none;
+
+        }
+
+        ul.tabs a:hover {
+            color:yellow;
+        }
+
+        ul.tabs a.current, ul.tabs a.current:hover, ul.tabs li.current a {
+            font-size: 14px;
+            cursor:default !important;
+            color:yellow;
+        }
+
+
+        #modelpane { 
+            position: relative;
+        }
+
+        .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+          .CodeMirror-selected  { background-color: blue !important; }
+          .CodeMirror-selectedtext { color: white; }
+          .styled-background { background-color: #ff7; }
+
+    </style>
+    <meta charset="utf-8">
+    <title>EaselJS: Protein Chomp</title>
+
+    <script src="third-party/easeljs/easeljs-NEXT.combined.js"></script>
+    <script src="third-party/jquery.js"></script>
+    <link rel="stylesheet" href="third-party/codemirror/codemirror.css">
+    <link rel="stylesheet" href="third-party/codemirror/solarized.css">
+    <link rel="stylesheet" href="third-party/codemirror/mdn-like.css">
+    <link rel="stylesheet" href="third-party/codemirror/neat.css">
+    <link rel="stylesheet" href="third-party/codemirror/monokai.css">
+    <script src="third-party/codemirror/codemirror.js"></script>
+    <script src="third-party/codemirror/matchbrackets.js"></script>
+    <script src="third-party/codemirror/continuecomment.js"></script>
+    <script src="third-party/codemirror/comment.js"></script>
+    <script src="third-party/codemirror/python.js"></script>
+    <script src="third-party/jquery.tools.min.js" charset="utf-8"></script>
+    <script src="third-party/ace/ace.js" charset="utf-8"></script>
+
+    <script src="generic_functions.js"></script>
+    <script src="jsmodules/protein_burst.js"></script>
+    <script src="jsmodules/expression_cassette.js"></script>
+    <script src="jsmodules/lipid_bilayer.js"></script>
+    <script src="jsmodules/dna_template.js"></script>
+    <script src="jsmodules/two_component.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body onload="main();">
+
+    <div id="container">
+      <div id="left"></div>
+      <div id="center">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div id="right">
+
+            <ul class="tabs">
+              <li><a href="#">Model</a></li>
+              <li><a href="#">Code</a></li>
+              <li><a href="#">Modules</a></li>
+            </ul>
+            <!-- tab "panes" -->
+            <div class="panes">
+              <div id="modelpane">
+              </div>
+              <div id="codepane">
+              </div>
+              <div id="yamlpane">
+              </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+</html>

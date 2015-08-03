@@ -10,6 +10,8 @@ function fitToContainer(canvas){
 }
 
 function initGUI() {
+    $("ul.tabs").tabs("div.panes > div");
+
     var canvas = document.getElementById("canvas");
     fitToContainer(canvas);
     
@@ -18,26 +20,28 @@ function initGUI() {
 
     //setup code editors
 
-    function setupCodeEditor(id) {
-        var editor = CodeMirror.fromTextArea(document.getElementById(id), {
-            lineNumbers: true,
-            matchBrackets: true,
-            continueComments: "Enter",
-            extraKeys: {"Ctrl-Q": "toggleComment"}
+    //var theme = "ace/theme/monokai"
+    var theme = "ace/theme/clouds_midnight"
+
+    function setupCodeEditor(id, language, url) {
+        var editor = ace.edit(id);
+        editor.setFontSize('16px');
+        editor.setTheme(theme);
+        editor.renderer.setShowGutter(false); 
+        editor.getSession().setMode("ace/mode/" + language);
+
+        if (url)
+         $.ajax({
+            url:url,
+            success: function(data) {
+                editor.setValue(data);
+            }
           });
-
-        editor.on('blur', function(e) {
-        });
-
-        editor.setSize('100%','100%');
-        editor.setOption("theme", "monokai");
     }
 
-    setupCodeEditor("modeltext");
-    setupCodeEditor("codetext");
-    setupCodeEditor("yamltext");
-
-    pureTabs.init('tabs__link', 'tabs__link--active');
+    setupCodeEditor("modelpane", "python", 'example.psc');
+    setupCodeEditor("codepane", "python", 'py/simulate.py');
+    setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml');
 }
 
 function main() {
