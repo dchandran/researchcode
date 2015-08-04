@@ -44,6 +44,22 @@ AnimModule.prototype = {
     }
 };
 
+function TimeSeriesData(data) {
+
+};
+
+TimeSeriesData.prototype = {
+
+    setTime: function(t) {
+        this.time = t;
+        updateDownstream();
+    },
+    
+    updateDownstream: function() {
+        
+    },
+};
+
 function initDiffusableMolecule(m, bounds, rotate, speed) {
     if (rotate===undefined) {
         rotate = true;
@@ -118,4 +134,6 @@ function moveDiffusableMolecule(m) {
         }
     }
 }
+
+
 

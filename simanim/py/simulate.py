@@ -11,16 +11,19 @@ c2 = sim_connection(m1, "k1", m2, "k1")
 
 s = combine_modules([m1, m2], [c1,c2])
 
-f = open(sys.argv[2],'w')
+modelfile = sys.argv[1]
+outfile = sys.argv[2]
+
+f = open(sys.argv[0],'w')
 f.write(s)
 f.close()
 
 smod = stochpy.SSA()
-smod.Model(sys.argv[1],'.')
+smod.Model(modelfile,'.')
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 
-obj = {'headers': ['time']+smod.SSA.species_names.aslist(),
-        'time': smod.data_stochsim.time.aslist(),
-        'species': smod.data_stochsim.species.aslist()};
+obj = {'headers': ['time']+smod.SSA.species_names,
+        'time': smod.data_stochsim.time.ravel().tolist(),
+        'species': smod.data_stochsim.species.tolist()};
 
-json.dump(obj, open('temp.out','w'))
+json.dump(obj, open(outfile,'w'))

@@ -12,7 +12,7 @@ function fitToContainer(canvas){
 function runPyCode(code) {
     $.ajax({
         type: 'POST',
-        url: '/api',
+        url: '/api/code',
         data: encodeURI(code),
         success: function(data) {
             debugger;
@@ -20,12 +20,24 @@ function runPyCode(code) {
     });
 }
 
-function updatePscModel(txt) {
-    
+function updatePscModel(code) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/model',
+        data: encodeURI(code),
+        success: function(data) {
+        }
+    });
 }
 
-function updateModules(txt) {
-    
+function updateModules(code) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/modules',
+        data: encodeURI(code),
+        success: function(data) {
+        }
+    });
 }
 
 function initGUI() {

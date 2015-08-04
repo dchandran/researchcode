@@ -16,7 +16,7 @@ var http = require('http');
 http.createServer(function (request, response) {    
     parsedUrl = url.parse(request.url);
 
-    if (parsedUrl.pathname==='/api') {
+    if (parsedUrl.pathname.indexOf('/api') > -1) {
 
     } else {
         request.addListener('end', function () {
@@ -27,21 +27,52 @@ http.createServer(function (request, response) {
     request.setEncoding('utf8');
     request.on('data', function (chunk) {
         parsedUrl = url.parse(request.url);
+
+        if (parsedUrl.pathname==='/api/model') {
+            try {
+                code = decodeURI(chunk);
+                console.log(code);
+                fs.writeFile("py/temp.psc", code, function(err) {
+                    if(err) console.log("Write File Error:" + err);
+                });
+                response.writeHead(200, {'Content-Type': 'text/plain' });
+                response.write(code);
+                response.end();          
+            } catch (err) {
+                console.log("Exception: " + err);
+            }
+        }
+
+        if (parsedUrl.pathname==='/api/modules') {
+            try {
+                code = decodeURI(chunk);
+                console.log(code);
+                fs.writeFile("py/modules.yaml", code, function(err) {
+                    if(err) console.log("Write File Error:" + err);
+                });
+                response.writeHead(200, {'Content-Type': 'text/plain' });
+                response.write(code);
+                response.end();          
+            } catch (err) {
+                console.log("Exception: " + err);
+            }
+        }
         
-        if (parsedUrl.pathname==='/api') {
+        if (parsedUrl.pathname==='/api/code') {
             try {
                 code = decodeURI(chunk);
                 console.log(code);
                 fs.writeFile("py/temp.py", code, function(err) {
                     if(err) console.log("Write File Error:" + err);
 
-                    exec('python3 py/temp.py', function (error, stdout, stderr) {
+                    exec('python3 py/temp.py py/temp.psc py/temp.out', function (error, stdout, stderr) {
                       console.log(stdout);
                       console.log(stderr);
-                      fs.readFile('temp.out', function (err, data) {
+                      fs.readFile('py/temp.out', function (err, data) {
                           if (err) console.log("Read File Error:" + err);
+                          console.log(data);
                           response.writeHead(200, {'Content-Type': 'text/plain' });
-                          response.write(JSON.stringify(data));
+                          response.write(data);
                           response.end();
                         });
                     });
