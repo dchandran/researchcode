@@ -5,7 +5,7 @@ class sim_module(object):
     Generates snippets of code
     """
 
-    modules_file = "modules.yaml"
+    modules_file = "py/modules.yaml"
     modules = None
 
     def __init__(self, name):
