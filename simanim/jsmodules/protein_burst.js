@@ -28,8 +28,9 @@ protein_bursts.init = function() {
     self.inputs.startLocation = {x:0, y:0};
     self.inputs.burstRNA = 0;
     self.inputs.burstProt = 0;
-    self.delayRNA = 26;
-    self.delayProt = 11;
+    self.delayRNA = 300;
+    self.delayProt = 30;
+    self.time = 0;
 };
 
 protein_bursts.tick = function(event) {
@@ -46,21 +47,23 @@ protein_bursts.tick = function(event) {
     var bounds = self.inputs.bounds;
     if (!rnaStartBounds) return;
 
-    if (mrnas.length < burstRNA && self.delayRNA > 25) {
+    var dt = (event.time - self.time);
+
+    if (mrnas.length < burstRNA && self.delayRNA < dt) {
         mrna = new createjs.Sprite(self.mrnaSheet, "wiggle");
         mrna.x = rnaStartBounds.left + Math.random()*20;
-        mrna.y = rnaStartBounds.top;
+        mrna.y = rnaStartBounds.top - 20;
         mrna.scaleY = 1;
         mrna.scaleX = 1;
         _EASEL_STAGE.addChild(mrna);
         mrnas.push(mrna);
-        self.delayRNA = 0;
+        self.time = event.time;
 
-        initDiffusableMolecule(mrna, bounds, false);
+        initDiffusableMolecule(mrna, bounds, false, 2);
         mrna.velY = - Math.abs(mrna.velY) - 0.7;
     }
 
-    if (mrnas.length > 3 && newProts.length < burstProt && self.delayProt > 10) {
+    if (mrnas.length > 3 && newProts.length < burstProt && self.delayProt < dt) {
         prot = new createjs.Sprite(self.protSheet, "grey");
         prot.x = mrnas[mrnas.length-1].x + 5;
         prot.y = mrnas[mrnas.length-1].y;
@@ -68,13 +71,11 @@ protein_bursts.tick = function(event) {
         prot.scaleX = 1;
         _EASEL_STAGE.addChild(prot);
         newProts.push(prot);
-        self.delayProt = 0;
+        self.time = event.time;
 
         initDiffusableMolecule(prot, bounds);
     }
-
-    self.delayRNA = self.delayRNA + 1;
-    self.delayProt = self.delayProt + 1;
+    
     var allRNADead = true;
 
     for (i=0; i < mrnas.length; ++i) {
@@ -83,15 +84,15 @@ protein_bursts.tick = function(event) {
             allRNADead = false;
             moveDiffusableMolecule(self.mrnas[i]);
 
-            if (mrnas[i].y < bounds.top + bounds.height*0.7) {
+            if (mrnas[i].y < bounds.top + bounds.height*0.6) {
 
                 mrnas[i].alpha = 0.5;
 
-                if (mrnas[i].y < bounds.top + bounds.height*0.6) {
+                if (mrnas[i].y < bounds.top + bounds.height*0.5) {
 
                     mrnas[i].alpha = 0.2;
 
-                    if (mrnas[i].y < bounds.top + bounds.height*0.5) {
+                    if (mrnas[i].y < bounds.top + bounds.height*0.3) {
                         _EASEL_STAGE.removeChild(mrnas[i]);
                         mrnas[i] = undefined;
                     }
@@ -106,8 +107,7 @@ protein_bursts.tick = function(event) {
         self.existingProts = self.existingProts.concat(newProts);
         self.newProts.length = 0;
         self.inputs.burstRNA = 0;
-        self.delayRNA = 11;
-        self.delayProt = 6;
+        self.time = event.time;
     }
 
     for (i=0; i < self.existingProts.length; ++i) {

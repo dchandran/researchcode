@@ -27,6 +27,9 @@
     <script src="jsmodules/dna_template.js"></script>
     <script src="jsmodules/two_component.js"></script>
     <script src="jsmodules/source_molecule.js"></script>
+
+    <link rel="stylesheet" href="third-party/noUiSlider.8.0.2/nouislider.min.css">
+    <script src="third-party/noUiSlider.8.0.2/nouislider.min.js"></script>
     <script src="main.js"></script>
 </head>
 
@@ -36,13 +39,15 @@
       <div id="left"></div>
       <div id="center">
         <canvas id="canvas"></canvas>
+        <div class="sliders" id="time-slider"></div>
+        <div class="sliders" id="time-slider-value">Current Time: 0</div>
       </div>
       <div id="right">
 
             <ul class="tabs">
-              <li><a href="#">Model</a></li>
-              <li><a href="#">Code</a></li>
-              <li><a href="#">Modules</a></li>
+              <li><a href="#">| Model</a></li>
+              <li><a href="#">| Code</a></li>
+              <li><a href="#">| Modules</a></li>
             </ul>
             <!-- tab "panes" -->
             <div class="panes">

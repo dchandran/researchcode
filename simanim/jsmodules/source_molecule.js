@@ -13,7 +13,8 @@ source_molecule.init = function() {
                     });
     self.molecules = [];
     self.inputs.numMolecules = 0;
-    self.delay = 7;
+    self.delay = 10;
+    self.time = 0;
 };
 
 source_molecule.tick = function(event) {
@@ -26,7 +27,7 @@ source_molecule.tick = function(event) {
 
     if (numMolecules > 0) {
 
-        if (molecules.length < self.inputs.numMolecules && self.delay > 6) {
+        if (molecules.length < self.inputs.numMolecules && self.delay < (event.time - self.time)) {
             mol = new createjs.Sprite(self.sourceSheet, "normal");
             mol.x = bounds.left + Math.random()*bounds.width;
             mol.y = bounds.top;
@@ -38,14 +39,23 @@ source_molecule.tick = function(event) {
 
             initDiffusableMolecule(mol, bounds, false, 3);
             mol.velY = Math.abs(mol.velY);
+
+            self.time = event.time;
         }
 
-        self.delay = self.delay + 1;
-
         for (i=0; i < molecules.length; ++i) {
-            if (molecules[i] && molecules[i].y > bounds.top + bounds.height && molecules.length <= numMolecules) {
-                molecules[i].x = bounds.left + Math.random()*bounds.width;
-                molecules[i].y = bounds.top;
+            if (molecules[i] && molecules[i].y > bounds.top + bounds.height/2) {
+                molecules[i].alpha = 0.75;
+
+                    if (molecules[i] && molecules[i].y > bounds.top + bounds.height*0.7) {
+                        molecules[i].alpha = 0.5;
+
+                    if (molecules[i] && molecules[i].y > bounds.top + bounds.height && molecules.length <= numMolecules) {
+                        molecules[i].x = bounds.left + Math.random()*bounds.width;
+                        molecules[i].y = bounds.top;
+                        molecules[i].alpha = 1.0;
+                    }
+                }
             }
         }
 

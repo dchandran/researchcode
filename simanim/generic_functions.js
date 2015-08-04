@@ -44,20 +44,51 @@ AnimModule.prototype = {
     }
 };
 
-function TimeSeriesData(data) {
+var TimeSeriesData = new AnimModule();
 
-};
+TimeSeriesData.setCurrentIndex = function(index) {
+    var timeArray = this.inputs.time;
+    var headers = this.inputs.headers;
+    var species = this.inputs.species;
 
-TimeSeriesData.prototype = {
+    if (!headers || !species || !timeArray || index < 0 || index >= timeArray.length) return;
 
-    setTime: function(t) {
-        this.time = t;
-        updateDownstream();
-    },
-    
-    updateDownstream: function() {
-        
-    },
+    this.inputs.currentIndex = index;
+    var s;
+
+    for (var i=0; i < headers.length-1; ++i) {
+        s = headers[i+1];
+        this.outputs[s] = species[index][i];
+    }
+    this.updateDownstream();
+}
+
+
+TimeSeriesData.setCurrentTime = function(time) {
+    this.inputs.currentTime = time;
+    var timeArray = this.inputs.time;
+
+    if (!timeArray) return;
+    var minTime = timeArray[0];
+    var maxTime = timeArray[timeArray.length-1];
+
+    if (time < minTime) time = minTime;
+    if (time > maxTime) time = maxTime;
+
+    this.setCurrentIndex( Math.trunc(timeArray.length * (time-minTime)/(maxTime - minTime) ) ) ;
+}
+
+TimeSeriesData.init = function(data) {
+    this.inputs.currentIndex = 0;
+    this.inputs.time = [];
+    this.inputs.species = [];
+    this.inputs.headers = [];
+
+    if (data && data.time && data.headers && data.species) {
+        this.inputs.time = data.time;
+        this.inputs.species = data.species;
+        this.inputs.headers = data.headers;
+    }
 };
 
 function initDiffusableMolecule(m, bounds, rotate, speed) {

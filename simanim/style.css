@@ -1,5 +1,8 @@
 #container {
     width:100%;
+    background:#333;
+    margin:0 auto;
+    padding:0;
 }
 
 #center {
@@ -15,6 +18,14 @@
     height: 800px;
 }
 
+#time-slider {
+    background: #888888;
+}
+
+#time-slider-value {
+    color: #9999ee;
+}
+
 .panes>div {
     display:none;
     padding:15px 10px;
@@ -27,7 +38,7 @@
     list-style:none;
     margin:0 !important;
     padding:0;
-    height:30px;
+    height:40px;
     background:#000;
 }
 
@@ -43,19 +54,19 @@ ul.tabs a {
     display:block;
     height: 30px;
     line-height:30px;
-    width: 134px;
+    width: 100px;
     text-align:center;
     text-decoration:none;
     padding:0px;
     margin:0px;
     position:relative;
     top:1px;
-    color:white;
+    color:#99aabb;
+    font-size: 14px;
 }
 
  ul.tabs a:active {
     outline:none;
-
 }
 
 ul.tabs a:hover {
@@ -63,17 +74,13 @@ ul.tabs a:hover {
 }
 
 ul.tabs a.current, ul.tabs a.current:hover, ul.tabs li.current a {
-    font-size: 14px;
+    font-size: 18px;
     cursor:default !important;
     color:#88bbff;
 }
 
 
-#modelpane { 
-    position: relative;
-}
-
 .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
-  .CodeMirror-selected  { background-color: blue !important; }
-  .CodeMirror-selectedtext { color: white; }
-  .styled-background { background-color: #ff7; }
+.CodeMirror-selected  { background-color: blue !important; }
+.CodeMirror-selectedtext { color: white; }
+.styled-background { background-color: #ff7; }

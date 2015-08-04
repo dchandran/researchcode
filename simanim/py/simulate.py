@@ -13,17 +13,39 @@ s = combine_modules([m1, m2], [c1,c2])
 
 modelfile = sys.argv[1]
 outfile = sys.argv[2]
-
-f = open(sys.argv[0],'w')
-f.write(s)
-f.close()
+gridsz = sys.argv[3]
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
+smod.GetRegularGrid(gridsz)
 
-obj = {'headers': ['time']+smod.SSA.species_names,
-        'time': smod.data_stochsim.time.ravel().tolist(),
-        'species': smod.data_stochsim.species.tolist()};
+for i in range(0,len(smod.data_stochsim_grid.species)):
+    smod.data_stochsim_grid.species[i] = smod.data_stochsim_grid.species[i][0].tolist()
+
+obj = { 'gridsz': gridsz,
+        'headers': ['time']+smod.SSA.species_names,
+        'time': smod.data_stochsim_grid.time.ravel().tolist(),
+        'species': smod.data_stochsim_grid.species};
 
 json.dump(obj, open(outfile,'w'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

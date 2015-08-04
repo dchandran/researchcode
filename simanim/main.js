@@ -9,13 +9,26 @@ function fitToContainer(canvas){
   canvas.height = canvas.offsetHeight;
 }
 
+function updateCurrentTime(values, handle) {
+    TimeSeriesData.setCurrentIndex(values[0]);
+
+    var rangeSliderValueElement = document.getElementById('time-slider-value');
+    rangeSliderValueElement.innerHTML = "Current Time: " + values[0];
+}
+
 function runPyCode(code) {
     $.ajax({
         type: 'POST',
         url: '/api/code',
         data: encodeURI(code),
         success: function(data) {
-            debugger;
+            try {
+                data = JSON.parse(data);
+                TimeSeriesData.init(data);
+                TimeSeriesData.setCurrentIndex(0);
+            } catch (e) {
+                console.log(e);
+            }
         }
     });
 }
@@ -40,7 +53,20 @@ function updateModules(code) {
     });
 }
 
+_EDITORS = [];
+
 function initGUI() {
+
+    /*$(window).resize(function(){
+        $("#center").width($(window).width() * 0.7);
+        $("#right").width($(window).width() * 0.3);
+        $("#center").height($(window).height());
+        $("#right").height($(window).height());
+        fitToContainer(document.getElementById("canvas"));
+        for (var i=0; i < _EDITORS.length; ++i)
+            _EDITORS[i].resize();
+    });*/
+
     $("ul.tabs").tabs("div.panes > div");
 
     var canvas = document.getElementById("canvas");
@@ -58,8 +84,10 @@ function initGUI() {
         var editor = ace.edit(id);
         editor.setFontSize('16px');
         editor.setTheme(theme);
-        editor.renderer.setShowGutter(false); 
+        //editor.renderer.setShowGutter(false); 
         editor.getSession().setMode("ace/mode/" + language);
+        editor.setOptions({maxLines: Infinity});
+        _EDITORS.push(editor);
 
         if (url)
          $.ajax({
@@ -83,10 +111,27 @@ function initGUI() {
     setupCodeEditor("modelpane", "python", 'example.psc', updatePscModel);
     setupCodeEditor("codepane", "python", 'py/simulate.py', runPyCode);
     setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
+
+    //setup slider
+    var rangeSlider = document.getElementById('time-slider');
+
+    noUiSlider.create(rangeSlider, {
+        start: [ 0 ],
+        step: 1,
+        range: {
+            'min': [  0 ],
+            'max': [ 100 ]
+        },
+        pips: { // Show a scale with the slider
+            mode: 'range',
+            density: 4
+        }
+    });
+
+    rangeSlider.noUiSlider.on('slide', updateCurrentTime);
 }
 
-function main() {
-    initGUI();
+function initCanvas() {
     var canvas = _EASEL_STAGE.canvas;
     canvas.left = 0;
     canvas.top = 0;
@@ -94,9 +139,11 @@ function main() {
     var bg = new createjs.Shape();
     bg.graphics.beginFill("#000000").drawRect(canvas.left, canvas.top, canvas.width, canvas.height);
     _EASEL_STAGE.addChild(bg);
+    createjs.Ticker.timingMode = createjs.Ticker.RAF;
+    createjs.Ticker.addEventListener("tick", _EASEL_STAGE);
+}
 
-    //CONNECT
-    
+function connectModules() {
     lipid_bilayer.connect('outerCellBounds', source_molecule, 'bounds');
     lipid_bilayer.connect('innerCellBounds',dna_template, 'bounds');
     lipid_bilayer.connect('innerCellBounds',two_component, 'inactiveBounds');
@@ -106,21 +153,9 @@ function main() {
     
     expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
     expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
+}
 
-
-    //INPUTS
-
-    two_component.inputs.numReceptors = 5;
-    two_component.inputs.numTfs = 10;
-    two_component.inputs.percentActiveTFs = 0.0;
-    two_component.inputs.percentActiveMembranes = 0.0;
-
-    lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
-    expression_cassette.inputs.parts = { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} };
-
-    createjs.Ticker.timingMode = createjs.Ticker.RAF;
-    createjs.Ticker.addEventListener("tick", _EASEL_STAGE);
-
+function initModules() {
     var modules = [
         lipid_bilayer,
         dna_template,
@@ -138,5 +173,21 @@ function main() {
             createjs.Ticker.addEventListener("tick", modules[i].tick);
         }
     }
+}
+
+function main() {
+    initGUI();
+    initCanvas();
+
+    two_component.inputs.numReceptors = 5;
+    two_component.inputs.numTfs = 10;
+    two_component.inputs.percentActiveTFs = 0.0;
+    two_component.inputs.percentActiveMembranes = 0.0;
+
+    lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
+    expression_cassette.inputs.parts = { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} };
+
+    connectModules();
+    initModules();
     
 }
