@@ -1,6 +1,6 @@
 var expression_cassette = new AnimModule("expression cassette");
 
-expression_cassette.init = function(_EASEL_STAGE, scene) {
+expression_cassette.init = function() {
 
     var self = expression_cassette;
     self.partTypeSpriteHash = {

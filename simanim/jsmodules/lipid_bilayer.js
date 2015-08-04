@@ -26,7 +26,6 @@ lipid_bilayer.init = function() {
         _EASEL_STAGE.addChild(bilayer);
     }
 
-    self.outputs.bounds = scene;
-    self.outputs.bounds.top = scene.top + 200;
-    self.outputs.bounds.height = scene.height - 150;
+    self.outputs.outerCellBounds = {left: scene.left, top: scene.top, height: 100, width: scene.width};
+    self.outputs.innerCellBounds = {left: scene.left, top: scene.top+200, height: scene.height-150, width: scene.width};
 };

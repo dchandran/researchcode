@@ -95,19 +95,27 @@ function main() {
     bg.graphics.beginFill("#000000").drawRect(canvas.left, canvas.top, canvas.width, canvas.height);
     _EASEL_STAGE.addChild(bg);
 
-    lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
+    //CONNECT
+    
+    lipid_bilayer.connect('outerCellBounds', source_molecule, 'bounds');
+    lipid_bilayer.connect('innerCellBounds',dna_template, 'bounds');
+    lipid_bilayer.connect('innerCellBounds',two_component, 'inactiveBounds');
+    lipid_bilayer.connect('innerCellBounds', protein_bursts, 'bounds');
+
+    dna_template.connect('bounds',expression_cassette, 'bounds');
+    
+    expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
+    expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
+
+
+    //INPUTS
+
     two_component.inputs.numReceptors = 5;
     two_component.inputs.numTfs = 10;
     two_component.inputs.percentActiveTFs = 0.0;
     two_component.inputs.percentActiveMembranes = 0.0;
 
-    lipid_bilayer.connect('bounds',dna_template, 'bounds');
-    lipid_bilayer.connect('bounds',two_component, 'inactiveBounds');
-    dna_template.connect('bounds',expression_cassette, 'bounds');
-    lipid_bilayer.connect('bounds', protein_bursts, 'bounds');
-    expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
-    expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
-
+    lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
     expression_cassette.inputs.parts = { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} };
 
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
@@ -118,7 +126,8 @@ function main() {
         dna_template,
         two_component, 
         expression_cassette,
-        protein_bursts
+        protein_bursts,
+        source_molecule
     ];
     for (var i=0; i < modules.length; ++i) {
         if (modules[i].init) {
