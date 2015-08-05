@@ -157,6 +157,8 @@ function connectModules() {
 }
 
 function connectDataModule() {
+    TimeSeriesData.connect('(R1+R0)/5', two_component, "numReceptors");
+    TimeSeriesData.connect('(TF1+TF0)/5', two_component, "numTFs");    
     TimeSeriesData.connect('R1/(R1+R0)', two_component, "percentActiveMembranes");
     TimeSeriesData.connect('TF1/(TF1+TF0)', two_component, "percentActiveTFs");
     TimeSeriesData.connect('gfp_on', expression_cassette, "state");

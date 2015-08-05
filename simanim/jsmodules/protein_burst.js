@@ -82,7 +82,7 @@ protein_bursts.tick = function(event) {
         proteins.push(prot);
         self.time = event.time;
 
-        initDiffusableMolecule(prot, bounds);
+        initDiffusableMolecule(prot, bounds, true, 2);
     }
     
     var allRNADead = true;
