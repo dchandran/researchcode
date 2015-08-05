@@ -155,6 +155,20 @@ function connectModules() {
     expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
 }
 
+function connectDataModule() {
+    "R0", "R1", "TF0", "TF1", "gfp_off", "gfp_on", "gfp_mRNA", "GFP"
+    TimeSeriesData.connect('R1/(R1+R0)', two_component, );
+    lipid_bilayer.connect('outerCellBounds', source_molecule, 'bounds');
+    lipid_bilayer.connect('innerCellBounds',dna_template, 'bounds');
+    lipid_bilayer.connect('innerCellBounds',two_component, 'inactiveBounds');
+    lipid_bilayer.connect('innerCellBounds', protein_bursts, 'bounds');
+
+    dna_template.connect('bounds',expression_cassette, 'bounds');
+    
+    expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
+    expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
+}
+
 function initModules() {
     var modules = [
         lipid_bilayer,
@@ -188,6 +202,6 @@ function main() {
     expression_cassette.inputs.parts = { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} };
 
     connectModules();
-    initModules();
-    
+    connectDataModule();
+    initModules();    
 }

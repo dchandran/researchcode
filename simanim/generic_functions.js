@@ -57,8 +57,11 @@ TimeSeriesData.setCurrentIndex = function(index) {
     var s;
 
     for (var i=0; i < headers.length-1; ++i) {
-        s = headers[i+1];
-        this.outputs[s] = species[index][i];
+        exec(headers[i] + '=' + species[index][i]);
+    }
+
+    for (s in this.outputs) {
+        this.outputs[s] = eval(s); //e.g s can be "A/B + C"
     }
     this.updateDownstream();
 }
