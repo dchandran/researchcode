@@ -37,21 +37,25 @@ expression_cassette.tick = function(event) {
     var parts = self.parts;
     var x = bounds.left, y = bounds.top;
     var j = 0, n = Object.keys(partDesc).length;
+    var state = self.inputs.state;
 
     if (partDesc) {
         for (i in partDesc) {
             desc = partDesc[i];
             if (desc) { 
                 part = parts[i];
-                if (part) {
-                    state = desc.state;
+                if (part) {                    
                     if (state)
-                        part.gotoAndPlay(state);
+                        part.gotoAndPlay("on");
+                    else
+                        part.gotoAndPlay("off");
                 } else {
                     sheet = partTypeSpriteHash[desc.type];
-                    state = desc.state;
-                    if (sheet && state) {
-                        part =  new createjs.Sprite(sheet, state);                              
+                    if (sheet) {
+                        if (state)
+                            part =  new createjs.Sprite(sheet, "on");
+                        else
+                            part =  new createjs.Sprite(sheet, "off");
                         part.scaleY = part.scaleX = 0.3;
                         _EASEL_STAGE.addChild(part);
                         parts[i] = part;

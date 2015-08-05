@@ -13,12 +13,13 @@ s = combine_modules([m1, m2], [c1,c2])
 
 modelfile = sys.argv[1]
 outfile = sys.argv[2]
-gridsz = sys.argv[3]
+gridsz = int(sys.argv[3])
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
+smod.PlotSpeciesTimeSeries()
 
 for i in range(0,len(smod.data_stochsim_grid.species)):
     smod.data_stochsim_grid.species[i] = smod.data_stochsim_grid.species[i][0].tolist()

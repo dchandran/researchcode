@@ -12,7 +12,6 @@ source_molecule.init = function() {
                         }
                     });
     self.molecules = [];
-    self.inputs.numMolecules = 0;
     self.delay = 10;
     self.time = 0;
 };
@@ -23,7 +22,7 @@ source_molecule.tick = function(event) {
     var molecules = self.molecules;
     var bounds = self.inputs.bounds;
     var mol;
-    var numMolecules = self.inputs.numMolecules;
+    var numMolecules = self.inputs.numMolecules || 0;
 
     if (numMolecules > 0) {
 

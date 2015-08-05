@@ -10,7 +10,7 @@ function fitToContainer(canvas){
 }
 
 function updateCurrentTime(values, handle) {
-    TimeSeriesData.setCurrentIndex(values[0]);
+    TimeSeriesData.setCurrentIndex(Number(values[0]));
 
     var rangeSliderValueElement = document.getElementById('time-slider-value');
     rangeSliderValueElement.innerHTML = "Current Time: " + values[0];
@@ -141,6 +141,7 @@ function initCanvas() {
     _EASEL_STAGE.addChild(bg);
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
     createjs.Ticker.addEventListener("tick", _EASEL_STAGE);
+    createjs.Ticker.addEventListener("tick", degradationAnimation);
 }
 
 function connectModules() {
@@ -156,17 +157,11 @@ function connectModules() {
 }
 
 function connectDataModule() {
-    "R0", "R1", "TF0", "TF1", "gfp_off", "gfp_on", "gfp_mRNA", "GFP"
-    TimeSeriesData.connect('R1/(R1+R0)', two_component, );
-    lipid_bilayer.connect('outerCellBounds', source_molecule, 'bounds');
-    lipid_bilayer.connect('innerCellBounds',dna_template, 'bounds');
-    lipid_bilayer.connect('innerCellBounds',two_component, 'inactiveBounds');
-    lipid_bilayer.connect('innerCellBounds', protein_bursts, 'bounds');
-
-    dna_template.connect('bounds',expression_cassette, 'bounds');
-    
-    expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
-    expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
+    TimeSeriesData.connect('R1/(R1+R0)', two_component, "percentActiveMembranes");
+    TimeSeriesData.connect('TF1/(TF1+TF0)', two_component, "percentActiveTFs");
+    TimeSeriesData.connect('gfp_on', expression_cassette, "state");
+    TimeSeriesData.connect('gfp_mRNA', protein_bursts, "numRNA");
+    TimeSeriesData.connect('GFP', protein_bursts, "numProteins");
 }
 
 function initModules() {
@@ -193,15 +188,17 @@ function main() {
     initGUI();
     initCanvas();
 
+    source_molecule.inputs.numMolecules = 100;
     two_component.inputs.numReceptors = 5;
     two_component.inputs.numTfs = 10;
     two_component.inputs.percentActiveTFs = 0.0;
     two_component.inputs.percentActiveMembranes = 0.0;
 
     lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
-    expression_cassette.inputs.parts = { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} };
+    expression_cassette.inputs.parts = { p: {type:'promoter'}, gfp:{type:'cds'} };
+    expression_cassette.inputs.state = 0;
 
     connectModules();
     connectDataModule();
-    initModules();    
+    initModules();
 }

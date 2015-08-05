@@ -1,4 +1,5 @@
 var _MODULES = {};
+var _DEGRADING_MOLECULES = [];
 
 function getAllModules() {
     var lst = [];
@@ -29,6 +30,9 @@ AnimModule.prototype = {
                 targetModule: targetModule,
                 input: input
               });
+            if (this.outputs[output]===undefined) {
+                this.outputs[output] = 0;
+            }
             targetModule.inputs[input] = this.outputs[output];
         }
     },
@@ -57,12 +61,13 @@ TimeSeriesData.setCurrentIndex = function(index) {
     var s;
 
     for (var i=0; i < headers.length-1; ++i) {
-        exec(headers[i] + '=' + species[index][i]);
+        eval("var " + headers[i+1] + '=' + species[i][index]);
     }
 
     for (s in this.outputs) {
         this.outputs[s] = eval(s); //e.g s can be "A/B + C"
     }
+
     this.updateDownstream();
 }
 
@@ -79,7 +84,7 @@ TimeSeriesData.setCurrentTime = function(time) {
     if (time > maxTime) time = maxTime;
 
     this.setCurrentIndex( Math.trunc(timeArray.length * (time-minTime)/(maxTime - minTime) ) ) ;
-}
+};
 
 TimeSeriesData.init = function(data) {
     this.inputs.currentIndex = 0;
@@ -170,4 +175,25 @@ function moveDiffusableMolecule(m) {
 }
 
 
+function markForDegradation(item) {
+    _DEGRADING_MOLECULES.push(item);
+}
+
+function degradationAnimation(event) {
+    var allDone = true;
+    for (i=0; i < _DEGRADING_MOLECULES.length; ++i) {
+        if (_DEGRADING_MOLECULES[i]) {
+            allDone = false;
+            _DEGRADING_MOLECULES[i].alpha -= 0.1 * Math.random();
+            if (_DEGRADING_MOLECULES[i].alpha < 0.1) {
+                _EASEL_STAGE.removeChild(_DEGRADING_MOLECULES[i]);
+                _DEGRADING_MOLECULES[i] = undefined;
+            }
+            if (Math.random() > 0.8) break;
+        }
+    }
+    if (allDone) {
+        _DEGRADING_MOLECULES.length = 0;
+    }
+}
 

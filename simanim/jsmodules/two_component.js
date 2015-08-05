@@ -30,8 +30,6 @@ two_component.init = function() {
     
     self.receptors = [];
     self.tfs = [];
-
-    self.disappearingItems = [];
 };
 
 two_component.tick = function(event) {
@@ -48,7 +46,7 @@ two_component.tick = function(event) {
     if (receptors.length != n) {
 
         while (receptors.length > n) {
-            self.disappearingItems.push(receptors[receptors.length-1]);
+            markForDegradation(receptors[receptors.length-1]);
             receptors.length = receptors.length-1;
         }
 
@@ -75,7 +73,7 @@ two_component.tick = function(event) {
     if (tfs.length != n) {
 
         while (tfs.length > n) {
-            self.disappearingItems.push(tfs[tfs.length-1]);
+            markForDegradation(tfs[tfs.length-1]);
             tfs.length = tfs.length-1;
         }
 
@@ -129,16 +127,5 @@ two_component.tick = function(event) {
         }
 
         moveDiffusableMolecule(tf);
-    }
-
-
-    for (i=0; i < self.disappearingItems.length; ++i) {
-        if (self.disappearingItems[i]) {
-            self.disappearingItems[i].alpha -= 0.05;
-            if (self.disappearingItems[i].alpha < 0.1) {
-                _EASEL_STAGE.removeChild(self.disappearingItems[i]);
-                self.disappearingItems[i] = undefined;
-            }
-        }
     }
 };
