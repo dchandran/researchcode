@@ -1,5 +1,5 @@
 import os
-import sqllite3
+import sqlite3
 import sys
 import wget
 import csv
@@ -131,8 +131,8 @@ def get_virus_data(accession):
 
 dbconnection = sqlite3.connect('virus.db')
 dbcursor = dbconnection.cursor()
-dbcursor.execute('''SELECT name FROM sqlite_master WHERE type='table'''')
-results = cursor.fetchall()
+dbcursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+results = dbcursor.fetchall()
 if len(results) < 1:
     dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, residue_type text, size real, strain text, taxonomy text)''')
 
