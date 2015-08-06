@@ -140,12 +140,19 @@ acc_lst = get_all_virus_accession_numbers()
 
 # acc = "NC_001416"  #for phage lambda
 # dat = get_virus_data(acc)
+table = []
 
 for acc in acc_lst:
    print ("parsing " + acc + "\n")
    dat = get_virus_data(acc)
    #virus_table.append(dat)
    tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['residue_type'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
-   dbcursor.execute("INSERT INTO viruses VALUES " + str(tupl))
+   table.append(tupl)
 
+try:
+    dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?)', table)
+except:
+    pass
+dbconnection.commit()
 #dbcursor.execute("SELECT name FROM viruses WHERE host=''")
+
