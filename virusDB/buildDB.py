@@ -1,8 +1,9 @@
 import os
+import sqllite3
 import sys
 import wget
 import csv
-import rdflib
+#import rdflib
 import re
 from Bio import GenBank
 from Bio import Entrez
@@ -14,7 +15,10 @@ def get_all_virus_accession_numbers():
     For cases with multiple accenssion numbers, gets 
     only the first one
     '''
-    filename = wget.download("http://www.ncbi.nlm.nih.gov/genomes/GenomesGroup.cgi?taxid=10239&cmd=download2",out="ncbi_viruses.tab")
+    try:
+        filename = wget.download("http://www.ncbi.nlm.nih.gov/genomes/GenomesGroup.cgi?taxid=10239&cmd=download2",out="ncbi_viruses.tab")
+    except Exception as e:
+        print ("NCBI's virus database is unreachable: " + str(e))
     #get all virus accession numbers
     acc_lst = {} #hashtable to avoid redundancy
     f = open(filename,'r')
@@ -73,8 +77,11 @@ def get_virus_data(accession):
         if protein_id:
 
             #get the Uniprot file
-            filename = wget.download("http://www.uniprot.org/uniprot/?query="+protein_id+"&sort=score&format=rdf",out="uniprot.rdf")
-            f = open(filename)
+            try:
+                filename = wget.download("http://www.uniprot.org/uniprot/?query="+protein_id+"&sort=score&format=rdf",out="uniprot.rdf")
+                f = open(filename)
+            except Exception as e:
+                print (protein_id + " url is unreachable: " + str(e))
 
             #scrape the Uniprot file for organism information
             for line in f.readlines():
@@ -87,26 +94,32 @@ def get_virus_data(accession):
             os.remove(filename)
 
             if organism_url:
-                filename = wget.download(organism_url+".rdf",out="uniprot.taxonomy.out")
-                f = open(filename)
-                for line in f.readlines():
-                    m = host_pattern.match(line)
-                    if m:
-                       host_url = m.group(1)
-                       break
-                f.close()
-                os.remove(filename)
+                try:
+                    filename = wget.download(organism_url+".rdf",out="uniprot.taxonomy.out")
+                    f = open(filename)
+                    for line in f.readlines():
+                        m = host_pattern.match(line)
+                        if m:
+                           host_url = m.group(1)
+                           break
+                    f.close()
+                    os.remove(filename)
+                except Exception as e:
+                    print (organism_url + " unreachable: " + str(e))
 
             if host_url:
-                filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
-                f = open(filename)
-                for line in f.readlines():
-                    m = host_name_pattern.match(line)
-                    if m:
-                       host_name = m.group(1)
-                       break
-                f.close()
-                os.remove(filename)
+                try:
+                    filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
+                    f = open(filename)
+                    for line in f.readlines():
+                        m = host_name_pattern.match(line)
+                        if m:
+                           host_name = m.group(1)
+                           break
+                    f.close()
+                    os.remove(filename)
+                except:
+                    print (host_url + " is unreachable: " + str(e))
 
         virus['organism_url'] = organism_url
         virus['host_url'] = host_url
@@ -114,10 +127,28 @@ def get_virus_data(accession):
 
         return virus
 
+#MAIN{'accession': 'NC_027399',
+ 'date': '24-JUN-2015',
+ 'host': None,
+ 'host_url': None,
+ 'organism': 'Klebsiella phage K64-1',
+ 'organism_url': None,
+ 'residue_type': 'DNA     linear',
+ 'size': '346602',
+ 'strain': 'Klebsiella phage K64-1',
+ 'taxonomy': ['Viruses',
+  'dsDNA viruses, no RNA stage',
+  'Caudovirales',
+  'Myoviridae']}
 
-#MAIN
+dbconnection = sqlite3.connect('virus.db')
+dbcursor = dbconnection.cursor()
+dbcursor.execute('''SELECT name FROM sqlite_master WHERE type='table'''')
+results = cursor.fetchall()
+if len(results) < 1:
+    dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, residue_type text, size real, strain text, taxonomy text)''')
+
 acc_lst = get_all_virus_accession_numbers()
-virus_table = []
 
 # acc = "NC_001416"  #for phage lambda
 # dat = get_virus_data(acc)
@@ -125,5 +156,8 @@ virus_table = []
 for acc in acc_lst:
    print ("parsing " + acc + "\n")
    dat = get_virus_data(acc)
-   virus_table.append(dat)
+   #virus_table.append(dat)
+   tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['residue_type'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
+   dbcursor.execute("INSERT INTO viruses VALUES " + str(tupl))
 
+#dbcursor.execute("SELECT name FROM viruses WHERE host=''")
