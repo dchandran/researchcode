@@ -127,19 +127,7 @@ def get_virus_data(accession):
 
         return virus
 
-#MAIN{'accession': 'NC_027399',
- 'date': '24-JUN-2015',
- 'host': None,
- 'host_url': None,
- 'organism': 'Klebsiella phage K64-1',
- 'organism_url': None,
- 'residue_type': 'DNA     linear',
- 'size': '346602',
- 'strain': 'Klebsiella phage K64-1',
- 'taxonomy': ['Viruses',
-  'dsDNA viruses, no RNA stage',
-  'Caudovirales',
-  'Myoviridae']}
+#MAIN
 
 dbconnection = sqlite3.connect('virus.db')
 dbcursor = dbconnection.cursor()
