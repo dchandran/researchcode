@@ -38,7 +38,7 @@ def get_virus_data(accession):
     NCBI accession number (NC_xxxxxx)
     '''
     virus = {}
-    #Entrez.email = "deepak.chandran@autodesk.com"
+    Entrez.email = "deepak.chandran@autodesk.com"
     handle = Entrez.efetch(id=accession, db="nucleotide", rettype="gb")
     proteins = []
     entry = None
@@ -63,10 +63,10 @@ def get_virus_data(accession):
 
         #all the code below is just to get the virus host
         #from Uniprot... kind of a hack
-        protein_id = None
-        organism_url = None
-        host_url = None
-        host_name = None
+        protein_id = ""
+        organism_url = ""
+        host_url = ""
+        host_name = ""
 
         for feature in entry.features:
             for quals in feature.qualifiers:
