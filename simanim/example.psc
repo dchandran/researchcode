@@ -1,45 +1,21 @@
 FIX: source sink
 
 # Reactions
-Receptor_Activation:
-    R0 > R1
-    k1*light*R0/(1 + R0)
+MecARepressComK:
+    MecA + ComK > MecA
+    k1*MecA*ComK*(1 + ComK)
 
-Receptor_Inactivation:
-    R1 > R0
-    k2*R1/(1 + R1)
+MecARepressionForward:
+    MecA + ComS > ComSMecA
+    k2*MecA*ComS
 
-TF_Activation:
-    TF0 > TF1
-    k3*R1*TF0/(1 + TF0)
+MecARepressionReverse:
+    ComSMecA > MecA + ComS
+    k3*ComSMecA
 
-TF_Inactivation:
-    TF1 > TF0
-    k4*TF1/(1 + TF1)
-
-gfp_on:
-    gfp_off > gfp_on
-    k3*gfp_off*TF1/(Kd + TF1)
-
-gfp_off:
-    gfp_on > gfp_off
-    k4*gfp_on
-
-gfp_mRNA_prod:
-    source > gfp_mRNA
-    k5*gfp_on
-
-gfp_mRNA_degr:
-    gfp_mRNA > sink
-    k5*gfp_mRNA
-
-GFP_prod:
-    source > GFP
-    k6*gfp_mRNA
-
-GFP_degr:
-    GFP > source
-    k7*GFP
+ComKGene:
+    source > ComP
+    
 
 # Fixed species
 sink = 1

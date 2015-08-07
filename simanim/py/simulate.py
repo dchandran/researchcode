@@ -1,15 +1,16 @@
-from sim_module import *
+from sim_module import sim_module, sim_connection, combine_modules
 import stochpy
 import json
 import sys
 
 m1 = sim_module("two_component") 
-m2 = sim_module("protein_burst")
+m2 = sim_module("protein_production")
 
-c1 = sim_connection(m1, "TF1", m2, "TF")
-c2 = sim_connection(m1, "k1", m2, "k1")
+c1 = sim_connection("TF1", m1, "TF1")
+c2 = sim_connection("TF1", m2, "TF")
+c3 = sim_connection("k1", m2, "k1")
 
-s = combine_modules([m1, m2], [c1,c2])
+s = combine_modules([m1, m2], [c1,c2,c3])
 
 modelfile = sys.argv[1]
 outfile = sys.argv[2]

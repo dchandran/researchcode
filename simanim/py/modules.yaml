@@ -23,7 +23,21 @@ two_component:
         k3: 1
         k4: 1
         light: 4
-protein_burst:
+sequestration:
+    reactions:
+        forward: |
+            A + B > AB
+            k1*A*B
+        reverse: |
+            AB > A + B
+            k2*AB
+    species:
+        A: 0
+        B: 10
+    parameters:
+        k1: 1
+        k2: 1
+protein_production:
     reactions:
         gfp_on: |
             gfp_off > gfp_on
