@@ -57,7 +57,15 @@ def get_virus_data(accession):
         virus['organism'] = entry.organism
         virus['strain'] = entry.source
         virus['taxonomy'] = entry.taxonomy
-        virus['residue_type'] = entry.residue_type
+
+        residue_shape = ""
+        residue = re.compile("\s+").split(entry.residue_type)
+        if len(residue) > 1:
+            residue_shape = residue[1]
+
+        virus['nucleic_acid_shape'] = residue_shape
+        virus['nucleic_acid_type'] = residue[0]
+
         virus['size'] = entry.size
         virus['date'] = entry.date
 
@@ -118,7 +126,7 @@ def get_virus_data(accession):
                            break
                     f.close()
                     os.remove(filename)
-                except:
+                except Exception as e:
                     print (host_url + " is unreachable: " + str(e))
 
         virus['organism_url'] = organism_url
@@ -134,7 +142,7 @@ dbcursor = dbconnection.cursor()
 dbcursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
 results = dbcursor.fetchall()
 if len(results) < 1:
-    dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, residue_type text, size real, strain text, taxonomy text)''')
+    dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, nucleic_acid_type text, nucleic_acid_shape text, size real, strain text, taxonomy text)''')
 
 acc_lst = get_all_virus_accession_numbers()
 
@@ -146,7 +154,7 @@ for acc in acc_lst:
    print ("parsing " + acc + "\n")
    dat = get_virus_data(acc)
    #virus_table.append(dat)
-   tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['residue_type'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
+   tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
    table.append(tupl)
 
 try:
