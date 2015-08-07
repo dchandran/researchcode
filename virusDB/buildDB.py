@@ -80,18 +80,18 @@ def get_virus_data(accession):
             try:
                 filename = wget.download("http://www.uniprot.org/uniprot/?query="+protein_id+"&sort=score&format=rdf",out="uniprot.rdf")
                 f = open(filename)
+
+                #scrape the Uniprot file for organism information
+                for line in f.readlines():
+                    m = orgn_pattern.match(line)
+                    if m:
+                        organism_url = m.group(1)
+                        break
+
+                f.close()
+                os.remove(filename)
             except Exception as e:
                 print (protein_id + " url is unreachable: " + str(e))
-
-            #scrape the Uniprot file for organism information
-            for line in f.readlines():
-                m = orgn_pattern.match(line)
-                if m:
-                    organism_url = m.group(1)
-                    break
-
-            f.close()
-            os.remove(filename)
 
             if organism_url:
                 try:
