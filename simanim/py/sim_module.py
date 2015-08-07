@@ -26,8 +26,7 @@ class sim_module(object):
 class sim_connection(object):
     """
     """
-    def __init__(self, input_module=None, input=None, output_module=None, output=None):
-        self.input_module = input_module
+    def __init__(self, input=None, output_module=None, output=None):
         self.output_module = output_module
 
         self.input_parameter = None
@@ -36,11 +35,6 @@ class sim_connection(object):
         self.output_parameter = None
         self.output_species = None
 
-        if input_module:
-            if input_module.parameters.get(input) != None:
-                self.input_parameter = input
-            elif input_module.species.get(input) != None:
-                self.input_species = input
         if output_module:
             if output_module.parameters.get(output) != None:
                 self.output_parameter = output
