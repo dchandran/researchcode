@@ -1,4 +1,5 @@
 var _EASEL_STAGE;
+var _EDITORS = {};
 
 function fitToContainer(canvas){
   // Make it visually fill the positioned parent
@@ -26,6 +27,13 @@ function runPyCode(code) {
                 data = JSON.parse(data);
                 TimeSeriesData.init(data);
                 TimeSeriesData.setCurrentIndex(0);
+                if (_EDITORS["modelpane"])
+                    $.ajax({
+                        url:'py/temp.psc',
+                        success: function(data) {
+                            _EDITORS["modelpane"].setValue(data);
+                        }
+                      });
             } catch (e) {
                 console.log(e);
             }
@@ -53,7 +61,7 @@ function updateModules(code) {
     });
 }
 
-_EDITORS = [];
+
 
 function initGUI() {
 
@@ -87,7 +95,7 @@ function initGUI() {
         //editor.renderer.setShowGutter(false); 
         editor.getSession().setMode("ace/mode/" + language);
         editor.setOptions({maxLines: Infinity});
-        _EDITORS.push(editor);
+        _EDITORS[id] = editor;
 
         if (url)
          $.ajax({
@@ -108,8 +116,8 @@ function initGUI() {
             });
     }
 
-    setupCodeEditor("modelpane", "python", 'example.psc', updatePscModel);
-    setupCodeEditor("codepane", "python", 'py/simulate.py', runPyCode);
+    setupCodeEditor("modelpane", "python", 'py/temp.psc', updatePscModel);
+    setupCodeEditor("codepane", "python", 'py/example1.py', runPyCode);
     setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
 
     //setup slider

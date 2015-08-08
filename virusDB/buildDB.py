@@ -85,49 +85,63 @@ def get_virus_data(accession):
         if protein_id:
 
             #get the Uniprot file
-            try:
-                filename = wget.download("http://www.uniprot.org/uniprot/?query="+protein_id+"&sort=score&format=rdf",out="uniprot.rdf")
-                f = open(filename)
+            count = 0
+            success = False
+            while not success and count < 10:
+                count += 1
+                try:
+                    filename = wget.download("http://www.uniprot.org/uniprot/?query="+protein_id+"&sort=score&format=rdf",out="uniprot.rdf")
+                    f = open(filename)
 
-                #scrape the Uniprot file for organism information
-                for line in f.readlines():
-                    m = orgn_pattern.match(line)
-                    if m:
-                        organism_url = m.group(1)
-                        break
+                    #scrape the Uniprot file for organism information
+                    for line in f.readlines():
+                        m = orgn_pattern.match(line)
+                        if m:
+                            organism_url = m.group(1)
+                            break
 
-                f.close()
-                os.remove(filename)
-            except Exception as e:
-                print (protein_id + " url is unreachable: " + str(e))
+                    f.close()
+                    os.remove(filename)
+                    success = True
+                except Exception as e:
+                    print (protein_id + " url is unreachable: " + str(e) + "\ntrying again...")
 
             if organism_url:
-                try:
-                    filename = wget.download(organism_url+".rdf",out="uniprot.taxonomy.out")
-                    f = open(filename)
-                    for line in f.readlines():
-                        m = host_pattern.match(line)
-                        if m:
-                           host_url = m.group(1)
-                           break
-                    f.close()
-                    os.remove(filename)
-                except Exception as e:
-                    print (organism_url + " unreachable: " + str(e))
+                count = 0
+                success = True
+                while not success and count < 10:
+                    count += 1
+                    try:
+                        filename = wget.download(organism_url+".rdf",out="uniprot.taxonomy.out")
+                        f = open(filename)
+                        for line in f.readlines():
+                            m = host_pattern.match(line)
+                            if m:
+                               host_url = m.group(1)
+                               break
+                        f.close()
+                        os.remove(filename)
+                        success = True
+                    except Exception as e:
+                        print (organism_url + " unreachable: " + str(e) + "\ntrying again...")
 
             if host_url:
-                try:
-                    filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
-                    f = open(filename)
-                    for line in f.readlines():
-                        m = host_name_pattern.match(line)
-                        if m:
-                           host_name = m.group(1)
-                           break
-                    f.close()
-                    os.remove(filename)
-                except Exception as e:
-                    print (host_url + " is unreachable: " + str(e))
+                count = 0
+                success = True
+                while not success and count < 10:
+                    count += 1
+                    try:
+                        filename = wget.download(host_url+".rdf",out="uniprot.taxonomy.out")
+                        f = open(filename)
+                        for line in f.readlines():
+                            m = host_name_pattern.match(line)
+                            if m:
+                               host_name = m.group(1)
+                               break
+                        f.close()
+                        os.remove(filename)
+                    except Exception as e:
+                        print (host_url + " is unreachable: " + str(e) + "\ntrying again...")
 
         virus['organism_url'] = organism_url
         virus['host_url'] = host_url

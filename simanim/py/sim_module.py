@@ -29,8 +29,7 @@ class sim_connection(object):
     def __init__(self, input=None, output_module=None, output=None):
         self.output_module = output_module
 
-        self.input_parameter = None
-        self.input_species = None
+        self.input = input
 
         self.output_parameter = None
         self.output_species = None
@@ -55,6 +54,9 @@ def combine_modules(modules, connections):
     output_species = {}
     output_params = {}
 
+    input_species = {}
+    input_params = {}
+
     for c in connections:
         if c.output_species and c.output_module:
             if output_species.get(c.output_species) == None:
@@ -70,23 +72,16 @@ def combine_modules(modules, connections):
 
     def replace_name(module, old, new):
         if module.parameters.get(old) != None:
-            module.parameters[new] = module.parameters[old]
+            input_params[new] = module.parameters[old]
             del module.parameters[old]
-        if module.species.get(old) != None:
-            module.species[new] = module.species[old]
+        elif module.species.get(old) != None:            
+            input_species[new] = module.species[old]
             del module.species[old]
         for r in module.reactions:
             module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"([^a-zA-Z0-9_])", r"\1"+new+r"\2", module.reactions[r])
-            module.reactions[r] = re.sub(r"^" + old + r"([^a-zA-Z0-9_])", new + r"\2", module.reactions[r])
+            module.reactions[r] = re.sub(r"^" + old + r"([^a-zA-Z0-9_])", new + r"\1", module.reactions[r])
             module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"$", r"\1" + new, module.reactions[r])
             module.reactions[r] = re.sub(r"^" + old + r"$", new, module.reactions[r])
-
-    for c in connections:
-        if c.output_module:
-            if c.output_species and c.input_species:
-                del c.output_module.species[c.output_species]
-            elif c.output_parameter and c.input_parameter:
-                del c.output_module.parameters[c.output_parameter]
 
 
     for i in range(0,len(modules)):
@@ -112,22 +107,21 @@ def combine_modules(modules, connections):
         #existing species/parameters are not listed in collision because
         #they are the first items in the existing_ hashtable, but we 
         #need to replace their names as well, just to be fair
-        if existing_params.get(name):
+        if existing_params.get(name) != None:
             replace_name(existing_params[name], name, existing_params[name].name + '_' + name)
             del existing_params[name]
-        if existing_species.get(name):
+        if existing_species.get(name) != None:
             replace_name(existing_species[name], name, existing_species[name].name + '_' + name)
             del existing_species[name]
 
     for c in connections:
-        if c.output_module:
-            if c.output_species and c.input_species:
-                replace_name(c.output_module, c.output_species, c.input_species)
-            elif c.output_parameter and c.input_parameter:
-                replace_name(c.output_module, c.output_parameter, c.input_parameter)
+        if c.output_module and c.input:
+            if c.output_species:
+                replace_name(c.output_module, c.output_species, c.input)
+            elif c.output_parameter:
+                replace_name(c.output_module, c.output_parameter, c.input)
 
     #DONE checking for name collisions
-
     s = ['FIX: source sink']
     s.append('\n#Reactions')
 
@@ -136,13 +130,24 @@ def combine_modules(modules, connections):
             s.append(r + ':\n    ' + m.reactions[r].replace('\n','\n    '))
 
     s.append('\n#Parameters')
+    for p in input_params:
+        s.append(p + ' = ' + str(input_params[p]))
+
     for m in modules:
         for p in m.parameters:
-            s.append(p + ' = ' + str(m.parameters[p]))
+            if input_params.get(p) == None:
+                s.append(p + ' = ' + str(m.parameters[p]))
+
 
     s.append('\n#Molecular species')
+    s.append('source = 1')
+    s.append('sink = 1')
+    for p in input_species:
+        s.append(p + ' = ' + str(input_species[p]))
+
     for m in modules:
         for n in m.species:
-            s.append(n + ' = ' + str(m.species[n]))
+            if input_species.get(n) == None:
+                s.append(n + ' = ' + str(m.species[n]))
 
     return '\n'.join(s)

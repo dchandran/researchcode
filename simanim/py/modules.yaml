@@ -37,31 +37,65 @@ sequestration:
     parameters:
         k1: 1
         k2: 1
-protein_production:
+activated_protein_production:
     reactions:
-        gfp_on: |
-            gfp_off > gfp_on
-            k1*gfp_off*TF/(Kd + TF)
-        gfp_off: |
-            gfp_on > gfp_off
-            k2*gfp_on
-        gfp_mRNA_prod: |
-            source > gfp_mRNA
-            k3*gfp_on
-        gfp_mRNA_degr: |
-            gfp_mRNA > sink
-            k4*gfp_mRNA
-        GFP_prod: |
-            source > GFP
-            k5*gfp_mRNA
-        GFP_degr: |
-            GFP > source
-            k6*GFP
+        gene_turns_on: |
+            gene_off > gene_on
+            k1*gene_off*TF/(Kd + TF)
+        gene_turns_off: |
+            gene_on > gene_off
+            k2*gene_on
+        mRNA_prod: |
+            source > mRNA
+            k3*gene_on
+        mRNA_degr: |
+            mRNA > sink
+            k4*mRNA
+        prot_prod: |
+            source > protein
+            k5*mRNA
+        prot_degr: |
+            protein > source
+            k6*protein
     species:
-        gfp_mRNA: 0
-        gfp_off: 1
-        gfp_on: 0
-        GFP: 0
+        mRNA: 0
+        gene_off: 1
+        gene_on: 0
+        protein: 0
+        TF: 0
+    parameters:
+        k1: 1
+        k2: 1
+        k3: 1
+        k4: 1
+        k5: 1
+        k6: 1
+        Kd: 0.2
+repressed_protein_production:
+    reactions:
+        gene_turns_on: |
+            gene_off > gene_on
+            k1*gene_off/(Kd + TF)
+        gene_turns_off: |
+            gene_on > gene_off
+            k2*gene_on
+        mRNA_prod: |
+            source > mRNA
+            k3*gene_on
+        mRNA_degr: |
+            mRNA > sink
+            k4*mRNA
+        prot_prod: |
+            source > protein
+            k5*mRNA
+        prot_degr: |
+            protein > source
+            k6*protein
+    species:
+        mRNA: 0
+        gene_off: 1
+        gene_on: 0
+        protein: 0
         TF: 0
     parameters:
         k1: 1
