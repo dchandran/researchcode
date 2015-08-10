@@ -29,7 +29,7 @@ class sim_module(object):
             for key in subs:
                 self.__replace_name(key, subs[key])
 
-    def __replace_name(old, new):
+    def __replace_name(self, old, new):
         if new == old:
             return
 
@@ -81,15 +81,16 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
     if not input_params:
         input_params = {}
 
-    for c in connections:
-        if c.output_species and c.output_module:
-            if output_species.get(c.output_species) == None:
-                output_species[c.output_species] = []
-            output_species[c.output_species].append(c.output_module)
-        if c.output_parameter and c.output_module:
-            if output_params.get(c.output_parameter) == None:
-                output_params[c.output_parameter] = []
-            output_params[c.output_parameter].append(c.output_module)
+    if connections:
+        for c in connections:
+            if c.output_species and c.output_module:
+                if output_species.get(c.output_species) == None:
+                    output_species[c.output_species] = []
+                output_species[c.output_species].append(c.output_module)
+            if c.output_parameter and c.output_module:
+                if output_params.get(c.output_parameter) == None:
+                    output_params[c.output_parameter] = []
+                output_params[c.output_parameter].append(c.output_module)
 
 
     collisions = []
@@ -141,12 +142,13 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
             replace_name(existing_species[name], name, existing_species[name].name + '_' + name)
             del existing_species[name]
 
-    for c in connections:
-        if c.output_module and c.input and :
-            if c.output_species:
-                replace_name(c.output_module, c.output_species, c.input)
-            elif c.output_parameter:
-                replace_name(c.output_module, c.output_parameter, c.input)
+    if connections:
+        for c in connections:
+            if c.output_module and c.input:
+                if c.output_species:
+                    replace_name(c.output_module, c.output_species, c.input)
+                elif c.output_parameter:
+                    replace_name(c.output_module, c.output_parameter, c.input)
 
     #DONE checking for name collisions
     s = ['FIX: source sink']
