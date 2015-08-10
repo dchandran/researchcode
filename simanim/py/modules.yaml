@@ -34,6 +34,7 @@ sequestration:
     species:
         a: 0
         b: 10
+        ab: 0
     parameters:
         k1: 1
         k2: 1

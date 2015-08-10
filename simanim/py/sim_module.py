@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pyaml import yaml
 import re
 class sim_module(object):
@@ -8,19 +9,20 @@ class sim_module(object):
     modules_file = "py/modules.yaml"
     modules = None
 
-    def __init__(self, name, subs = None):
+    def __init__(self, name, module_type, subs = None):
         if not sim_module.modules:
             sim_module.modules = yaml.load(open(sim_module.modules_file))
 
-        module = sim_module.modules.get(name)
+        module = sim_module.modules.get(module_type)
+        self.name = name
         
-        if module != None:
-            self.name = name
-            self.reactions = module['reactions']
-            self.species = module['species']
-            self.parameters = module['parameters']
+        if module != None:            
+            self.type = module_type
+            self.reactions = deepcopy(module['reactions'])
+            self.species = deepcopy(module['species'])
+            self.parameters = deepcopy(module['parameters'])
         else:
-            self.name = "unknown"
+            self.type = "unknown"
             self.reactions = {}
             self.species = {}
             self.parameters = {}
@@ -156,7 +158,7 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
 
     for m in modules:
         for r in m.reactions:
-            s.append(r + ':\n    ' + m.reactions[r].replace('\n','\n    '))
+            s.append(m.name+"_"+r + ':\n    ' + m.reactions[r].replace('\n','\n    '))
 
     s.append('\n#Parameters')
     for p in input_params:

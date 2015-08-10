@@ -4,10 +4,11 @@ import json
 import sys
 import os
 
-m1 = sim_module("sequestration", {'a': 'MecA', 'b': 'ComK', 'k1': 'k1'}) 
-m2 = sim_module("sequestration", {'b': 'MecA', 'a': 'ComS', 'k1': 'k1'}) 
-m3 = sim_module("activated_protein_production", {'TF': 'ComK', 'Protein': 'ComK', 'k1': 'k2'})
-m4 = sim_module("repressed_protein_production", {'TF': 'ComK', 'Protein': 'ComS', 'k1': 'k2'})
+sim_module.modules_file = "modules.yaml"
+m1 = sim_module("m1","sequestration", {'a': 'MecA', 'b': 'ComK', 'k1': 'k1'}) 
+m2 = sim_module("m2","sequestration", {'b': 'MecA', 'a': 'ComS', 'k1': 'k1'}) 
+m3 = sim_module("m3","activated_protein_production", {'TF': 'ComK', 'Protein': 'ComK', 'k1': 'k2'})
+m4 = sim_module("m4","repressed_protein_production", {'TF': 'ComK', 'Protein': 'ComS', 'k1': 'k2'})
 
 species = {'MecA': 10, 'ComK': 0, 'ComS': 0}
 params =  {'k1': 10, 'k2': 5}
@@ -16,10 +17,10 @@ s = combine_modules([m1, m2], species, params)
 
 modelfile = 'temp.psc'
 
-if not os.path.exists(modelfile):
-    fout = open(modelfile,'w')
-    fout.write(s)
-    fout.close()
+#if not os.path.exists(modelfile):
+fout = open(modelfile,'w')
+fout.write(s)
+fout.close()
 
 outfile = 'temp.out'
 gridsz = 100
