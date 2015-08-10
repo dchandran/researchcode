@@ -172,7 +172,7 @@ for acc in acc_lst:
    table.append(tupl)
 
 try:
-    dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?)', table)
+    dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
 except:
     pass
 dbconnection.commit()
