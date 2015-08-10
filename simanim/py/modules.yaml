@@ -1,22 +1,22 @@
 two_component:
     reactions:
         Receptor_Activation: |
-            R0 > R1
-            k1*light*R0/(1 + R0)
+            r0 > r1
+            k1*light*r0/(1 + r0)
         Receptor_Inactivation: |
-            R1 > R0
-            k2*R1/(1 + R1)
+            r1 > r0
+            k2*r1/(1 + r1)
         TF_Activation: |
-            TF0 > TF1
-            k3*R1*TF0/(1 + TF0)
+            tf0 > tf1
+            k3*r1*tf0/(1 + tf0)
         TF_Inactivation: |
-            TF1 > TF0
-            k4*TF1/(1 + TF1)
+            tf1 > tf0
+            k4*tf1/(1 + tf1)
     species:
-        R0: 10
-        R1: 0
-        TF0: 100
-        TF1: 0
+        r0: 10
+        r1: 0
+        tf0: 100
+        tf1: 0
     parameters:
         k1: 1
         k2: 0.1
@@ -26,14 +26,14 @@ two_component:
 sequestration:
     reactions:
         forward: |
-            A + B > AB
-            k1*A*B
+            a + b > ab
+            k1*a*b
         reverse: |
-            AB > A + B
-            k2*AB
+            ab > a + b
+            k2*ab
     species:
-        A: 0
-        B: 10
+        a: 0
+        b: 10
     parameters:
         k1: 1
         k2: 1
@@ -41,7 +41,7 @@ activated_protein_production:
     reactions:
         gene_turns_on: |
             gene_off > gene_on
-            k1*gene_off*TF/(Kd + TF)
+            k1*gene_off*tf/(Kd + tf)
         gene_turns_off: |
             gene_on > gene_off
             k2*gene_on
@@ -62,7 +62,7 @@ activated_protein_production:
         gene_off: 1
         gene_on: 0
         protein: 0
-        TF: 0
+        tf: 0
     parameters:
         k1: 1
         k2: 1
@@ -75,7 +75,7 @@ repressed_protein_production:
     reactions:
         gene_turns_on: |
             gene_off > gene_on
-            k1*gene_off/(Kd + TF)
+            k1*gene_off/(Kd + tf)
         gene_turns_off: |
             gene_on > gene_off
             k2*gene_on
@@ -96,7 +96,7 @@ repressed_protein_production:
         gene_off: 1
         gene_on: 0
         protein: 0
-        TF: 0
+        tf: 0
     parameters:
         k1: 1
         k2: 1
@@ -105,5 +105,4 @@ repressed_protein_production:
         k5: 1
         k6: 1
         Kd: 0.2
-
 

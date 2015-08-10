@@ -108,7 +108,7 @@ def get_virus_data(accession):
 
             if organism_url:
                 count = 0
-                success = True
+                success = False
                 while not success and count < 10:
                     count += 1
                     try:
@@ -127,7 +127,7 @@ def get_virus_data(accession):
 
             if host_url:
                 count = 0
-                success = True
+                success = False
                 while not success and count < 10:
                     count += 1
                     try:
@@ -157,6 +157,10 @@ dbcursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
 results = dbcursor.fetchall()
 if len(results) < 1:
     dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, nucleic_acid_type text, nucleic_acid_shape text, size real, strain text, taxonomy text)''')
+    dbconnection.commit()
+    print("Created viruses table")
+else:
+    print("viruses table exists with " + str(len(results)) + " entries")
 
 acc_lst = get_all_virus_accession_numbers()
 
@@ -165,16 +169,21 @@ acc_lst = get_all_virus_accession_numbers()
 table = []
 
 for acc in acc_lst:
-   print ("parsing " + acc + "\n")
-   dat = get_virus_data(acc)
-   #virus_table.append(dat)
-   tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
-   table.append(tupl)
+    print ("parsing " + acc + "\n")
+    dat = get_virus_data(acc)
+    #virus_table.append(dat)
+    tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
+    table.append(tupl)
+    try:
+        sqlcmd = "INSERT INTO viruses VALUES"+str(tupl)
+        print(sqlcmd)
+        dbcursor.execute(sqlcmd)
+        dbconnection.commit()
+    except Exception as e:
+        print("Error: " + str(e))
+        pass
 
-try:
-    dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
-except:
-    pass
-dbconnection.commit()
-#dbcursor.execute("SELECT name FROM viruses WHERE host=''")
+
+#dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
+#dbconnection.commit()
 

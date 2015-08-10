@@ -8,20 +8,42 @@ class sim_module(object):
     modules_file = "py/modules.yaml"
     modules = None
 
-    def __init__(self, name):
+    def __init__(self, name, subs = None):
         if not sim_module.modules:
             sim_module.modules = yaml.load(open(sim_module.modules_file))
 
         module = sim_module.modules.get(name)
-        self.reactions = None
-        self.species = None
-        self.parameters = None
-
-        if module:
+        
+        if module != None:
             self.name = name
             self.reactions = module['reactions']
             self.species = module['species']
             self.parameters = module['parameters']
+        else:
+            self.name = "unknown"
+            self.reactions = {}
+            self.species = {}
+            self.parameters = {}
+
+        if subs != None:
+            for key in subs:
+                self.__replace_name(key, subs[key])
+
+    def __replace_name(old, new):
+        if new == old:
+            return
+
+        module = self
+
+        if module.parameters.get(old) != None:
+            del module.parameters[old]
+        elif module.species.get(old) != None:
+            del module.species[old]
+        for r in module.reactions:
+            module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"([^a-zA-Z0-9_])", r"\1"+new+r"\2", module.reactions[r])
+            module.reactions[r] = re.sub(r"^" + old + r"([^a-zA-Z0-9_])", new + r"\1", module.reactions[r])
+            module.reactions[r] = re.sub(r"([^a-zA-Z0-9_])" + old + r"$", r"\1" + new, module.reactions[r])
+            module.reactions[r] = re.sub(r"^" + old + r"$", new, module.reactions[r])
 
 class sim_connection(object):
     """
@@ -40,7 +62,7 @@ class sim_connection(object):
             elif output_module.species.get(output) != None:
                 self.output_species = output
 
-def combine_modules(modules, connections):
+def combine_modules(modules, input_species=None, input_params=None, connections=None):
     """
     Generate final code from the given
     list of modules
@@ -54,8 +76,10 @@ def combine_modules(modules, connections):
     output_species = {}
     output_params = {}
 
-    input_species = {}
-    input_params = {}
+    if not input_species:
+        input_species = {}
+    if not input_params:
+        input_params = {}
 
     for c in connections:
         if c.output_species and c.output_module:
@@ -71,6 +95,9 @@ def combine_modules(modules, connections):
     collisions = []
 
     def replace_name(module, old, new):
+        if new == old:
+            return
+
         if module.parameters.get(old) != None:
             input_params[new] = module.parameters[old]
             del module.parameters[old]
@@ -115,7 +142,7 @@ def combine_modules(modules, connections):
             del existing_species[name]
 
     for c in connections:
-        if c.output_module and c.input:
+        if c.output_module and c.input and :
             if c.output_species:
                 replace_name(c.output_module, c.output_species, c.input)
             elif c.output_parameter:
