@@ -27,7 +27,7 @@ gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
-os.remove(modelfile)
+#os.remove(modelfile)
 
 smod.DoStochSim(end = 500,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)

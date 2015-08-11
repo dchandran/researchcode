@@ -165,12 +165,12 @@ function connectModules() {
 }
 
 function connectDataModule() {
-    TimeSeriesData.connect('(R1+R0)/5', two_component, "numReceptors");
-    TimeSeriesData.connect('(TF1+TF0)/5', two_component, "numTFs");    
-    TimeSeriesData.connect('R1/(R1+R0)', two_component, "percentActiveMembranes");
-    TimeSeriesData.connect('TF1/(TF1+TF0)', two_component, "percentActiveTFs");
-    TimeSeriesData.connect('gfp_on', expression_cassette, "state");
-    TimeSeriesData.connect('gfp_mRNA', protein_bursts, "numRNA");
+    TimeSeriesData.connect('(r1+r0)/5', two_component, "numReceptors");
+    TimeSeriesData.connect('(tf1+tf0)/5', two_component, "numTFs");    
+    TimeSeriesData.connect('tf1/(r1+r0)', two_component, "percentActiveMembranes");
+    TimeSeriesData.connect('tf1/(tf1+tf0)', two_component, "percentActiveTFs");
+    TimeSeriesData.connect('gene_on', expression_cassette, "state");
+    TimeSeriesData.connect('mRNA', protein_bursts, "numRNA");
     TimeSeriesData.connect('GFP', protein_bursts, "numProteins");
 }
 

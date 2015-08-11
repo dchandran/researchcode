@@ -65,7 +65,7 @@ http.createServer(function (request, response) {
                 fs.writeFile("py/temp.py", code, function(err) {
                     if(err) console.log("Write File Error:" + err);
 
-                    exec('python3 py/temp.py' + GRIDSZ, function (error, stdout, stderr) {
+                    exec('python3 py/temp.py', function (error, stdout, stderr) {
                       console.log(stdout);
                       console.log(stderr);
                       fs.readFile('py/temp.out', function (err, data) {
