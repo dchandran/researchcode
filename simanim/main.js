@@ -1,7 +1,7 @@
 var _EASEL_STAGE;
 var _EDITORS = {};
 
-function fitToContainer(canvas){
+function fitToContainer(canvas) {
   // Make it visually fill the positioned parent
   canvas.style.width ='100%';
   canvas.style.height='100%';
@@ -61,7 +61,52 @@ function updateModules(code) {
     });
 }
 
+myChart = null;
 
+function setupDimpleJS(id,w,h) {
+    var svg = dimple.newSvg(id,w,h);
+    d3.tsv("/py/temp.csv", function (data) {
+      myChart = new dimple.chart(svg, data);
+      myChart.setBounds(30, 20, 300, 200);
+      var x = myChart.addCategoryAxis("x", "time");
+      x.addOrderRule("time");
+      myChart.addMeasureAxis("y", "GFP");
+      myChart.addSeries("GFP", dimple.plot.line);
+      myChart.addLegend(60, 10, 300, 20, "right");
+      myChart.draw();
+    });
+}
+
+function setupCodeEditor(id, language, url, callback) {
+    //var theme = "ace/theme/monokai"
+    var theme = "ace/theme/clouds_midnight";
+
+    var editor = ace.edit(id);
+    editor.setFontSize('16px');
+    editor.setTheme(theme);
+    //editor.renderer.setShowGutter(false); 
+    editor.getSession().setMode("ace/mode/" + language);
+    editor.setOptions({maxLines: Infinity});
+    _EDITORS[id] = editor;
+
+    if (url)
+     $.ajax({
+        url:url,
+        success: function(data) {
+            editor.setValue(data);
+        }
+      });
+
+    if (callback)
+        editor.commands.addCommand({
+            name: 'ExScript',
+            bindKey: 'Shift-Enter',
+            exec: function(editor) {
+                callback(editor.getValue());
+            },
+            readOnly: true
+        });
+}
 
 function initGUI() {
 
@@ -85,40 +130,10 @@ function initGUI() {
 
     //setup code editors
 
-    //var theme = "ace/theme/monokai"
-    var theme = "ace/theme/clouds_midnight"
-
-    function setupCodeEditor(id, language, url, callback) {
-        var editor = ace.edit(id);
-        editor.setFontSize('16px');
-        editor.setTheme(theme);
-        //editor.renderer.setShowGutter(false); 
-        editor.getSession().setMode("ace/mode/" + language);
-        editor.setOptions({maxLines: Infinity});
-        _EDITORS[id] = editor;
-
-        if (url)
-         $.ajax({
-            url:url,
-            success: function(data) {
-                editor.setValue(data);
-            }
-          });
-
-        if (callback)
-            editor.commands.addCommand({
-                name: 'ExScript',
-                bindKey: 'Shift-Enter',
-                exec: function(editor) {
-                    callback(editor.getValue());
-                },
-                readOnly: true
-            });
-    }
-
     setupCodeEditor("modelpane", "python", 'py/temp.psc', updatePscModel);
     setupCodeEditor("codepane", "python", 'py/example1.py', runPyCode);
     setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
+    setupDimpleJS("#plotpane", 400, 300);
 
     //setup slider
     var rangeSlider = document.getElementById('time-slider');

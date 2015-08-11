@@ -3,6 +3,8 @@ import stochpy
 import json
 import sys
 import os
+import csv
+from numpy import transpose
 
 sim_module.modules_file = "modules.yaml"
 m1 = sim_module("m1","sequestration", {'a': 'MecA', 'b': 'ComK', 'k1': 'k1'}) 
@@ -13,7 +15,7 @@ m4 = sim_module("m4","repressed_protein_production", {'TF': 'ComK', 'Protein': '
 species = {'MecA': 10, 'ComK': 0, 'ComS': 0}
 params =  {'k1': 10, 'k2': 5}
 
-s = combine_modules([m1, m2], species, params)
+s = combine_modules([m1, m2, m3, m4], species, params)
 
 modelfile = 'temp.psc'
 
@@ -31,17 +33,20 @@ os.remove(modelfile)
 
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
-smod.PlotSpeciesTimeSeries()
+#smod.PlotSpeciesTimeSeries()
 
-for i in range(0,len(smod.data_stochsim_grid.species)):
-    smod.data_stochsim_grid.species[i] = smod.data_stochsim_grid.species[i][0].tolist()
+with open('temp.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    headers = ['time']+smod.SSA.species_names
+    writer.writerow(headers)
 
-obj = { 'gridsz': gridsz,
-        'headers': ['time']+smod.SSA.species_names,
-        'time': smod.data_stochsim_grid.time.ravel().tolist(),
-        'species': smod.data_stochsim_grid.species};
+    time = smod.data_stochsim_grid.time.ravel().tolist()
+    data = transpose(smod.data_stochsim_grid.species)
+    for i in range(0,len(data)):
+        writer.writerow([ time[i] ] + data[i][0].tolist())
 
-json.dump(obj, open(outfile,'w'))
+
+
 
 
 
