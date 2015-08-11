@@ -32,9 +32,6 @@ class sim_module(object):
                 self.__replace_name(key, subs[key])
 
     def __replace_name(self, old, new):
-        if new == old:
-            return
-
         module = self
 
         if module.parameters.get(old) != None:
@@ -98,9 +95,6 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
     collisions = []
 
     def replace_name(module, old, new):
-        if new == old:
-            return
-
         if module.parameters.get(old) != None:
             input_params[new] = module.parameters[old]
             del module.parameters[old]

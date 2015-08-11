@@ -4,6 +4,8 @@ import json
 import sys
 import os
 
+sim_module.modules_file = "py/modules.yaml"
+
 m1 = sim_module("two_component") 
 m2 = sim_module("gfp_production", 
     {'tf': 'tf1', 
