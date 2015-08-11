@@ -4,30 +4,32 @@ import json
 import sys
 import os
 
-m1 = sim_module("two_component") 
-m2 = sim_module("gfp_production", 
+sim_module.modules_file = "modules.yaml"
+m1 = sim_module("m1","two_component", {'tf0':'tf0', 'tf1':'tf1'})
+m2 = sim_module("m2","activated_protein_production", 
     {'tf': 'tf1', 
      'k1': 'k1', 
      'protein': 'GFP'})
 
-species = {'tf': 10, 'GFP': 0}
-params = {'k1': 1}
+species = {'tf1': 0, 'tf0': 10, 'GFP': 0}
+params = {'k1': 5}
 
 s = combine_modules([m1, m2], species, params)
 
-modelfile = sys.argv[1]
-
+modelfile = "temp.psc"
 if not os.path.exists(modelfile):
     fout = open(modelfile,'w')
     fout.write(s)
     fout.close()
 
-outfile = sys.argv[2]
-gridsz = int(sys.argv[3])
+outfile = "temp.out"
+gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
-smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
+os.remove(modelfile)
+
+smod.DoStochSim(end = 500,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
 smod.PlotSpeciesTimeSeries()
 

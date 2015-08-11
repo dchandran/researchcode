@@ -17,16 +17,18 @@ s = combine_modules([m1, m2], species, params)
 
 modelfile = 'temp.psc'
 
-#if not os.path.exists(modelfile):
-fout = open(modelfile,'w')
-fout.write(s)
-fout.close()
+if not os.path.exists(modelfile):
+    fout = open(modelfile,'w')
+    fout.write(s)
+    fout.close()
 
 outfile = 'temp.out'
 gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
+os.remove(modelfile)
+
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
 smod.PlotSpeciesTimeSeries()
