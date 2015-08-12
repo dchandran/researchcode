@@ -1,4 +1,4 @@
-from sim_module import sim_module, sim_connection, combine_modules
+from sim_module import sim_module, sim_connection, combine_modules, write_linearized_table
 import stochpy
 import json
 import sys
@@ -35,12 +35,8 @@ smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
 #smod.PlotSpeciesTimeSeries()
 
-with open('temp.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    headers = ['time']+smod.SSA.species_names
-    writer.writerow(headers)
 
-    time = smod.data_stochsim_grid.time.ravel().tolist()
-    data = transpose(smod.data_stochsim_grid.species)
-    for i in range(0,len(data)):
-        writer.writerow([ time[i] ] + data[i][0].tolist())
+time = smod.data_stochsim_grid.time.ravel().tolist()
+species = transpose(smod.data_stochsim_grid.species)
+data = write_linearized_table('temp.csv',smod.SSA.species_names, time, species)
+

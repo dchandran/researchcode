@@ -91,7 +91,6 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
                     output_params[c.output_parameter] = []
                 output_params[c.output_parameter].append(c.output_module)
 
-
     collisions = []
 
     def replace_name(module, old, new):
@@ -125,7 +124,7 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
 
     for collision in collisions:
         module = collision['module']
-        name = collision['name']            
+        name = collision['name']
         replace_name(module, name, module.name + '_' + name)
 
         #existing species/parameters are not listed in collision because
@@ -176,3 +175,12 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
                 s.append(n + ' = ' + str(m.species[n]))
 
     return '\n'.join(s)
+
+def write_linearized_table(filename, headers, time, species):
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        headers = data['headers']
+        writer.writerow(headers)
+
+        for i in range(0,len(data)):
+            writer.writerow([ time[i] ] + data[i][0].tolist())
