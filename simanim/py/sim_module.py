@@ -179,8 +179,9 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
 def write_linearized_table(filename, headers, time, species):
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        headers = data['headers']
-        writer.writerow(headers)
+        writer.writerow(("time","number of molecules"))
 
-        for i in range(0,len(data)):
-            writer.writerow([ time[i] ] + data[i][0].tolist())
+        for i in range(0,len(species)):          
+            for j in range(0,len(headers)):
+                lst = [ time[i], data[i][j] ]
+                writer.writerow(lst)
