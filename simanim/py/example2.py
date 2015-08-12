@@ -3,7 +3,8 @@ import stochpy
 import json
 import sys
 import os
-import matplotlib.pyplot as plt
+import csv
+from numpy import transpose
 
 sim_module.modules_file = "modules.yaml"
 
@@ -19,28 +20,33 @@ s = combine_modules([m1, m2, m3, m4], species, params)
 
 modelfile = 'temp.psc'
 
-#if not os.path.exists(modelfile):
-fout = open(modelfile,'w')
-fout.write(s)
-fout.close()
+if not os.path.exists(modelfile):
+    fout = open(modelfile,'w')
+    fout.write(s)
+    fout.close()
 
 outfile = 'temp.out'
 gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
+os.remove(modelfile)
+
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
-smod.PlotSpeciesTimeSeries()
+#smod.PlotSpeciesTimeSeries()
 
-for i in range(0,len(smod.data_stochsim_grid.species)):
-    smod.data_stochsim_grid.species[i] = smod.data_stochsim_grid.species[i][0].tolist()
+with open('temp.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    headers = ['time']+smod.SSA.species_names
+    writer.writerow(headers)
 
-obj = { 'gridsz': gridsz,
-        'headers': ['time']+smod.SSA.species_names,
-        'time': smod.data_stochsim_grid.time.ravel().tolist(),
-        'species': smod.data_stochsim_grid.species};
+    time = smod.data_stochsim_grid.time.ravel().tolist()
+    data = transpose(smod.data_stochsim_grid.species)
+    for i in range(0,len(data)):
+        writer.writerow([ time[i] ] + data[i][0].tolist())
 
-json.dump(obj, open(outfile,'w'))
+
+
 
 plt.waitforbuttonpress()
