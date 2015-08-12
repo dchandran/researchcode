@@ -20,17 +20,16 @@ s = combine_modules([m1, m2, m3, m4], species, params)
 
 modelfile = 'temp.psc'
 
-if not os.path.exists(modelfile):
-    fout = open(modelfile,'w')
-    fout.write(s)
-    fout.close()
+fout = open(modelfile,'w')
+fout.write(s)
+fout.close()
 
 outfile = 'temp.out'
 gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
-os.remove(modelfile)
+#os.remove(modelfile)
 
 smod.DoStochSim(end = 100,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
@@ -45,8 +44,3 @@ with open('temp.csv', 'w', newline='') as csvfile:
     data = transpose(smod.data_stochsim_grid.species)
     for i in range(0,len(data)):
         writer.writerow([ time[i] ] + data[i][0].tolist())
-
-
-
-
-plt.waitforbuttonpress()
