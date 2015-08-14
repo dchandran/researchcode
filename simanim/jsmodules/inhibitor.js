@@ -1,8 +1,8 @@
-var two_component = new AnimModule("two component");
+var inhibitor = new AnimModule("inhibitor");
     
-two_component.init = function() {
+inhibitor.init = function() {
     var i;
-    var self = two_component;
+    var self = inhibitor;
     var bounds = self.inputs.inactiveBounds;
             
     self.proteinChompSheet = new createjs.SpriteSheet({
@@ -14,7 +14,7 @@ two_component.init = function() {
             "active": [0, 15, "active", 0.5],
             "bind": [0, 8, "bound", 0.7],
             "bound": 8,
-            "inactive": 16,
+            "inert": 16,
         }
     });
 
@@ -24,7 +24,7 @@ two_component.init = function() {
         "frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},              
         "animations": {
             "active": [0, 9, "active", 0.5],
-            "inactive": 10
+            "inert": 10
         }
     });
     
@@ -32,9 +32,9 @@ two_component.init = function() {
     self.tfs = [];
 };
 
-two_component.tick = function(event) {
+inhibitor.tick = function(event) {
     var tf, rec, recp, i;
-    var self = two_component;
+    var self = inhibitor;
     var percentActiveTFs = self.inputs.percentActiveTFs;
     var percentActiveMembranes = self.inputs.percentActiveMembranes;
     var receptors = self.receptors;
@@ -42,11 +42,6 @@ two_component.tick = function(event) {
     var n = self.inputs.numReceptors;    
     var recp;
     var bounds = self.inputs.inactiveBounds;
-    var receptorStates = self.inputs.receptorStates || [];
-    var tfStates = self.inputs.tfStates || [];
-
-    self.outputs.tfPos = [];
-    self.outputs.receptorPos = [];
 
     if (receptors.length != n) {
 
@@ -56,7 +51,7 @@ two_component.tick = function(event) {
         }
 
         while (receptors.length < n) {
-            recp = new createjs.Sprite(self.membraneChompSheet, "inactive", false);
+            recp = new createjs.Sprite(self.membraneChompSheet, "inert", false);
             initDiffusableMolecule(recp, {left: bounds.left, width: bounds.width, height: 0, top: bounds.top-140}, false);
             recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
             recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
@@ -83,7 +78,7 @@ two_component.tick = function(event) {
         }
 
         while (tfs.length < n) {
-            tf = new createjs.Sprite(self.proteinChompSheet, "inactive");
+            tf = new createjs.Sprite(self.proteinChompSheet, "inert");
             initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
             tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
             tf.y = tf.bounds.top;// + (Math.random());
@@ -102,20 +97,15 @@ two_component.tick = function(event) {
             rec.alpha += 0.02;
         }
 
-        if (rec.currentAnimation !== 'active' && 
-            (i < percentActiveMembranes*receptors.length || 
-                (receptorStates.length > i && receptorStates[i]==='active'))) {
+        if (rec.currentAnimation !== 'active' && i < percentActiveMembranes*receptors.length) {
             rec.gotoAndPlay('active');
         } else {
-            if (rec.currentAnimation !== 'inactive' && 
-                (i >= percentActiveMembranes*receptors.length || 
-                    (receptorStates.length > i && receptorStates[i]==='inactive'))) {
-                rec.gotoAndPlay('inactive');
+            if (rec.currentAnimation !== 'inert' && i >= percentActiveMembranes*receptors.length) {
+                rec.gotoAndPlay('inert');
             }
         }
 
         moveDiffusableMolecule(rec);
-        self.outputs.receptorPos[i] = {x: rec.x, y: rec.y};
     }
 
     for (i=0; i < tfs.length; ++i) {
@@ -124,23 +114,18 @@ two_component.tick = function(event) {
             tf.alpha += 0.02;
         }
 
-        if (tf.currentAnimation !== 'active' && 
-            (i < percentActiveTFs*tfs.length ||
-             (tfStates.length > i && tfStates[i]==='active'))) {
+        if (tf.currentAnimation !== 'active' && i < percentActiveTFs*tfs.length) {
             tf.gotoAndPlay('active');
             bounds = self.inputs.activeBounds;
             initDiffusableMolecule(tf, bounds);
         } else {
-            if (tf.currentAnimation !== 'inactive' && 
-                (i >= percentActiveTFs*tfs.length ||
-                 (tfStates.length > i && tfStates[i]==='inactive'))) {
-                tf.gotoAndPlay('inactive');
+            if (tf.currentAnimation !== 'inert' && i >= percentActiveTFs*tfs.length) {
+                tf.gotoAndPlay('inert');
                 bounds = self.inputs.inactiveBounds;
                 initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
             }
         }
 
         moveDiffusableMolecule(tf);
-        self.outputs.tfPos[i] = {x: tf.x, y: tf.y};
     }
 };

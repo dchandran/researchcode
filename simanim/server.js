@@ -32,7 +32,7 @@ http.createServer(function (request, response) {
             try {
                 code = decodeURI(chunk);
                 console.log(code);
-                fs.writeFile("py/temp.psc", code, function(err) {
+                fs.writeFile("temp.psc", code, function(err) {
                     if(err) console.log("Write File Error:" + err);
                 });
                 response.writeHead(200, {'Content-Type': 'text/plain' });
@@ -65,17 +65,21 @@ http.createServer(function (request, response) {
                 fs.writeFile("py/temp.py", code, function(err) {
                     if(err) console.log("Write File Error:" + err);
 
-                    exec('python3 py/temp.py', function (error, stdout, stderr) {
-                      console.log(stdout);
-                      console.log(stderr);
-                      fs.readFile('py/temp.out', function (err, data) {
-                          if (err) console.log("Read File Error:" + err);
-                          console.log(data);
-                          response.writeHead(200, {'Content-Type': 'text/plain' });
-                          response.write(data);
-                          response.end();
+                    try {
+                        exec('python3 py/temp.py', function (error, stdout, stderr) {
+                          console.log(stdout);
+                          console.log(stderr);
+                          fs.readFile('temp.json', function (err, data) {
+                              if (err) console.log("Read File Error:" + err);
+                              console.log(data);
+                              response.writeHead(200, {'Content-Type': 'text/plain' });
+                              response.write(data);
+                              response.end();
+                            });
                         });
-                    });
+                    } catch (err) {
+                        console.log("Exception: " + err);        
+                    }
                 }); 
                 
             } catch (err) {

@@ -7,8 +7,9 @@
 
     <script src="third-party/easeljs/easeljs-NEXT.combined.js"></script>
     <script src="third-party/jquery.js"></script>
-    <script src="third-party/d3.v3.4.8.min.js"></script>
-    <script src="third-party/dimple.v2.1.6.min.js"></script>
+    <link href="third-party/c3/c3.min.css" rel="stylesheet" type="text/css">
+    <script src="third-party/d3.v3.4.8.min.js" charset="utf-8"></script>
+    <script src="third-party/c3/c3.min.js"></script>
 
     <script src="third-party/easeljs/easeljs-NEXT.combined.js"></script>
     <link rel="stylesheet" href="third-party/codemirror/codemirror.css">
@@ -44,15 +45,13 @@
       <div id="center">
         <canvas id="canvas"></canvas>
         <div class="sliders" id="time-slider"></div>
-        <div class="sliders" id="time-slider-value">Current Time: 0</div>
+        <div id="plotpane" style="height:50%; width:100%"></div>
       </div>
       <div id="right">
-
             <ul class="tabs">
               <li><a href="#">| Model</a></li>
               <li><a href="#">| Code</a></li>
               <li><a href="#">| Modules</a></li>
-              <li><a href="#">| Plots</a></li>
             </ul>
             <!-- tab "panes" -->
             <div class="panes">
@@ -62,10 +61,7 @@
               </div>
               <div id="yamlpane">
               </div>
-              <div id="plotpane">
-              </div>
             </div>
-
         </div>
     </div>
 

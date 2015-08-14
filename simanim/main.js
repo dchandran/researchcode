@@ -12,9 +12,6 @@ function fitToContainer(canvas) {
 
 function updateCurrentTime(values, handle) {
     TimeSeriesData.setCurrentIndex(Number(values[0]));
-
-    var rangeSliderValueElement = document.getElementById('time-slider-value');
-    rangeSliderValueElement.innerHTML = "Current Time: " + values[0];
 }
 
 function runPyCode(code) {
@@ -25,15 +22,11 @@ function runPyCode(code) {
         success: function(data) {
             try {
                 data = JSON.parse(data);
+                updateGraph(data);
                 TimeSeriesData.init(data);
                 TimeSeriesData.setCurrentIndex(0);
-                if (_EDITORS["modelpane"])
-                    $.ajax({
-                        url:'py/temp.psc',
-                        success: function(data) {
-                            _EDITORS["modelpane"].setValue(data);
-                        }
-                      });
+                if (_EDITORS["modelpane"] && data.modelstring)
+                    _EDITORS["modelpane"].setValue(data.modelstring);
             } catch (e) {
                 console.log(e);
             }
@@ -61,28 +54,46 @@ function updateModules(code) {
     });
 }
 
-myChart = null;
+function updateGraph(data) {
+    var id = "#plotpane";
+    if (!updateGraph.chart) {
+        updateGraph.chart = c3.generate({
+            bindto: id,
+            data: { x: 'time', columns: [] }
+        });
+    }
 
-function setupDimpleJS(id,w,h) {
-    var svg = dimple.newSvg(id,w,h);
-    d3.tsv("/py/temp.csv", function (data) {
-      myChart = new dimple.chart(svg, data);
-      myChart.setBounds(30, 20, 300, 200);
-      var x = myChart.addCategoryAxis("x", "time");
-      x.addOrderRule("time");
-      myChart.addMeasureAxis("y", "GFP");
-      myChart.addSeries("GFP", dimple.plot.line);
-      myChart.addLegend(60, 10, 300, 20, "right");
-      myChart.draw();
-    });
+    var data2 = {x:'time',columns:[]};
+    var col = ['time'];
+    var i,j;
+
+    for (i=0; i < data.time.length; ++i) {
+        col.push(Math.round(data.time[i] * 100) / 100);
+    }
+
+    data2.columns.push(col);
+
+    for (i=0; i < data.headers.length; ++i) {
+        col = [data.headers[i]];
+        for (j=0; j < data.species.length; ++j) {
+            col.push(data.species[j][i]);
+        }
+        data2.columns.push(col);
+    }
+
+    debugger;
+
+    updateGraph.chart.load(data2);
 }
+
 
 function setupCodeEditor(id, language, url, callback) {
     //var theme = "ace/theme/monokai"
     var theme = "ace/theme/clouds_midnight";
+    //var theme = "ace/theme/kr_theme";
 
     var editor = ace.edit(id);
-    editor.setFontSize('16px');
+    editor.setFontSize('20px');
     editor.setTheme(theme);
     //editor.renderer.setShowGutter(false); 
     editor.getSession().setMode("ace/mode/" + language);
@@ -130,10 +141,9 @@ function initGUI() {
 
     //setup code editors
 
-    setupCodeEditor("modelpane", "python", 'py/temp.psc', updatePscModel);
+    setupCodeEditor("modelpane", "python", 'temp.psc', updatePscModel);
     setupCodeEditor("codepane", "python", 'py/example1.py', runPyCode);
     setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
-    setupDimpleJS("#plotpane", 400, 300);
 
     //setup slider
     var rangeSlider = document.getElementById('time-slider');

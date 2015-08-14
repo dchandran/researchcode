@@ -1,6 +1,9 @@
 from copy import deepcopy
 from pyaml import yaml
 import re
+import csv
+import json
+
 class sim_module(object):
     """
     Generates snippets of code
@@ -176,12 +179,26 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
 
     return '\n'.join(s)
 
+
+
 def write_linearized_table(filename, headers, time, species):
+
+    species2 = []
+
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        writer.writerow(("time","number of molecules"))
 
-        for i in range(0,len(species)):          
+        writer.writerow(("time","Molecule","Molecule count"))
+
+        for i in range(0,len(species)):
+            species2.append(species[i][0].tolist())
             for j in range(0,len(headers)):
-                lst = [ time[i], data[i][j] ]
+                lst = [ time[i], headers[j], species[i][0][j] ]
                 writer.writerow(lst)
+
+    obj = { 'size': len(species),
+            'headers': headers,
+            'time': time,
+            'species': species2 }
+
+    return obj

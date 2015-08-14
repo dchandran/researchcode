@@ -60,8 +60,8 @@ TimeSeriesData.setCurrentIndex = function(index) {
     this.inputs.currentIndex = index;
     var s;
 
-    for (var i=0; i < headers.length-1; ++i) {
-        eval("var " + headers[i+1] + '=' + species[i][index]);
+    for (var i=0; i < headers.length; ++i) {
+        eval("var " + headers[i] + '=' + species[index][i]);
     }
 
     for (s in this.outputs) {
