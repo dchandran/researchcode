@@ -2,27 +2,31 @@ two_component:
     reactions:
         Receptor_Activation: |
             r0 > r1
-            k1*light*r0/(1 + r0)
+            Kcat1*light*r0/(Kd1 + r0)
         Receptor_Inactivation: |
             r1 > r0
-            k2*r1/(1 + r1)
+            Kcat2*r1/(Kd2 + r1)
         TF_Activation: |
             tf0 > tf1
-            k3*r1*tf0/(1 + tf0)
+            Kcat3*r1*tf0/(Kd3 + tf0)
         TF_Inactivation: |
             tf1 > tf0
-            k4*tf1/(1 + tf1)
+            Kcat4*tf1/(Kd4 + tf1)
     species:
         r0: 10
         r1: 0
         tf0: 100
         tf1: 0
     parameters:
-        k1: 1
-        k2: 0.1
-        k3: 1
-        k4: 1
-        light: 4
+        Kcat1: 1
+        Kcat2: 2
+        Kcat3: 1
+        Kcat4: 2
+        Kd1: 5
+        Kd2: 5
+        Kd3: 5
+        Kd4: 5
+        light: 2
 sequestration:
     reactions:
         forward: |
@@ -71,7 +75,7 @@ activated_protein_production:
         k4: 1
         k5: 1
         k6: 0.2
-        Kd: 0.2
+        Kd: 1
 repressed_protein_production:
     reactions:
         gene_turns_on: |

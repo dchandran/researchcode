@@ -1,4 +1,4 @@
-from sim_module import sim_module, sim_connection, combine_modules, write_linearized_table
+from sim_module import sim_module, sim_connection, combine_modules, generate_output
 import stochpy
 import json
 import sys
@@ -28,15 +28,15 @@ gridsz = 100
 
 smod = stochpy.SSA()
 smod.Model(modelfile,'.')
-#os.remove(modelfile)
+os.remove(modelfile)
 
 smod.DoStochSim(end = 500,mode = 'time',trajectories = 1)
 smod.GetRegularGrid(gridsz)
-smod.PlotSpeciesTimeSeries()
+#smod.PlotSpeciesTimeSeries()
 
 time = smod.data_stochsim_grid.time.ravel().tolist()
 species = transpose(smod.data_stochsim_grid.species)
 
-obj = write_linearized_table(outfile+".csv", smod.SSA.species_names, time, species)
+obj = generate_output(outfile+".csv", smod.SSA.species_names, time, species)
 obj['modelstring'] = s
 json.dump(obj, open(outfile+".json",'w'))

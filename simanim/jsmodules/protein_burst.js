@@ -87,22 +87,24 @@ protein_bursts.tick = function(event) {
     
     var allRNADead = true;
 
-    for (i=0; i < mrnas.length; ++i) {
-        if (mrnas[i]) {
-            allRNADead = false;
-            moveDiffusableMolecule(self.mrnas[i]);
+    if (!self.isPaused()) {
+        for (i=0; i < mrnas.length; ++i) {
+            if (mrnas[i]) {
+                allRNADead = false;
+                moveDiffusableMolecule(self.mrnas[i]);
 
-            if (mrnas[i].y < bounds.top + bounds.height*0.2) {
-                mrna = mrnas[i];
-                mrna.x = rnaStartBounds.left + Math.random()*20;
-                mrna.y = rnaStartBounds.top - 20;
-                initDiffusableMolecule(mrna, bounds, false, 2);
-                mrna.velY = - Math.abs(mrna.velY) - 0.7;
+                if (mrnas[i].y < bounds.top + bounds.height*0.2) {
+                    mrna = mrnas[i];
+                    mrna.x = rnaStartBounds.left + Math.random()*20;
+                    mrna.y = rnaStartBounds.top - 20;
+                    initDiffusableMolecule(mrna, bounds, false, 2);
+                    mrna.velY = - Math.abs(mrna.velY) - 0.7;
+                }
             }
         }
-    }
 
-    for (i=0; i < self.proteins.length; ++i) {
-        moveDiffusableMolecule(self.proteins[i]);
+        for (i=0; i < self.proteins.length; ++i) {
+            moveDiffusableMolecule(self.proteins[i]);
+        }
     }
 };

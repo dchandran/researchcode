@@ -81,8 +81,6 @@ function updateGraph(data) {
         data2.columns.push(col);
     }
 
-    debugger;
-
     updateGraph.chart.load(data2);
 }
 
@@ -186,7 +184,10 @@ function connectModules() {
     dna_template.connect('bounds',expression_cassette, 'bounds');
     
     expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
-    expression_cassette.connect('firstPartBounds', two_component, 'activeBounds');
+    lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
+    expression_cassette.connect('firstPartBounds', two_component, 'targetBounds');
+
+    two_component.connect('tfPos', inhibitor, '')
 }
 
 function connectDataModule() {

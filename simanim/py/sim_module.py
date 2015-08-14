@@ -180,8 +180,7 @@ def combine_modules(modules, input_species=None, input_params=None, connections=
     return '\n'.join(s)
 
 
-
-def write_linearized_table(filename, headers, time, species):
+def generate_output(filename, headers, time, species):
 
     species2 = []
 

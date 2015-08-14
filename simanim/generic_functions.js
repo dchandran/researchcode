@@ -23,6 +23,10 @@ function AnimModule(name) {
 }
 
 AnimModule.prototype = {
+    isPaused: function() {
+        return createjs.Ticker.getPaused();
+    },
+
     connect: function(output, targetModule, input) {
         if (targetModule) {
             this.connections.push({ 
@@ -122,6 +126,19 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
 }
 
 function moveDiffusableMolecule(m) {
+    if (m.targetBounds) {
+        var x = m.targetBounds.left + m.targetBounds.width;
+        var y = m.targetBounds.top;
+        var dist = (m.x - x)*(m.x - x) + (m.y - y)*(m.y - y);
+        if (dist < 5) {
+            m.x = x;
+            m.y = y;
+            return;
+        }
+
+        m.bounds = { left: x - 10, top: y - 10, width: 20, height: 20};
+    }
+
     var right = m.bounds.left + m.bounds.width;
     var bottom = m.bounds.top + m.bounds.height;
     var outside = false;

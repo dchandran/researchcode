@@ -58,10 +58,11 @@ source_molecule.tick = function(event) {
             }
         }
 
-        for (i=0; i < molecules.length; ++i) {
-            if (molecules[i])
-                moveDiffusableMolecule(self.molecules[i]);
-        }
+        if (!self.isPaused())
+            for (i=0; i < molecules.length; ++i) {
+                if (molecules[i])
+                    moveDiffusableMolecule(self.molecules[i]);
+            }
     }
 
     while (molecules.length > self.inputs.numMolecules) {
