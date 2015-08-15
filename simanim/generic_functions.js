@@ -110,6 +110,9 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
 
     if (rotate) {
         m.rotation = 360*Math.random();
+        m.velTheta = speed*(Math.random() - 0.5);
+    } else {
+        m.velTheta = 0;
     }
 
     if (!speed) {
@@ -121,7 +124,6 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
     m.allowRotation = rotate;
     m.velX = speed*(Math.random() - 0.5);
     m.velY = speed*(Math.random() - 0.5);
-    m.velTheta = (Math.random() - 0.5);
     m.bounds = bounds;
 }
 
@@ -187,6 +189,8 @@ function moveDiffusableMolecule(m) {
                 m.velX = m.speed*(Math.random() - 0.5);
             if (m.velY !== 0)
                 m.velY = m.speed*(Math.random() - 0.5);
+            if (m.velTheta !== 0)
+                m.velTheta = m.speed*(Math.random() - 0.5);
         }
     }
 }

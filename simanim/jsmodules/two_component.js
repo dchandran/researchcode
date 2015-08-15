@@ -117,7 +117,7 @@ two_component.tick = function(event) {
             }
 
             moveDiffusableMolecule(rec);
-            self.outputs.receptorPos[i] = {x: rec.x, y: rec.y};
+            self.outputs.receptorPos[i] = rec.bounds;
         }
 
     var taken = false;
@@ -163,6 +163,6 @@ two_component.tick = function(event) {
     if (!self.isPaused())
         for (i=0; i < tfs.length; ++i) {
             moveDiffusableMolecule(tfs[i]);
-            self.outputs.tfPos[i] = {x: tf.x, y: tf.y};
+            self.outputs.tfPos[i] = 
         }
 };

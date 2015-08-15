@@ -187,7 +187,8 @@ function connectModules() {
     lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
     expression_cassette.connect('firstPartBounds', two_component, 'targetBounds');
 
-    two_component.connect('tfPos', inhibitor, '')
+    lipid_bilayer.connect('innerCellBounds', inhibitor, 'bounds');
+    two_component.connect('tfPos', inhibitor, 'tfPos');
 }
 
 function connectDataModule() {
@@ -207,7 +208,8 @@ function initModules() {
         two_component, 
         expression_cassette,
         protein_bursts,
-        source_molecule
+        source_molecule,
+        inhibitor
     ];
     for (var i=0; i < modules.length; ++i) {
         if (modules[i].init) {

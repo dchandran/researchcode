@@ -19,8 +19,8 @@ inhibitor.init = function() {
 };
 
 inhibitor.tick = function(event) {
-    var self = protein_bursts;
-    var bounds = self.bounds;
+    var self = inhibitor;
+    var bounds = self.inputs.bounds;
     var molecules = self.molecules;
     var n = self.inputs.count || 0;
     var mol;
@@ -34,22 +34,38 @@ inhibitor.tick = function(event) {
 
     while (molecules.length < n) {
         mol = new createjs.Sprite(self.spriteSheet, "free");
-        initDiffusableMolecule(mol, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top}, true, 3);
+        initDiffusableMolecule(mol, bounds, true, 3);
         mol.x = mol.bounds.left + mol.bounds.width*(Math.random());
         mol.y = mol.bounds.top + mol.bounds.height*(Math.random());
-        mol.scaleX = tf.scaleY = 0.4;
+        mol.scaleX = mol.scaleY = 0.4;
         mol.alpha = 0.1;
 
         _EASEL_STAGE.addChild(mol);          
         molecules.push(mol);
     }
 
-    if (!self.isPaused())
+    var i, j, k, k2, arr;
+
+    if (!self.isPaused()) {
+
+        for (j in self.inputs) {
+            if (j !== "bounds") {
+                arr = self.inputs[j];
+                for (k=0; k < arr.length && k < molecules.length; ++k) {
+                    mol = molecules[k2];
+                    mol.targetBounds = arr[k];
+                    k2 += 1;
+                }
+            }
+        }
+
         for (i=0; i < molecules.length; ++i) {
             mol = molecules[i];
             if (mol.alpha < 1) {
                 mol.alpha += 0.02;
             }
+
             moveDiffusableMolecule(mol);
         }
+    }
 };
