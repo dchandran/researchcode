@@ -183,17 +183,17 @@ function connectModules() {
 
     dna_template.connect('bounds',expression_cassette, 'bounds');
     
-    expression_cassette.connect('lastPartBounds', protein_bursts, 'rnaStartBounds');
+    expression_cassette.connect('lastPart', protein_bursts, 'cds');
     lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
-    expression_cassette.connect('firstPartBounds', two_component, 'targetBounds');
+    expression_cassette.connect('firstPart', two_component, 'target');
 
     lipid_bilayer.connect('innerCellBounds', inhibitor, 'bounds');
-    two_component.connect('tfPos', inhibitor, 'tfPos');
+    two_component.connect('tfs', inhibitor, 'tfs');
 }
 
 function connectDataModule() {
     TimeSeriesData.connect('(r1+r0)/5', two_component, "numReceptors");
-    TimeSeriesData.connect('(tf1+tf0)/5', two_component, "numTFs");    
+    TimeSeriesData.connect('(tf1+tf0)/5', two_component, "numTfs");    
     TimeSeriesData.connect('tf1/(r1+r0)', two_component, "percentActiveMembranes");
     TimeSeriesData.connect('tf1/(tf1+tf0)', two_component, "percentActiveTFs");
     TimeSeriesData.connect('gene_on', expression_cassette, "state");

@@ -108,15 +108,15 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
         rotate = true;
     }
 
+    if (!speed) {
+        speed = 1.0;
+    }
+
     if (rotate) {
         m.rotation = 360*Math.random();
         m.velTheta = speed*(Math.random() - 0.5);
     } else {
         m.velTheta = 0;
-    }
-
-    if (!speed) {
-        speed = 1.0;
     }
 
     m.speed = speed;
@@ -128,21 +128,28 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
 }
 
 function moveDiffusableMolecule(m) {
-    if (m.targetBounds) {
-        var x = m.targetBounds.left + m.targetBounds.width;
-        var y = m.targetBounds.top;
-        var dist = (m.x - x)*(m.x - x) + (m.y - y)*(m.y - y);
-        if (dist < 5) {
-            m.x = x;
-            m.y = y;
-            return;
+    var bounds = m.bounds;
+    if (!bounds) return;
+
+    if (m.target) {
+        if (m.target.parent === m.parent) {
+            var x = m.target.x;
+            var y = m.target.y;
+            var dist = (m.x - x)*(m.x - x) + (m.y - y)*(m.y - y);
+            if (dist < 25) {
+                m.rotation = 0;
+                m.target.rotation = 0;
+                m.x = x;
+                m.y = y;
+                return;
+            }
         }
 
-        m.bounds = { left: x - 10, top: y - 10, width: 20, height: 20};
+        bounds = { left: x - 10, top: y - 10, width: 20, height: 20};
     }
 
-    var right = m.bounds.left + m.bounds.width;
-    var bottom = m.bounds.top + m.bounds.height;
+    var right = bounds.left + bounds.width;
+    var bottom = bounds.top + bounds.height;
     var outside = false;
     var vX = m.velX, vY = m.velY;
 
@@ -151,12 +158,12 @@ function moveDiffusableMolecule(m) {
         vX = m.velX - 0.2;
         outside = true;
     }
-    if (m.x < m.bounds.left) {
+    if (m.x < bounds.left) {
         m.velX = Math.abs(m.velX);
         vX = m.velX + 0.2;
         outside = true;
     }
-    if (m.y < m.bounds.top) {
+    if (m.y < bounds.top) {
         m.velY = Math.abs(m.velY);
         vY = m.velY + 0.2;
         outside = true;
@@ -168,8 +175,8 @@ function moveDiffusableMolecule(m) {
     }
 
     if (outside) {
-        m.x = m.x + 5*vX;
-        m.y = m.y + 5*vY;
+        m.x = m.x +  10*Math.abs(m.velX)*(bounds.left + bounds.width/2 - m.x)/bounds.width;
+        m.y = m.y +  10*Math.abs(m.velY)*(bounds.top + bounds.height/2 - m.y)/bounds.height;
     } else {
         m.x = m.x + vX;
         m.y = m.y + vY;

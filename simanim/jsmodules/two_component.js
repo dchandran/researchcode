@@ -40,15 +40,15 @@ two_component.tick = function(event) {
     var percentActiveMembranes = self.inputs.percentActiveMembranes;
     var receptors = self.receptors;
     var tfs = self.tfs;
-    var n = self.inputs.numReceptors;    
     var recp;
     var bounds = self.inputs.inactiveBounds;
     var receptorStates = self.inputs.receptorStates || [];
     var tfStates = self.inputs.tfStates || [];
 
-    self.outputs.tfPos = [];
-    self.outputs.receptorPos = [];
+    self.outputs.tfs = [];
+    self.outputs.receptors = [];
 
+    var n = self.inputs.numReceptors || 0;    
     if (receptors.length != n) {
 
         while (receptors.length > n) {
@@ -72,7 +72,7 @@ two_component.tick = function(event) {
         }
     }
 
-    n = self.inputs.numTfs;
+    n = self.inputs.numTfs || 0;
     var tfs = self.tfs;
     var tf;
 
@@ -117,7 +117,6 @@ two_component.tick = function(event) {
             }
 
             moveDiffusableMolecule(rec);
-            self.outputs.receptorPos[i] = rec.bounds;
         }
 
     var taken = false;
@@ -138,17 +137,17 @@ two_component.tick = function(event) {
             if (tf.currentAnimation !== 'inactive' && 
                 (i >= percentActiveTFs*tfs.length ||
                  (tfStates.length > i && tfStates[i]==='inactive'))) {
-                if (tf.targetBounds)
-                    delete tf.targetBounds;
+                if (tf.target)
+                    delete tf.target;
                 tf.gotoAndPlay('inactive');
                 bounds = self.inputs.inactiveBounds;
                 initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
             }
         }
 
-        if (tf.targetBounds) {
+        if (tf.target) {
             if (Math.random() < 0.00) {
-                delete tf.targetBounds;
+                delete tf.target;
             } else {
                 taken = true;
             }
@@ -156,13 +155,15 @@ two_component.tick = function(event) {
     }
 
     i = Math.random() * percentActiveTFs * tfs.length;
-    if (i > 0 && self.inputs.targetBounds && !taken) {
-        tfs[Math.floor(i)].targetBounds = self.inputs.targetBounds;
+    if (i > 0 && self.inputs.target && !taken) {
+        tfs[Math.floor(i)].target = self.inputs.target;
     }
 
     if (!self.isPaused())
         for (i=0; i < tfs.length; ++i) {
             moveDiffusableMolecule(tfs[i]);
-            self.outputs.tfPos[i] = 
         }
+
+    self.outputs.receptors = receptors;
+    self.outputs.tfs = tfs;
 };

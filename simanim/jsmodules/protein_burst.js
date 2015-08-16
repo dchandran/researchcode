@@ -29,7 +29,7 @@ protein_bursts.init = function() {
     self.inputs.numProteins = self.inputs.numProteins || 0;
     self.delayRNA = 300;
     self.delayProt = 30;
-    self.inputs.rnaStartBounds = null;
+    self.inputs.cds = null;
     self.time = 0;
 };
 
@@ -40,11 +40,13 @@ protein_bursts.tick = function(event) {
     var proteins = self.proteins;
     var mrna;
     var prot;
-    var rnaStartBounds = self.inputs.rnaStartBounds;
+    var cds = self.inputs.cds;
     var numRNA = self.inputs.numRNA || 0;
     var numProteins = self.inputs.numProteins || 0;
     var bounds = self.inputs.bounds;
-    if (!rnaStartBounds) return;
+    if (!cds) return;
+
+    var rnaStartBounds = cds.getBounds();
 
     var dt = (event.time - self.time);
 

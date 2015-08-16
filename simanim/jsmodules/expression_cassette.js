@@ -65,21 +65,11 @@ expression_cassette.tick = function(event) {
                 bounds = part.getBounds();
                 if (bounds) {
                     if (j == 0) {
-                        self.outputs.firstPartBounds = {
-                            left: x, 
-                            top: y,
-                            width: bounds.width * 0.3,
-                            height: bounds.height * 0.3
-                        };
+                        self.outputs.firstPart = part;
                         self.updateDownstream();
                     } else {
                         if (j == (n-1)) {
-                            self.outputs.lastPartBounds = {
-                                left: x, 
-                                top: y,
-                                width: bounds.width * 0.3,
-                                height: bounds.height * 0.3
-                            };
+                            self.outputs.lastPart = part;
                         }
                         self.updateDownstream();
                     }

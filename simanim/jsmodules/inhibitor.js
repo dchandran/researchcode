@@ -44,18 +44,34 @@ inhibitor.tick = function(event) {
         molecules.push(mol);
     }
 
-    var i, j, k, k2, arr;
+    var i, j, k, k2, n, arr;
 
     if (!self.isPaused()) {
+        k2 = 0;
 
-        for (j in self.inputs) {
-            if (j !== "bounds") {
-                arr = self.inputs[j];
-                for (k=0; k < arr.length && k < molecules.length; ++k) {
-                    mol = molecules[k2];
-                    mol.targetBounds = arr[k];
-                    k2 += 1;
+        var percentBound = self.inputs.percentBound;
+
+        if (percentBound) {
+            for (j in self.inputs) {
+                if (j !== "bounds" && percentBound[j]) {
+                    n = percentBound[j]*molecules.length;
+                    arr = self.inputs[j];
+                    for (k=0; k < arr.length && k2 < molecules.length && n > 0; ++k) {
+                        mol = molecules[k2];
+                        mol.target = arr[k];
+                        mol.gotoAndPlay('bound');
+                        k2 += 1;
+                        n -= 1;
+                    }
                 }
+            }
+        }
+
+        for (; k2 < molecules.length; ++k2) {
+            mol = molecules[k2];
+            if (mol.target) {
+                delete mol.target;
+                molecules[k2].gotoAndPlay('free');
             }
         }
 
