@@ -1,5 +1,7 @@
 var _EASEL_STAGE;
 var _EDITORS = {};
+var _CODEFILE = 'py/example1.py';
+var _TimeSeriesData = createModuleFromType("TIME SERIES", "time series");
 
 function fitToContainer(canvas) {
   // Make it visually fill the positioned parent
@@ -11,7 +13,7 @@ function fitToContainer(canvas) {
 }
 
 function updateCurrentTime(values, handle) {
-    TimeSeriesData.setCurrentIndex(Number(values[0]));
+    _TimeSeriesData.setCurrentIndex(Number(values[0]));
 }
 
 function runPyCode(code) {
@@ -23,8 +25,8 @@ function runPyCode(code) {
             try {
                 data = JSON.parse(data);
                 updateGraph(data);
-                TimeSeriesData.init(data);
-                TimeSeriesData.setCurrentIndex(0);
+                _TimeSeriesData.init(data);
+                _TimeSeriesData.setCurrentIndex(0);
                 if (_EDITORS["modelpane"] && data.modelstring)
                     _EDITORS["modelpane"].setValue(data.modelstring);
             } catch (e) {
@@ -140,7 +142,7 @@ function initGUI() {
     //setup code editors
 
     setupCodeEditor("modelpane", "python", 'temp.psc', updatePscModel);
-    setupCodeEditor("codepane", "python", 'py/example1.py', runPyCode);
+    setupCodeEditor("codepane", "python", _CODEFILE, runPyCode);
     setupCodeEditor("yamlpane", "yaml", 'py/modules.yaml', updateModules);
 
     //setup slider
@@ -175,42 +177,8 @@ function initCanvas() {
     createjs.Ticker.addEventListener("tick", degradationAnimation);
 }
 
-function connectModules() {
-    lipid_bilayer.connect('outerCellBounds', source_molecule, 'bounds');
-    lipid_bilayer.connect('innerCellBounds',dna_template, 'bounds');
-    lipid_bilayer.connect('innerCellBounds',two_component, 'inactiveBounds');
-    lipid_bilayer.connect('innerCellBounds', protein_bursts, 'bounds');
 
-    dna_template.connect('bounds',expression_cassette, 'bounds');
-    
-    expression_cassette.connect('lastPart', protein_bursts, 'cds');
-    lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
-    expression_cassette.connect('firstPart', two_component, 'target');
-
-    lipid_bilayer.connect('innerCellBounds', inhibitor, 'bounds');
-    two_component.connect('tfs', inhibitor, 'tfs');
-}
-
-function connectDataModule() {
-    TimeSeriesData.connect('(r1+r0)/5', two_component, "numReceptors");
-    TimeSeriesData.connect('(tf1+tf0)/5', two_component, "numTfs");    
-    TimeSeriesData.connect('tf1/(r1+r0)', two_component, "percentActiveMembranes");
-    TimeSeriesData.connect('tf1/(tf1+tf0)', two_component, "percentActiveTFs");
-    TimeSeriesData.connect('gene_on', expression_cassette, "state");
-    TimeSeriesData.connect('mRNA', protein_bursts, "numRNA");
-    TimeSeriesData.connect('GFP', protein_bursts, "numProteins");
-}
-
-function initModules() {
-    var modules = [
-        lipid_bilayer,
-        dna_template,
-        two_component, 
-        expression_cassette,
-        protein_bursts,
-        source_molecule,
-        inhibitor
-    ];
+function initModules(modules) {
     for (var i=0; i < modules.length; ++i) {
         if (modules[i].init) {
             modules[i].init();
@@ -222,21 +190,24 @@ function initModules() {
     }
 }
 
+var _SETUPFUNC;
+
 function main() {
     initGUI();
     initCanvas();
+    if (_SETUPFUNC) {
+        var lst = _SETUPFUNC(_TimeSeriesData);
+        initModules(lst);
+    }
+}
 
-    source_molecule.inputs.numMolecules = 100;
-    two_component.inputs.numReceptors = 5;
-    two_component.inputs.numTfs = 10;
-    two_component.inputs.percentActiveTFs = 0.0;
-    two_component.inputs.percentActiveMembranes = 0.0;
-
-    lipid_bilayer.inputs.bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
-    expression_cassette.inputs.parts = { p: {type:'promoter'}, gfp:{type:'cds'} };
-    expression_cassette.inputs.state = 0;
-
-    connectModules();
-    connectDataModule();
-    initModules();
+function setupProgram(obj) {
+    if (obj) {
+        if (obj.code) {
+            _CODEFILE = obj.code;
+        }
+        if (obj.setup) {
+            _SETUPFUNC = obj.setup;
+        }
+    }
 }

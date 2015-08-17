@@ -1,5 +1,17 @@
 var _MODULES = {};
+var _MODULETYPES = {};
 var _DEGRADING_MOLECULES = [];
+
+function registerModuleType(typename, constructor) {
+    _MODULETYPES[typename] = constructor;
+}
+
+function createModuleFromType(name, typename) {
+    var constructor = _MODULETYPES[typename];
+    if (constructor) {
+        return constructor(name, typename);
+    }
+}
 
 function getAllModules() {
     var lst = [];
@@ -9,8 +21,9 @@ function getAllModules() {
     return lst;
 }
 
-function AnimModule(name) {
+function AnimModule(name, family) {
     this.name = name;
+    this.family = family;
     this.inputs = {};
     this.outputs = {};
     this.init = null;
@@ -49,57 +62,6 @@ AnimModule.prototype = {
             output = this.connections[i].output;
             targetModule.inputs[input] = this.outputs[output];
         }
-    }
-};
-
-var TimeSeriesData = new AnimModule();
-
-TimeSeriesData.setCurrentIndex = function(index) {
-    var timeArray = this.inputs.time;
-    var headers = this.inputs.headers;
-    var species = this.inputs.species;
-
-    if (!headers || !species || !timeArray || index < 0 || index >= timeArray.length) return;
-
-    this.inputs.currentIndex = index;
-    var s;
-
-    for (var i=0; i < headers.length; ++i) {
-        eval("var " + headers[i] + '=' + species[index][i]);
-    }
-
-    for (s in this.outputs) {
-        this.outputs[s] = eval(s); //e.g s can be "A/B + C"
-    }
-
-    this.updateDownstream();
-}
-
-
-TimeSeriesData.setCurrentTime = function(time) {
-    this.inputs.currentTime = time;
-    var timeArray = this.inputs.time;
-
-    if (!timeArray) return;
-    var minTime = timeArray[0];
-    var maxTime = timeArray[timeArray.length-1];
-
-    if (time < minTime) time = minTime;
-    if (time > maxTime) time = maxTime;
-
-    this.setCurrentIndex( Math.trunc(timeArray.length * (time-minTime)/(maxTime - minTime) ) ) ;
-};
-
-TimeSeriesData.init = function(data) {
-    this.inputs.currentIndex = 0;
-    this.inputs.time = [];
-    this.inputs.species = [];
-    this.inputs.headers = [];
-
-    if (data && data.time && data.headers && data.species) {
-        this.inputs.time = data.time;
-        this.inputs.species = data.species;
-        this.inputs.headers = data.headers;
     }
 };
 
@@ -175,8 +137,8 @@ function moveDiffusableMolecule(m) {
     }
 
     if (outside) {
-        m.x = m.x +  10*Math.abs(m.velX)*(bounds.left + bounds.width/2 - m.x)/bounds.width;
-        m.y = m.y +  10*Math.abs(m.velY)*(bounds.top + bounds.height/2 - m.y)/bounds.height;
+        m.x = m.x +  10*Math.abs(m.velX)*(bounds.left + bounds.width/2 - m.x)/(1+bounds.width);
+        m.y = m.y +  10*Math.abs(m.velY)*(bounds.top + bounds.height/2 - m.y)/(1+bounds.height);
     } else {
         m.x = m.x + vX;
         m.y = m.y + vY;
@@ -224,4 +186,3 @@ function degradationAnimation(event) {
         _DEGRADING_MOLECULES.length = 0;
     }
 }
-
