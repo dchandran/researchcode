@@ -23,7 +23,7 @@ function InhibitorModule(name,typename) {
         var self = module;
         var bounds = self.inputs.bounds;
         var molecules = self.molecules;
-        var n = self.inputs.count || 0;
+        var n = self.inputs.numMolecules || 0;
         var mol;
 
         if (!bounds) return;
@@ -45,25 +45,22 @@ function InhibitorModule(name,typename) {
             molecules.push(mol);
         }
 
-        var i, j, k, k2, n, arr;
+        var i, j, k, k2, n, arr, percentBound;
 
         if (!self.isPaused()) {
             k2 = 0;
-
-            var percentBound = self.inputs.percentBound;
-
-            if (percentBound) {
-                for (j in self.inputs) {
-                    if (j !== "bounds" && percentBound[j]) {
-                        n = percentBound[j]*molecules.length;
-                        arr = self.inputs[j];
-                        for (k=0; k < arr.length && k2 < molecules.length && n > 0; ++k) {
-                            mol = molecules[k2];
-                            mol.target = arr[k];
-                            mol.gotoAndPlay('bound');
-                            k2 += 1;
-                            n -= 1;
-                        }
+            
+            for (j in self.inputs) {
+                percentBound = self.inputs[ j + ' bound' ];
+                if (j !== "bounds" && percentBound) {                    
+                    n = percentBound;
+                    arr = self.inputs[j];
+                    for (k=0; k < arr.length && k2 < molecules.length && n > 0; ++k) {
+                        mol = molecules[k2];
+                        mol.target = arr[k];
+                        mol.gotoAndPlay('bound');
+                        k2 += 1;
+                        n -= 1;
                     }
                 }
             }

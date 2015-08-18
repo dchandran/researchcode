@@ -32,6 +32,7 @@ function ProteinProduction(name,typename) {
         self.delayProt = 30;
         self.inputs.cds = null;
         self.time = 0;
+        self.outputs.mRNAPos = self.outputs.mRNAPos || {};
     };
 
     module.tick = function(event) {
@@ -73,10 +74,18 @@ function ProteinProduction(name,typename) {
             mrna.velY = - Math.abs(mrna.velY) - 0.7;
         }
 
+        if (mrnas.length > 0) {
+            var lastx = mrnas[mrnas.length-1].x + 5;
+            var lasty = mrnas[mrnas.length-1].y;
+
+            self.outputs.mRNAPos.x = lastx;
+            self.outputs.mRNAPos.y = lasty;
+        }
+
         if (mrnas.length > 0 && proteins.length < numProteins && self.delayProt < dt) {
             prot = new createjs.Sprite(self.protSheet, "grey");
-            prot.x = mrnas[mrnas.length-1].x + 5;
-            prot.y = mrnas[mrnas.length-1].y;
+            prot.x = lastx;
+            prot.y = lasty;
             prot.scaleY = 1;
             prot.scaleX = 1;
             _EASEL_STAGE.addChild(prot);

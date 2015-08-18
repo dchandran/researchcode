@@ -46,7 +46,7 @@ activated_protein_production:
     reactions:
         gene_turns_on: |
             gene_off > gene_on
-            k1*gene_off*tf/(Kd + tf)
+            k1*gene_off*tf**2/(Kd + tf**2)
         gene_turns_off: |
             gene_on > gene_off
             k2*gene_on
@@ -80,7 +80,7 @@ repressed_protein_production:
     reactions:
         gene_turns_on: |
             gene_off > gene_on
-            k1*gene_off/(Kd + tf)
+            k1*gene_off/(Kd + tf**2)
         gene_turns_off: |
             gene_on > gene_off
             k2*gene_on

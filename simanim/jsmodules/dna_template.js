@@ -29,6 +29,9 @@ function DNAStrand(name, typename) {
         }
 
         self.outputs.bounds = {left: scene.left, width: scene.width, top: y, height:10};
+        self.outputs.left = {x: scene.left, y: y};
+        self.outputs.right = {x: scene.left+scene.width, y: y+10};
+        self.outputs.center = {x: scene.left+scene.width/2, y: y+10};
     };
 
     return module;

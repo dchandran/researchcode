@@ -40,6 +40,18 @@ AnimModule.prototype = {
         return createjs.Ticker.getPaused();
     },
 
+    passInputs: function(module, inputs) {
+        for (var i=0; i < inputs.length; ++i) {
+            module.inputs[ inputs[i] ] = this.inputs[ inputs[i] ];
+        }
+    },
+
+    passOutputs: function(module, outputs) {
+        for (var i=0; i < outputs.length; ++i) {
+            this.outputs[ outputs[i] ] = module.outputs[ outputs[i] ];
+        }
+    },
+
     connect: function(output, targetModule, input) {
         if (targetModule) {
             this.connections.push({ 
@@ -137,8 +149,8 @@ function moveDiffusableMolecule(m) {
     }
 
     if (outside) {
-        m.x = m.x +  10*Math.abs(m.velX)*(bounds.left + bounds.width/2 - m.x)/(1+bounds.width);
-        m.y = m.y +  10*Math.abs(m.velY)*(bounds.top + bounds.height/2 - m.y)/(1+bounds.height);
+        m.x = m.x +  10*Math.abs(0.01+m.velX)*(bounds.left + bounds.width/2 - m.x)/(1+bounds.width);
+        m.y = m.y +  10*Math.abs(0.01+m.velY)*(bounds.top + bounds.height/2 - m.y)/(1+bounds.height);
     } else {
         m.x = m.x + vX;
         m.y = m.y + vY;

@@ -1,5 +1,6 @@
 function ExpressionCassette(name,typename) {
     var module = new AnimModule(name, typename);
+    module.protein_bursts = createModuleFromType(name + "-submodule", "protein bursts");
 
     module.init = function() {
 
@@ -26,25 +27,35 @@ function ExpressionCassette(name,typename) {
         };
 
         self.parts = [];
+        self.partsCached = [];        
+        self.protein_bursts.init();
+        self.connect('lastPart', self.protein_bursts, 'cds');
     };
 
     module.tick = function(event) {
 
         var self = module;
-        var bounds = self.inputs.bounds;
+
+        var orientation = self.inputs.orientation || 'f';
+        var startPos = self.inputs.startPos;
+
+        if (!startPos) return;
+        
         var part, desc, i, sheet;
         var partDesc = self.inputs.parts; //e.g. { p: {type:'promoter', state:'off'}, gfp:{type:'cds', state:'off'} }
         var partTypeSpriteHash = self.partTypeSpriteHash;
         var parts = self.parts;
-        var x = bounds.left, y = bounds.top;
+        var partsCached = self.partsCached;
+        var x = startPos.x || 0, y = startPos.y || 0;
         var j = 0, n = Object.keys(partDesc).length;
         var state = self.inputs.state;
 
         if (partDesc) {
             for (i in partDesc) {
                 desc = partDesc[i];
-                if (desc) { 
+                if (desc && partsCached[i] != desc)  {
                     part = parts[i];
+                    partsCached[i] = part;
                     if (part) {                    
                         if (state)
                             part.gotoAndPlay("on");
@@ -74,13 +85,21 @@ function ExpressionCassette(name,typename) {
                             }
                             self.updateDownstream();
                         }
-                        x = x + bounds.width * 0.3;
-                        part.y = y - bounds.height * 0.3;
+                        if (orientation[0]==='r') {
+                            x = x - bounds.width * 0.3;
+                            part.rotation = 180;
+                            part.y = y + bounds.height * 0.3;
+                        } else {
+                            x = x + bounds.width * 0.3;
+                            part.y = y - bounds.height * 0.3;
+                        }
                     }
                 }
                 j = j + 1;
             }
         }
+        self.passInputs(self.protein_bursts, ["numRNA", "numProteins", "bounds"]);
+        self.protein_bursts.tick(event);
     };
 
     return module;

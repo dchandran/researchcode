@@ -165,7 +165,7 @@ function initGUI() {
 }
 
 function initCanvas() {
-    var canvas = _EASEL_STAGE.canvas;
+     
     canvas.left = 0;
     canvas.top = 0;
 
@@ -196,7 +196,9 @@ function main() {
     initGUI();
     initCanvas();
     if (_SETUPFUNC) {
-        var lst = _SETUPFUNC(_TimeSeriesData);
+        var canvas = _EASEL_STAGE.canvas;
+        var bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
+        var lst = _SETUPFUNC(bounds, _TimeSeriesData);
         initModules(lst);
     }
 }
