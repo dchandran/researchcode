@@ -18,6 +18,7 @@ setupProgram(
             coms.inputs.activeBounds = bounds;
             comk_gene.inputs.bounds = bounds;
             coms_gene.inputs.bounds = bounds;
+            meca.inputs.bounds = bounds
 
 
             coms_gene.inputs.orientation = 'forward';

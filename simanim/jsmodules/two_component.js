@@ -4,7 +4,6 @@ function TranscriptionFactor(name, typename) {
     module.init = function() {
         var i;
         var self = module;
-        var bounds = self.inputs.inactiveBounds;
                 
         self.proteinChompSheet = new createjs.SpriteSheet({
             framerate: 30,
@@ -28,7 +27,6 @@ function TranscriptionFactor(name, typename) {
         var tf, i;
         var percentActiveTFs = self.inputs.percentActiveTFs;
         var tfs = self.tfs;
-        var bounds = self.inputs.inactiveBounds;
         var tfStates = self.inputs.tfStates || [];
 
         self.outputs.tfs = [];
@@ -46,7 +44,7 @@ function TranscriptionFactor(name, typename) {
 
             while (tfs.length < n) {
                 tf = new createjs.Sprite(self.proteinChompSheet, "inactive");
-                initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
+                initDiffusableMolecule(tf, self.inputs.inactiveBounds);
                 if (self.inputs.tfStartPos) {
                     tf.x = self.inputs.tfStartPos.x;
                     tf.y = self.inputs.tfStartPos.y;
@@ -77,8 +75,7 @@ function TranscriptionFactor(name, typename) {
                 (i < percentActiveTFs*tfs.length ||
                  (tfStates.length > i && tfStates[i]==='active'))) {
                 tf.gotoAndPlay('active');
-                bounds = self.inputs.activeBounds;
-                initDiffusableMolecule(tf, bounds, true, 3);
+                initDiffusableMolecule(tf, self.inputs.activeBounds, true, 3);
             } else {
                 if (tf.currentAnimation !== 'inactive' && 
                     (i >= percentActiveTFs*tfs.length ||
@@ -86,8 +83,7 @@ function TranscriptionFactor(name, typename) {
                     if (tf.target)
                         delete tf.target;
                     tf.gotoAndPlay('inactive');
-                    bounds = self.inputs.inactiveBounds;
-                    initDiffusableMolecule(tf, {left: bounds.left, width: bounds.width, height: 50, top: bounds.top});
+                    initDiffusableMolecule(tf, self.inputs.inactiveBounds);
                 }
             }
 
@@ -224,8 +220,18 @@ function TwoComponentSystem(name,typename) {
     module.tick = function(event) {
         var self = module;
 
+        var h;
+        if (self.inputs.inactiveBounds) {
+            h = self.inputs.inactiveBounds.height;
+            self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES            
+        }
+
         self.passInputs(self.membrane_receptor, ["receptorStates","inactiveBounds", "percentActiveMembranes", "receptorStartPos","activeBounds","numReceptors"]);
         self.passInputs(self.transcription_factor, ["tfStates","inactiveBounds","tfStartPos","percentActiveTFs","activeBounds","target","numTfs"]);
+
+        if (h) {
+            self.inputs.inactiveBounds.height = h;
+        }
 
         self.membrane_receptor.tick();
         self.transcription_factor.tick();

@@ -100,6 +100,7 @@ function ExpressionCassette(name,typename) {
         }
         self.passInputs(self.protein_bursts, ["numRNA", "numProteins", "bounds"]);
         self.protein_bursts.tick(event);
+        self.passOutputs(self.protein_bursts,["mRNAPos"]);
     };
 
     return module;

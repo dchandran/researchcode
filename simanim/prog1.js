@@ -43,7 +43,7 @@ setupProgram(
             timeseries.connect('tf1/(tf1+tf0)', two_component, "percentActiveTFs");
             timeseries.connect('gene_on', expression_cassette, "state");
             timeseries.connect('mRNA', expression_cassette, "numRNA");
-            timeseries.connect('GFP', expression_cassette, "numProteins");
+            timeseries.connect('GFP', expression_cassette, "numGFP");
 
             return [source_molecule,two_component,expression_cassette,lipid_bilayer,dna_template,inhibitor];
         }

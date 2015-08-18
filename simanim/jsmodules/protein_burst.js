@@ -27,7 +27,7 @@ function ProteinProduction(name,typename) {
         self.proteins = [];
         self.inputs.startLocation = {x:0, y:0};
         self.inputs.numRNA = self.inputs.numRNA || 0;
-        self.inputs.numProteins = self.inputs.numProteins || 0;
+        self.inputs.numGFP = self.inputs.numGFP || 0;
         self.delayRNA = 300;
         self.delayProt = 30;
         self.inputs.cds = null;
@@ -44,7 +44,7 @@ function ProteinProduction(name,typename) {
         var prot;
         var cds = self.inputs.cds;
         var numRNA = self.inputs.numRNA || 0;
-        var numProteins = self.inputs.numProteins || 0;
+        var numGFP = self.inputs.numGFP || 0;
         var bounds = self.inputs.bounds;
         if (!cds) return;
 
@@ -55,7 +55,7 @@ function ProteinProduction(name,typename) {
             mrnas.length = mrnas.length-1;
         }
 
-        while (proteins.length > numProteins) {
+        while (proteins.length > numGFP) {
             markForDegradation(proteins[proteins.length-1]);
             proteins.length = proteins.length-1;
         }
@@ -82,7 +82,7 @@ function ProteinProduction(name,typename) {
             self.outputs.mRNAPos.y = lasty;
         }
 
-        if (mrnas.length > 0 && proteins.length < numProteins && self.delayProt < dt) {
+        if (mrnas.length > 0 && proteins.length < numGFP && self.delayProt < dt) {
             prot = new createjs.Sprite(self.protSheet, "grey");
             prot.x = lastx;
             prot.y = lasty;
