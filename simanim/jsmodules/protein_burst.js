@@ -117,6 +117,7 @@ function ProteinProduction(name,typename) {
                 moveDiffusableMolecule(self.proteins[i]);
             }
         }
+        self.updateDownstream();
     };
     return module;
 }

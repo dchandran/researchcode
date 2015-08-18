@@ -17,6 +17,9 @@ function TimeSeriesData(name,typename) {
 
         for (s in this.outputs) {
             this.outputs[s] = eval(s); //e.g s can be "A/B + C"
+            if (isNaN(this.outputs[s])) {
+                this.outputs[s] = 0; //0/0 is a very common case, hence justified
+            }
         }
 
         this.updateDownstream();

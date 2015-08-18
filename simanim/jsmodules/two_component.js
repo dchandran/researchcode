@@ -24,12 +24,23 @@ function TranscriptionFactor(name, typename) {
     module.tick = function(event) {
         var self = module;
 
-        var tf, i;
+        var tf, i, j;
         var percentActiveTFs = self.inputs.percentActiveTFs;
         var tfs = self.tfs;
         var tfStates = self.inputs.tfStates || [];
 
         self.outputs.tfs = [];
+
+        var targets = [];
+        
+        if (self.inputs.target) {
+            targets.push(self.inputs.target);
+        } else {
+            i = 1;
+            while (self.inputs['target' + i] !== undefined) {
+                targets.push(self.inputs['target' + i]);
+            }
+        }
 
         n = self.inputs.numTfs || 0;
         var tfs = self.tfs;
@@ -45,7 +56,7 @@ function TranscriptionFactor(name, typename) {
             while (tfs.length < n) {
                 tf = new createjs.Sprite(self.proteinChompSheet, "inactive");
                 initDiffusableMolecule(tf, self.inputs.inactiveBounds);
-                if (self.inputs.tfStartPos) {
+                if (self.inputs.tfStartPos && self.inputs.tfStartPos.x && self.inputs.tfStartPos.y) {
                     tf.x = self.inputs.tfStartPos.x;
                     tf.y = self.inputs.tfStartPos.y;
 
@@ -63,7 +74,8 @@ function TranscriptionFactor(name, typename) {
             }
         }
 
-        var taken = false;
+        var taken = [];
+        taken.length = targets.length;
 
         for (i=0; i < tfs.length; ++i) {
             tf = tfs[i];
@@ -91,16 +103,21 @@ function TranscriptionFactor(name, typename) {
                 if (Math.random() < 0.00) {
                     delete tf.target;
                 } else {
-                    taken = true;
+                    j = targets.indexOf(tf.target);
+                    if (j > -1) {
+                        taken[j] = true;
+                    }
                 }
             }
         }
 
-        i = Math.random() * percentActiveTFs * tfs.length;
-        if (i > 0 && self.inputs.target && !taken) {
-            i = Math.floor(i);
-            tfs[i].target = self.inputs.target;
-            tfs[i].rotation = tfs[i].target.rotation;
+        for (i=0; i < targets.length; ++i) {
+            j = Math.random() * percentActiveTFs * tfs.length;
+            if (j > 0 && !taken[i]) {
+                j = Math.floor(j);
+                tfs[j].target = targets[i];
+                tfs[j].rotation = tfs[j].target.rotation;
+            }
         }
 
         if (!self.isPaused())
@@ -109,6 +126,7 @@ function TranscriptionFactor(name, typename) {
             }
 
         self.outputs.tfs = tfs;
+        self.updateDownstream();
     };
 
     return module;
@@ -199,6 +217,7 @@ function MembraneReceptor(name, typename) {
             }
 
         self.outputs.receptors = receptors;
+        self.updateDownstream();
     };
 
     return module;
@@ -206,15 +225,14 @@ function MembraneReceptor(name, typename) {
 
 function TwoComponentSystem(name,typename) {
     var module = new AnimModule(name, typename);
-    module.membrane_receptor = createModuleFromType(name + "-submodule", "membrane receptor");
-    module.transcription_factor = createModuleFromType(name + "-submodule", "transcription factor");
+    module.submodules.membrane_receptor = createModuleFromType(name + "-submodule", "membrane receptor");
+    module.submodules.transcription_factor = createModuleFromType(name + "-submodule", "transcription factor");
 
     module.init = function() {
         var i;
         var self = module;
         var bounds = self.inputs.inactiveBounds;
-        self.membrane_receptor.init();
-        self.transcription_factor.init();
+        self.initSubmodules();
     };
 
     module.tick = function(event) {
@@ -226,18 +244,13 @@ function TwoComponentSystem(name,typename) {
             self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES            
         }
 
-        self.passInputs(self.membrane_receptor, ["receptorStates","inactiveBounds", "percentActiveMembranes", "receptorStartPos","activeBounds","numReceptors"]);
-        self.passInputs(self.transcription_factor, ["tfStates","inactiveBounds","tfStartPos","percentActiveTFs","activeBounds","target","numTfs"]);
-
+        self.tickSubmodules(event);
+        
         if (h) {
             self.inputs.inactiveBounds.height = h;
         }
 
-        self.membrane_receptor.tick();
-        self.transcription_factor.tick();
-
-        self.passOutputs(self.membrane_receptor,["receptors"]);
-        self.passOutputs(self.transcription_factor,["tfs"]);
+        self.updateDownstream();
     };
 
     return module;

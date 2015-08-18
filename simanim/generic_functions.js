@@ -26,6 +26,7 @@ function AnimModule(name, family) {
     this.family = family;
     this.inputs = {};
     this.outputs = {};
+    this.submodules = {};
     this.init = null;
     this.tick = null;
 
@@ -35,20 +36,59 @@ function AnimModule(name, family) {
     return this;
 }
 
+function isModule(obj) {
+    return obj.inputs !== undefined &&
+           obj.outputs !== undefined &&
+           obj.isPaused !== undefined &&
+           obj.passInputs !== undefined &&
+           obj.passOutputs !== undefined &&
+           obj.connect !== undefined;
+}
+
 AnimModule.prototype = {
     isPaused: function() {
         return createjs.Ticker.getPaused();
     },
 
-    passInputs: function(module, inputs) {
-        for (var i=0; i < inputs.length; ++i) {
-            module.inputs[ inputs[i] ] = this.inputs[ inputs[i] ];
+    initSubmodules: function() {
+        var i;
+        var module;
+        for (i in this.submodules) {
+            module = this.submodules[i];
+            if (isModule(module)) {
+                module.init();
+            }
         }
     },
 
-    passOutputs: function(module, outputs) {
-        for (var i=0; i < outputs.length; ++i) {
-            this.outputs[ outputs[i] ] = module.outputs[ outputs[i] ];
+    tickSubmodules: function(e) {
+        var i,j;
+        var inputs = this.inputs;
+        var module;
+        for (i in this.submodules) {
+            module = this.submodules[i];
+            if (isModule(module)) {
+                for (j=0; j < inputs.length; ++j) {
+                    module.inputs[ inputs[j] ] = this.inputs[ inputs[j] ];
+                }
+            }
+        }
+
+        for (i in this.submodules) {
+            module = this.submodules[i];
+            if (isModule(module)) {
+                module.tick(e);
+            }
+        }
+
+        var outputs = this.outputs;        
+        for (i in this) {
+            module = this[i];
+            if (isModule(module)) {
+                for (j=0; j < outputs.length; ++j) {
+                    this.outputs[ outputs[j] ] = module.outputs[ outputs[j] ];
+                }
+            }
         }
     },
 

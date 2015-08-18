@@ -1,6 +1,6 @@
 function ExpressionCassette(name,typename) {
     var module = new AnimModule(name, typename);
-    module.protein_bursts = createModuleFromType(name + "-submodule", "protein bursts");
+    module.submodules.protein_bursts = createModuleFromType(name + "-submodule", "protein bursts");
 
     module.init = function() {
 
@@ -28,8 +28,8 @@ function ExpressionCassette(name,typename) {
 
         self.parts = [];
         self.partsCached = [];        
-        self.protein_bursts.init();
-        self.connect('lastPart', self.protein_bursts, 'cds');
+        self.initSubmodules();
+        self.connect('lastPart', self.submodules.protein_bursts, 'cds');
     };
 
     module.tick = function(event) {
@@ -77,13 +77,11 @@ function ExpressionCassette(name,typename) {
                     bounds = part.getBounds();
                     if (bounds) {
                         if (j == 0) {
-                            self.outputs.firstPart = part;
-                            self.updateDownstream();
+                            self.outputs.firstPart = part;                            
                         } else {
                             if (j == (n-1)) {
                                 self.outputs.lastPart = part;
                             }
-                            self.updateDownstream();
                         }
                         if (orientation[0]==='r') {
                             x = x - bounds.width * 0.3;
@@ -98,9 +96,10 @@ function ExpressionCassette(name,typename) {
                 j = j + 1;
             }
         }
-        self.passInputs(self.protein_bursts, ["numRNA", "numProteins", "bounds"]);
-        self.protein_bursts.tick(event);
-        self.passOutputs(self.protein_bursts,["mRNAPos"]);
+        
+        
+        self.tickSubmodules(event);
+        self.updateDownstream();
     };
 
     return module;

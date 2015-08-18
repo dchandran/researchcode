@@ -18,8 +18,7 @@ setupProgram(
             coms.inputs.activeBounds = bounds;
             comk_gene.inputs.bounds = bounds;
             coms_gene.inputs.bounds = bounds;
-            meca.inputs.bounds = bounds
-
+            meca.inputs.bounds = bounds;
 
             coms_gene.inputs.orientation = 'forward';
             comk_gene.inputs.orientation = 'reverse';
@@ -38,16 +37,18 @@ setupProgram(
             coms_gene.inputs.parts = { p: {type:'promoter'}, coms:{type:'cds'} };
             coms_gene.inputs.state = 0;
 
-            coms_gene.connect('firstPart', coms, 'target');
+            coms_gene.connect('firstPart', coms, 'target1');
             comk_gene.connect('firstPart', coms, 'target2');
-
             
-            timeseries.connect('MecA+inhibit1_ab+inhibit2_ab', meca, "numMolecules");
-            timeseries.connect('inhibit1_ab', meca, "comk bound");
-            timeseries.connect('inhibit2_ab', meca, "coms bound");
+            timeseries.connect('MecA+MecAComK+MecAComS', meca, "numMolecules");
+            timeseries.connect('MecAComK', meca, "comk bound");
+            timeseries.connect('MecAComS', meca, "coms bound");
 
-            timeseries.connect('ComK', comk, "numTfs");
-            timeseries.connect('ComS', coms, "numTfs");
+            timeseries.connect('ComK/(ComK+MecAComK)', comk, "percentActiveTFs");
+            timeseries.connect('ComS/(ComS+MecAComS)', coms, "percentActiveTFs");
+            
+            timeseries.connect('ComK+MecAComK', comk, "numTfs");
+            timeseries.connect('ComS+MecAComS', coms, "numTfs");
 
             timeseries.connect('comk_gene_on', comk_gene, "state");
             timeseries.connect('coms_gene_on', coms_gene, "state");

@@ -41,7 +41,7 @@ function InhibitorModule(name,typename) {
             mol.scaleX = mol.scaleY = 0.4;
             mol.alpha = 0.1;
 
-            _EASEL_STAGE.addChild(mol);          
+            _EASEL_STAGE.addChild(mol);     
             molecules.push(mol);
         }
 
@@ -55,7 +55,7 @@ function InhibitorModule(name,typename) {
                 if (j !== "bounds" && percentBound) {                    
                     n = percentBound;
                     arr = self.inputs[j];
-                    for (k=0; k < arr.length && k2 < molecules.length && n > 0; ++k) {
+                    for (k=arr.length-1; k >= 0 && k2 < molecules.length && n > 0; --k) {
                         mol = molecules[k2];
                         mol.target = arr[k];
                         mol.gotoAndPlay('bound');
@@ -82,6 +82,7 @@ function InhibitorModule(name,typename) {
                 moveDiffusableMolecule(mol);
             }
         }
+        self.updateDownstream();
     };
 
     return module;

@@ -70,6 +70,7 @@ function SourceMolecules(name,typename) {
             _EASEL_STAGE.removeChild(molecules[molecules.length-1]);
             molecules.length = molecules.length-1;
         }
+        self.updateDownstream();
     };
     return module;
 }
