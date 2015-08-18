@@ -900,7 +900,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="-53.699919"
+     inkscape:cx="84.87151"
      inkscape:cy="776.65116"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -918,7 +918,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1372,97 +1372,145 @@
        d="m 69.285641,383.41966 c 0,15.43416 -18.73232,11.652 -34.440605,11.652 -15.708282,0 -30.5593917,18.68944 -30.5593917,3.25528 0,-15.43415 14.8511097,-43.89333 30.5593917,-43.89333 15.708285,0 34.440605,13.5519 34.440605,28.98605 z"
        id="path2985-5-6"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5648-9);fill-opacity:1;stroke:none"
        d="m 134.28565,389.49109 c 0,15.43416 -18.73232,5.58057 -34.440614,5.58057 -15.708282,0 -30.559391,18.68944 -30.559391,3.25528 0,-15.43415 14.851109,-43.89333 30.559391,-43.89333 15.708294,0 34.440614,19.62333 34.440614,35.05748 z"
        id="path2985-5-3-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5646-4);fill-opacity:1;stroke:none"
        d="m 199.28565,394.84823 c 0,15.43416 -18.73232,0.22343 -34.44061,0.22343 -15.70828,0 -30.55939,18.68944 -30.55939,3.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-2"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5640-9);fill-opacity:1;stroke:none"
        d="m 264.28565,394.84823 c 0,15.43416 -18.73232,-4.77657 -34.44061,-4.77657 -15.70828,0 -30.55939,23.68944 -30.55939,8.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-1-4"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5638-0);fill-opacity:1;stroke:none"
        d="m 329.28565,395.7322 c 0,15.43416 -18.73232,-10.13371 -34.44061,-10.13371 -15.70828,0 -30.55939,29.04658 -30.55939,13.61242 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-1-9-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5636-8);fill-opacity:1;stroke:none"
        d="m 391.65262,396.43525 c -0.61631,15.53181 -21.0456,-11.86976 -31.58347,-11.91942 -8.68382,-0.0409 -25.63484,30.83228 -28.05939,15.39813 -2.39517,-15.24717 12.35111,-43.89333 28.05939,-43.89333 15.70829,0 32.19542,24.99261 31.58347,40.41462 z"
        id="path2985-5-3-1-1-9-5-1"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5628-9);fill-opacity:1;stroke:none"
        d="m 452.72405,396.63352 c -0.61631,15.53181 -17.11703,-11.86976 -27.6549,-11.91942 -8.68382,-0.0409 -23.49198,30.83228 -25.91653,15.39813 -2.39517,-15.24717 10.20825,-43.89333 25.91653,-43.89333 15.70829,0 28.26685,24.99261 27.6549,40.41462 z"
        id="path2985-5-3-1-1-9-5-7-8"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5626-4);fill-opacity:1;stroke:none"
        d="m 514.64279,396.43525 c 0,15.43416 -9.08946,-12.27657 -24.79775,-12.27657 -15.70828,0 -21.98796,31.18944 -21.98796,15.75528 0,-15.43415 6.27968,-43.89333 21.98796,-43.89333 15.70829,0 24.79775,24.98047 24.79775,40.41462 z"
        id="path2985-5-3-1-1-9-1-5"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5624-1);fill-opacity:1;stroke:none"
        d="m 524.28579,435.41966 c 0,15.43416 -18.73232,11.652 -34.44061,11.652 -15.70828,0 -30.55939,18.68944 -30.55939,3.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,13.5519 34.44061,28.98605 z"
        id="path2985-5-9-0"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5630-1);fill-opacity:1;stroke:none"
        d="m 459.28579,441.49109 c 0,15.43416 -18.73232,5.58057 -34.44061,5.58057 -15.70828,0 -30.55939,18.68944 -30.55939,3.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,19.62333 34.44061,35.05748 z"
        id="path2985-5-3-0-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5632-8);fill-opacity:1;stroke:none"
        d="m 394.28579,446.84823 c 0,15.43416 -18.73232,0.22343 -34.44061,0.22343 -15.70828,0 -30.55939,18.68944 -30.55939,3.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-4-4"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5634-8);fill-opacity:1;stroke:none"
        d="m 329.28579,446.84823 c 0,15.43416 -18.73232,-4.77657 -34.44061,-4.77657 -15.70828,0 -30.55939,23.68944 -30.55939,8.25528 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-1-98-6"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5642-2);fill-opacity:1;stroke:none"
        d="m 264.28579,447.7322 c 0,15.43416 -18.73232,-10.13371 -34.44061,-10.13371 -15.70828,0 -30.55939,29.04658 -30.55939,13.61242 0,-15.43415 14.85111,-43.89333 30.55939,-43.89333 15.70829,0 34.44061,24.98047 34.44061,40.41462 z"
        id="path2985-5-3-1-1-9-6-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5644-1);fill-opacity:1;stroke:none"
        d="m 196.80197,448.43525 c -0.61631,15.53181 -21.0456,-11.86976 -31.58347,-11.91942 -8.68382,-0.0409 -25.63484,30.83228 -28.05939,15.39813 -2.39517,-15.24717 12.35111,-43.89333 28.05939,-43.89333 15.70829,0 32.19542,24.99261 31.58347,40.41462 z"
        id="path2985-5-3-1-1-9-5-4-3"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5650-6);fill-opacity:1;stroke:none"
        d="m 129.6906,448.63352 c -0.61631,15.53181 -17.11703,-11.86976 -27.65491,-11.91942 -8.683815,-0.0409 -23.491975,30.83228 -25.916525,15.39813 -2.39517,-15.24717 10.20825,-43.89333 25.916525,-43.89333 15.7083,0 28.26686,24.99261 27.65491,40.41462 z"
        id="path2985-5-3-1-1-9-5-7-7-9"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:url(#radialGradient5654-7);fill-opacity:1;stroke:none"
        d="m 60.714355,448.43525 c 0,15.43416 -9.08946,-12.27657 -24.79775,-12.27657 -15.70828,0 -21.987961,31.18944 -21.987961,15.75528 0,-15.43415 6.279681,-43.89333 21.987961,-43.89333 15.70829,0 24.79775,24.98047 24.79775,40.41462 z"
        id="path2985-5-3-1-1-9-1-9-8"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="fill:#555400;fill-opacity:1;stroke:#dee45a;stroke-opacity:1;filter:url(#filter3778-5)"
@@ -1472,14 +1520,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(122.77447,296.28464)" />
+       transform="translate(122.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="105.50083"
        y="375.91757"
        id="text3002-4"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-1"
          x="105.50083"
@@ -1493,14 +1547,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(57.774462,296.28464)" />
+       transform="translate(57.774462,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="40.500828"
        y="375.91757"
        id="text3002-5-9"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-9-6"
          x="40.500828"
@@ -1514,14 +1574,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(187.77447,296.28464)" />
+       transform="translate(187.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="170.50084"
        y="375.91757"
        id="text3002-3-89"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-50"
          x="170.50084"
@@ -1535,14 +1601,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(252.77447,296.28464)" />
+       transform="translate(252.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="235.50084"
        y="375.91757"
        id="text3002-3-4-8"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-7-5"
          x="235.50084"
@@ -1556,14 +1628,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(382.77447,296.28464)" />
+       transform="translate(382.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="365.50082"
        y="375.91757"
        id="text3002-3-7-4"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-79-5"
          x="365.50082"
@@ -1577,14 +1655,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(447.77447,296.28464)" />
+       transform="translate(447.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="430.50082"
        y="375.91757"
        id="text3002-3-6-8"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-2-2"
          x="430.50082"
@@ -1598,14 +1682,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(317.77447,296.28464)" />
+       transform="translate(317.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="300.50082"
        y="375.91757"
        id="text3002-3-9-9"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-74-9"
          x="300.50082"
@@ -1619,14 +1709,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(512.77447,296.28464)" />
+       transform="translate(512.77447,296.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="495.50082"
        y="375.91757"
        id="text3002-3-8-8"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-5-5"
          x="495.50082"
@@ -1640,14 +1736,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(122.77447,348.28464)" />
+       transform="translate(122.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="105.50083"
        y="427.91757"
        id="text3002-1-5"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-6-0"
          x="105.50083"
@@ -1661,14 +1763,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(57.774462,348.28464)" />
+       transform="translate(57.774462,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="40.500828"
        y="427.91757"
        id="text3002-5-5-3"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-9-3-9"
          x="40.500828"
@@ -1682,14 +1790,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(187.77447,348.28464)" />
+       transform="translate(187.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="170.50084"
        y="427.91757"
        id="text3002-3-1-7"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-3-6"
          x="170.50084"
@@ -1703,14 +1817,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(252.77447,348.28464)" />
+       transform="translate(252.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="235.50084"
        y="427.91757"
        id="text3002-3-4-1-3"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-7-9-9"
          x="235.50084"
@@ -1724,14 +1844,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(382.77447,348.28464)" />
+       transform="translate(382.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="365.50082"
        y="427.91757"
        id="text3002-3-7-2-2"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-79-9-7"
          x="365.50082"
@@ -1745,14 +1871,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(447.77447,348.28464)" />
+       transform="translate(447.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="430.50082"
        y="427.91757"
        id="text3002-3-6-1-5"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-2-7-5"
          x="430.50082"
@@ -1766,14 +1898,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(317.77447,348.28464)" />
+       transform="translate(317.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="300.50082"
        y="427.91757"
        id="text3002-3-9-8-5"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-74-8-1"
          x="300.50082"
@@ -1787,14 +1925,20 @@
        sodipodi:rx="4.4194174"
        sodipodi:ry="4.4194174"
        d="m -10.859139,77.438713 a 4.4194174,4.4194174 0 1 1 -8.838835,0 4.4194174,4.4194174 0 1 1 8.838835,0 z"
-       transform="translate(512.77447,348.28464)" />
+       transform="translate(512.77447,348.28464)"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:6.383811px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff8c5;fill-opacity:1;stroke:none;font-family:Sans"
        x="495.50082"
        y="427.91757"
        id="text3002-3-8-3-6"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3004-0-5-9-0"
          x="495.50082"
@@ -1805,7 +1949,7 @@
        id="path2985-5-9-9-4"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssss"
-       inkscape:export-filename="/home/deepak/researchcode/drawcellJS/easel/protein_inert.png"
+       inkscape:export-filename="/home/deepak/researchcode/simanim/protein_chomp2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
   </g>
