@@ -14,11 +14,11 @@ var parsedUrl, query, code;
 var http = require('http');
 
 http.createServer(function (request, response) {    
-    parsedUrl = url.parse(request.url);    
-
+    parsedUrl = url.parse(request.url);
     if (parsedUrl.pathname.indexOf('/api') > -1) {
 
     } else {
+        console.log(parsedUrl.pathname);
         request.addListener('end', function () {
             fileServer.serve(request, response);
         }).resume();

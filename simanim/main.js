@@ -3,6 +3,27 @@ var _EDITORS = {};
 var _CODEFILE = 'py/example1.py';
 var _TimeSeriesData = createModuleFromType("TIME SERIES", "time series");
 
+function reset() {
+    createjs.Ticker.removeAllEventListeners();
+    var i;
+
+    for (i in _MODULES) {
+        delete _MODULES[i];
+    }
+
+    delete _MODULES;
+
+    _MODULES = {};
+    _DEGRADING_MOLECULES.length = 0;
+
+    if (_EASEL_STAGE) {
+        _EASEL_STAGE.removeAllChildren();
+        _EASEL_STAGE.update();
+    }
+
+    initCanvas();
+}
+
 function fitToContainer(canvas) {
   // Make it visually fill the positioned parent
   canvas.style.width ='100%';
@@ -86,6 +107,16 @@ function updateGraph(data) {
     updateGraph.chart.load(data2);
 }
 
+function loadCodeFile(id, url) {
+    if (url)
+        $.ajax({
+            url:url,
+            dataType: "text",
+            success: function(data) {
+                _EDITORS[id].setValue(data);
+            }
+        });
+}
 
 function setupCodeEditor(id, language, url, callback) {
     //var theme = "ace/theme/monokai"
@@ -100,13 +131,8 @@ function setupCodeEditor(id, language, url, callback) {
     editor.setOptions({maxLines: Infinity});
     _EDITORS[id] = editor;
 
-    if (url)
-     $.ajax({
-        url:url,
-        success: function(data) {
-            editor.setValue(data);
-        }
-      });
+    
+    loadCodeFile(id, url);
 
     if (callback)
         editor.commands.addCommand({
@@ -190,26 +216,39 @@ function initModules(modules) {
     }
 }
 
-var _SETUPFUNC;
-
 function main() {
     initGUI();
     initCanvas();
-    if (_SETUPFUNC) {
-        var canvas = _EASEL_STAGE.canvas;
-        var bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
-        var lst = _SETUPFUNC(bounds, _TimeSeriesData);
-        initModules(lst);
-    }
 }
 
-function setupProgram(obj) {
-    if (obj) {
-        if (obj.code) {
-            _CODEFILE = obj.code;
-        }
-        if (obj.setup) {
-            _SETUPFUNC = obj.setup;
-        }
-    }
+function loadProgram(fileurl) {
+    $.ajax({
+        url:fileurl,
+        dataType: "text",
+        success: function(data) {
+            try {
+                eval("var obj = " + data);
+                var setupFunc;
+                if (obj) {
+                    if (obj.code) {
+                        _CODEFILE = obj.code;
+                        loadCodeFile("codepane", _CODEFILE);
+                    }
+                    if (obj.setup) {
+                        setupFunc = obj.setup;
+                    }
+                }
+
+                if (setupFunc) {
+                    reset();
+                    var canvas = _EASEL_STAGE.canvas;
+                    var bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
+                    var lst = setupFunc(bounds, _TimeSeriesData);
+                    initModules(lst);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+      }
+  });
 }
