@@ -36,15 +36,15 @@
         coms_gene.inputs.parts = { p: {type:'promoter'}, coms:{type:'cds'} };
         coms_gene.inputs.state = 0;
 
-        coms_gene.connect('firstPart', coms, 'target1');
-        comk_gene.connect('firstPart', coms, 'target2');
+        coms_gene.connect('firstPart', comk, 'target1');
+        comk_gene.connect('firstPart', comk, 'target2');
         
         timeseries.connect('MecA+MecAComK+MecAComS', meca, "numMolecules");
         timeseries.connect('MecAComK', meca, "comk bound");
         timeseries.connect('MecAComS', meca, "coms bound");
 
         timeseries.connect('ComK/(ComK+MecAComK)', comk, "percentActiveTFs");
-        timeseries.connect('ComS/(ComS+MecAComS)', coms, "percentActiveTFs");
+        //timeseries.connect('ComS/(ComS+MecAComS)', coms, "percentActiveTFs");
         
         timeseries.connect('ComK+MecAComK', comk, "numTfs");
         timeseries.connect('ComS+MecAComS', coms, "numTfs");

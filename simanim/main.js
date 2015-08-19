@@ -32,6 +32,29 @@ function reset() {
     initCanvas();
 }
 
+
+var _INTERVAL_FUNC = null;
+function play(intr) {
+    if (!intr) intr = 3000;
+
+    _INTERVAL_FUNC = setInterval(
+        
+        function(){ 
+            _TimeSeriesData.nextStep(); 
+        }, 
+
+        intr);
+
+}
+
+function pause() {
+    if (_INTERVAL_FUNC) {
+        clearInterval(_INTERVAL_FUNC);
+        delete _INTERVAL_FUNC;
+        _INTERVAL_FUNC = null;
+    }
+}
+
 function fitToContainer(canvas) {
   // Make it visually fill the positioned parent
   canvas.style.width ='100%';

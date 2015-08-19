@@ -1,5 +1,12 @@
 function TimeSeriesData(name,typename) {
     var module = new AnimModule(name, typename);
+    
+    module.nextStep = function() {
+        if (this.inputs.time.length <= this.inputs.currentIndex) {
+            this.inputs.currentIndex = -1;
+        }
+        this.setCurrentIndex(this.inputs.currentIndex+1);
+    }
 
     module.setCurrentIndex = function(index) {
         var timeArray = this.inputs.time;
@@ -9,6 +16,8 @@ function TimeSeriesData(name,typename) {
         if (!headers || !species || !timeArray || index < 0 || index >= timeArray.length) return;
 
         this.inputs.currentIndex = index;
+        console.log("TIME = " + timeArray[index])
+
         var s;
 
         for (var i=0; i < headers.length; ++i) {
@@ -41,7 +50,6 @@ function TimeSeriesData(name,typename) {
     };
 
     module.init = function(data) {
-        this.inputs.currentIndex = 0;
         this.inputs.time = [];
         this.inputs.species = [];
         this.inputs.headers = [];
@@ -50,6 +58,7 @@ function TimeSeriesData(name,typename) {
             this.inputs.time = data.time;
             this.inputs.species = data.species;
             this.inputs.headers = data.headers;
+            this.setCurrentIndex(0);
         }
     };
 
