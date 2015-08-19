@@ -28,7 +28,7 @@ function ProteinProduction(name,typename) {
         self.inputs.startLocation = {x:0, y:0};
         self.inputs.numRNA = self.inputs.numRNA || 0;
         self.inputs.numGFP = self.inputs.numGFP || 0;
-        self.delayRNA = 300;
+        self.delayRNA = 30;
         self.delayProt = 30;
         self.inputs.cds = null;
         self.time = 0;
@@ -70,7 +70,7 @@ function ProteinProduction(name,typename) {
             mrnas.push(mrna);
             self.time = event.time;
 
-            initDiffusableMolecule(mrna, bounds, false, 2);
+            initDiffusableMolecule(mrna, bounds, false, 5);
             mrna.velY = - Math.abs(mrna.velY) - 0.7;
         }
 
@@ -80,6 +80,9 @@ function ProteinProduction(name,typename) {
 
             self.outputs.mRNAPos.x = lastx;
             self.outputs.mRNAPos.y = lasty;
+        } else {
+            self.outputs.mRNAPos.x = cds.x + Math.random()*20;
+            self.outputs.mRNAPos.y = cds.y - 20;
         }
 
         if (mrnas.length > 0 && proteins.length < numGFP && self.delayProt < dt) {

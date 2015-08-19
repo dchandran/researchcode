@@ -184,7 +184,7 @@ def generate_output(filename, headers, time, species):
 
     species2 = []
 
-    with open(filename, 'w', newline='') as csvfile:
+    with open(filename, 'w') as csvfile:
         writer = csv.writer(csvfile, delimiter='\t', quotechar='|', quoting=csv.QUOTE_MINIMAL)
 
         writer.writerow(("time","Molecule","Molecule count"))
