@@ -60,7 +60,7 @@ AnimModule.prototype = {
     },
 
     tickSubmodules: function(e) {
-        var i,j;
+        var i,j, outputs;
         var inputs = this.inputs;
         var module;
         for (i in this.submodules) {
@@ -79,10 +79,10 @@ AnimModule.prototype = {
             }
         }
 
-        var outputs = this.outputs;        
-        for (i in this) {
-            module = this[i];
+        for (i in this.submodules) {
+            module = this.submodules[i];
             if (isModule(module)) {
+                outputs = module.outputs;
                 for (j in outputs) {
                     this.outputs[j] = module.outputs[j];
                 }

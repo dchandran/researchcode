@@ -1,3 +1,4 @@
+var _CHART;
 var _EASEL_STAGE;
 var _EDITORS = {};
 var _CODEFILE = 'py/example1.py';
@@ -21,6 +22,13 @@ function reset() {
         _EASEL_STAGE.update();
     }
 
+    delete _TimeSeriesData;
+    _TimeSeriesData = createModuleFromType("TIME SERIES", "time series");
+
+    if (_CHART) {
+        _CHART.destroy();
+        _CHART = null;
+    }
     initCanvas();
 }
 
@@ -79,8 +87,8 @@ function updateModules(code) {
 
 function updateGraph(data) {
     var id = "#plotpane";
-    if (!updateGraph.chart) {
-        updateGraph.chart = c3.generate({
+    if (!_CHART) {
+        _CHART = c3.generate({
             bindto: id,
             data: { x: 'time', columns: [] }
         });
@@ -104,7 +112,7 @@ function updateGraph(data) {
         data2.columns.push(col);
     }
 
-    updateGraph.chart.load(data2);
+    _CHART.load(data2);
 }
 
 function loadCodeFile(id, url) {
