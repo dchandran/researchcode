@@ -4,10 +4,16 @@ function TranscriptionFactor(name, typename) {
     module.init = function() {
         var i;
         var self = module;
+        var imageFile = "protein_chomp" + TranscriptionFactor.lastIndex;
+
+        ++TranscriptionFactor.lastIndex;
+        if (TranscriptionFactor.lastIndex > TranscriptionFactor.maxIndex) {
+            TranscriptionFactor.lastIndex = 1;
+        }
                 
         self.proteinChompSheet = new createjs.SpriteSheet({
             framerate: 30,
-            "images": ["protein_chomp.png"],
+            "images": [imageFile + ".png"],
             "frames": {"regX": 0, "height": 51, "count": 17, "regY": 0, "width": 65},
             // define two animations, run (loops, 1.5x speed) and jump (returns to run):
             "animations": {
@@ -39,6 +45,7 @@ function TranscriptionFactor(name, typename) {
             i = 1;
             while (self.inputs['target' + i] !== undefined) {
                 targets.push(self.inputs['target' + i]);
+                ++i;
             }
         }
 
@@ -112,11 +119,13 @@ function TranscriptionFactor(name, typename) {
         }
 
         for (i=0; i < targets.length; ++i) {
-            j = Math.random() * percentActiveTFs * tfs.length;
-            if (j > 0 && !taken[i]) {
-                j = Math.floor(j);
-                tfs[j].target = targets[i];
-                tfs[j].rotation = tfs[j].target.rotation;
+            if (!taken[i] && percentActiveTFs * tfs.length > 0) {
+                j = Math.floor(Math.random() * percentActiveTFs * tfs.length);
+                while (tfs[j] && tfs[j].target && j < percentActiveTFs * tfs.length) ++j;
+                if (tfs[j] && !tfs[j].target) {
+                    tfs[j].target = targets[i];
+                    tfs[j].rotation = tfs[j].target.rotation;
+                }
             }
         }
 
@@ -260,3 +269,6 @@ function TwoComponentSystem(name,typename) {
 registerModuleType("membrane receptor", MembraneReceptor);
 registerModuleType("transcription factor", TranscriptionFactor);
 registerModuleType("two component", TwoComponentSystem);
+
+TranscriptionFactor.lastIndex = 1;
+TranscriptionFactor.maxIndex = 2;

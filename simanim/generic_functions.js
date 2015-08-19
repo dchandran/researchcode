@@ -40,8 +40,6 @@ function isModule(obj) {
     return obj.inputs !== undefined &&
            obj.outputs !== undefined &&
            obj.isPaused !== undefined &&
-           obj.passInputs !== undefined &&
-           obj.passOutputs !== undefined &&
            obj.connect !== undefined;
 }
 
@@ -68,8 +66,8 @@ AnimModule.prototype = {
         for (i in this.submodules) {
             module = this.submodules[i];
             if (isModule(module)) {
-                for (j=0; j < inputs.length; ++j) {
-                    module.inputs[ inputs[j] ] = this.inputs[ inputs[j] ];
+                for (j in inputs) {
+                    module.inputs[j] = this.inputs[j];
                 }
             }
         }
@@ -85,8 +83,8 @@ AnimModule.prototype = {
         for (i in this) {
             module = this[i];
             if (isModule(module)) {
-                for (j=0; j < outputs.length; ++j) {
-                    this.outputs[ outputs[j] ] = module.outputs[ outputs[j] ];
+                for (j in outputs) {
+                    this.outputs[j] = module.outputs[j];
                 }
             }
         }
