@@ -265,6 +265,12 @@ function loadProgram(fileurl) {
                         _CODEFILE = obj.code;
                         loadCodeFile("codepane", _CODEFILE);
                     }
+                    if (obj.modules) {
+                        for (var i in obj.modules) {
+                            //example: var coms = createModuleFromType("ComS", "transcription factor");
+                            eval(i + " = createModuleFromType('" + i + "', '" + obj.modules[i] + "');");
+                        }
+                    }
                     if (obj.setup) {
                         setupFunc = obj.setup;
                     }

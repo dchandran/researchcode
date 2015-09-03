@@ -1,13 +1,17 @@
 {
     code: "py/example1.py",
 
+    modules: {
+        source_molecule: "source",
+        two_component: "two component",
+        expression_cassette: "expression cassette",
+        lipid_bilayer: "lipid bilayer",
+        dna_template: "DNA template",  
+        inhibitor: "inhibitor",
+    },
+
+
     setup: function(bounds,timeseries) {
-        var source_molecule = createModuleFromType("m1", "source");
-        var two_component = createModuleFromType("m2", "two component");
-        var expression_cassette = createModuleFromType("m3", "expression cassette");
-        var lipid_bilayer = createModuleFromType("m4", "lipid bilayer");
-        var dna_template = createModuleFromType("m6", "DNA template");   
-        var inhibitor = createModuleFromType("m7", "inhibitor");
 
         source_molecule.inputs.numMolecules = 100;
         two_component.inputs.numReceptors = 5;

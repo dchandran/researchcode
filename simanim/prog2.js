@@ -1,14 +1,16 @@
 {
     code: "py/example2.py",
 
-    setup: function(bounds, timeseries) {
-        var comk = createModuleFromType("ComK", "transcription factor");
-        var coms = createModuleFromType("ComS", "transcription factor");
-        var meca = createModuleFromType("MecA", "inhibitor");
-        var comk_gene = createModuleFromType("comk", "expression cassette");
-        var coms_gene = createModuleFromType("coms", "expression cassette");
+    modules: {
+        var comk: "transcription factor",
+        var coms: "transcription factor",
+        var meca: "inhibitor",
+        var comk_gene: "expression cassette",
+        var coms_gene: "expression cassette",
+        var dna: "DNA template"
+    },
 
-        var dna = createModuleFromType("dna", "DNA template");
+    setup: function(bounds, timeseries) {
 
         dna.inputs.bounds = bounds;
         comk.inputs.inactiveBounds = bounds;
