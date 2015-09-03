@@ -6,8 +6,7 @@
         two_component: "two component",
         expression_cassette: "expression cassette",
         lipid_bilayer: "lipid bilayer",
-        dna_template: "DNA template",  
-        inhibitor: "inhibitor",
+        dna_template: "DNA template"
     },
 
 
@@ -36,7 +35,6 @@
         expression_cassette.connect('firstPart', two_component, 'target');
 
         lipid_bilayer.connect('innerCellBounds', inhibitor, 'bounds');
-        two_component.connect('tfs', inhibitor, 'tfs');
 
         //protein_bursts.connect('mRNAPos', two_component, 'tfStartPos');
 
@@ -47,7 +45,5 @@
         timeseries.connect('gene_on', expression_cassette, "state");
         timeseries.connect('mRNA', expression_cassette, "numRNA");
         timeseries.connect('GFP', expression_cassette, "numGFP");
-
-        return [source_molecule,two_component,expression_cassette,lipid_bilayer,dna_template,inhibitor];
     }
 }

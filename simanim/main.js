@@ -260,6 +260,7 @@ function loadProgram(fileurl) {
             try {
                 eval("var obj = " + data);
                 var setupFunc;
+                var lst = [];
                 if (obj) {
                     if (obj.code) {
                         _CODEFILE = obj.code;
@@ -269,6 +270,7 @@ function loadProgram(fileurl) {
                         for (var i in obj.modules) {
                             //example: var coms = createModuleFromType("ComS", "transcription factor");
                             eval(i + " = createModuleFromType('" + i + "', '" + obj.modules[i] + "');");
+                            eval('lst.push(' + i + ');');
                         }
                     }
                     if (obj.setup) {
@@ -280,7 +282,7 @@ function loadProgram(fileurl) {
                     reset();
                     var canvas = _EASEL_STAGE.canvas;
                     var bounds = {left:canvas.left, top:canvas.top, width: canvas.width, height: canvas.height};
-                    var lst = setupFunc(bounds, _TimeSeriesData);
+                    setupFunc(bounds, _TimeSeriesData);
                     initModules(lst);
                 }
             } catch (e) {

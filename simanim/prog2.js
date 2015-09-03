@@ -4,7 +4,7 @@
     modules: {
         var comk: "transcription factor",
         var coms: "transcription factor",
-        var meca: "inhibitor",
+        var meca: "small molecule",
         var comk_gene: "expression cassette",
         var coms_gene: "expression cassette",
         var dna: "DNA template"
@@ -56,7 +56,5 @@
 
         timeseries.connect('comk_mRNA', comk_gene, "numRNA");
         timeseries.connect('coms_mRNA', coms_gene, "numRNA");
-
-        return [dna, comk, coms, meca, comk_gene, coms_gene];
     }
 }

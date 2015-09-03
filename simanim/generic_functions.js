@@ -141,16 +141,15 @@ function initDiffusableMolecule(m, bounds, rotate, speed) {
 
 function moveDiffusableMolecule(m) {
     var bounds = m.bounds;
-    if (!bounds) return;
-
+    
     if (m.target) {
         if (m.target.parent === m.parent) {
             var x = m.target.x;
             var y = m.target.y;
             var dist = (m.x - x)*(m.x - x) + (m.y - y)*(m.y - y);
             if (dist < 25) {
-                m.rotation = 0;
-                m.target.rotation = 0;
+                //m.rotation = 0;
+                //m.target.rotation = 0;
                 m.x = x;
                 m.y = y;
                 return;
@@ -159,6 +158,8 @@ function moveDiffusableMolecule(m) {
 
         bounds = { left: x - 10, top: y - 10, width: 20, height: 20};
     }
+
+    if (!bounds) return;
 
     var right = bounds.left + bounds.width;
     var bottom = bounds.top + bounds.height;

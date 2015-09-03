@@ -1,4 +1,4 @@
-function InhibitorModule(name,typename) {
+function SmallMolecule(name,typename) {
     var module = new AnimModule(name,typename);
         
     module.init = function() {
@@ -82,10 +82,12 @@ function InhibitorModule(name,typename) {
                 moveDiffusableMolecule(mol);
             }
         }
+        
+        self.outputs.molecules = molecules;
         self.updateDownstream();
     };
 
     return module;
 }
 
-registerModuleType("inhibitor", InhibitorModule);
+registerModuleType("small molecule", SmallMolecule);
