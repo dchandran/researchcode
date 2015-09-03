@@ -26,11 +26,11 @@
         dna.connect('center', comk_gene, 'startPos');
         dna.connect('center', coms_gene, 'startPos');
         
-        comk.connect('tfs', meca, 'comk');
-        coms.connect('tfs', meca, 'coms');
+        comk.connect('molecules', meca, 'comk');
+        coms.connect('molecules', meca, 'coms');
 
-        comk_gene.connect('mRNAPos', comk, 'tfStartPos');
-        coms_gene.connect('mRNAPos', coms, 'tfStartPos');            
+        comk_gene.connect('mRNAPos', comk, 'startPos');
+        coms_gene.connect('mRNAPos', coms, 'startPos');            
 
         comk_gene.inputs.parts = { p: {type:'promoter'}, comk:{type:'cds'} };
         comk_gene.inputs.state = 0;
@@ -45,11 +45,10 @@
         timeseries.connect('MecAComK', meca, "comk bound");
         timeseries.connect('MecAComS', meca, "coms bound");
 
-        timeseries.connect('ComK/(ComK+MecAComK)', comk, "percentActiveTFs");
-        //timeseries.connect('ComS/(ComS+MecAComS)', coms, "percentActiveTFs");
+        timeseries.connect('ComK/(ComK+MecAComK)', comk, "percentActive");
         
-        timeseries.connect('ComK+MecAComK', comk, "numTfs");
-        timeseries.connect('ComS+MecAComS', coms, "numTfs");
+        timeseries.connect('ComK+MecAComK', comk, "numMolecules");
+        timeseries.connect('ComS+MecAComS', coms, "numMolecules");
 
         timeseries.connect('comk_gene_on', comk_gene, "state");
         timeseries.connect('coms_gene_on', coms_gene, "state");

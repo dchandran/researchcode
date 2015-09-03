@@ -34,9 +34,8 @@
         lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
         expression_cassette.connect('firstPart', two_component, 'target');
 
-
         timeseries.connect('(r1+r0)/2', two_component, "numReceptors");
-        timeseries.connect('(tf1+tf0)/2', two_component, "numTfs");    
+        timeseries.connect('(tf1+tf0)/2', two_component, "numTFs");    
         timeseries.connect('tf1/(r1+r0)', two_component, "percentActiveMembranes");
         timeseries.connect('tf1/(tf1+tf0)', two_component, "percentActiveTFs");
         timeseries.connect('gene_on', expression_cassette, "state");

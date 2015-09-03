@@ -33,7 +33,7 @@ function EnzymeActivity(name, typename) {
         var tf, i, j;
         var percentActive = self.inputs.percentActive;
         var tfs = self.tfs;
-        var tfStates = self.inputs.tfStates || [];
+        var states = self.inputs.states || [];
 
         self.outputs.tfs = [];
 
@@ -54,7 +54,7 @@ function EnzymeActivity(name, typename) {
             }
         }
 
-        n = self.inputs.numTfs || 0;
+        n = self.inputs.numMolecules || 0;
         var tfs = self.tfs;
         var tf;
 
@@ -68,9 +68,9 @@ function EnzymeActivity(name, typename) {
             while (tfs.length < n) {
                 tf = new createjs.Sprite(self.proteinChompSheet, "inactive");
                 initDiffusableMolecule(tf, self.inputs.inactiveBounds);
-                if (self.inputs.tfStartPos && self.inputs.tfStartPos.x && self.inputs.tfStartPos.y) {
-                    tf.x = self.inputs.tfStartPos.x;
-                    tf.y = self.inputs.tfStartPos.y;
+                if (self.inputs.startPos && self.inputs.startPos.x && self.inputs.startPos.y) {
+                    tf.x = self.inputs.startPos.x;
+                    tf.y = self.inputs.startPos.y;
 
                 } else {
                     tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
@@ -142,7 +142,7 @@ function EnzymeActivity(name, typename) {
                 moveDiffusableMolecule(tfs[i]);
             }
 
-        self.outputs.tfs = tfs;
+        self.outputs.molecules = tfs;
         self.updateDownstream();
     };
 
@@ -177,11 +177,11 @@ function MembraneReceptor(name, typename) {
         var receptors = self.receptors;
         var recp, i;
         var bounds = self.inputs.inactiveBounds;
-        var receptorStates = self.inputs.receptorStates || [];
+        var receptorStates = self.inputs.states || [];
 
         self.outputs.receptors = [];
 
-        var n = self.inputs.numReceptors || 0;    
+        var n = self.inputs.count || 0;    
         if (receptors.length != n) {
 
             while (receptors.length > n) {
@@ -192,9 +192,9 @@ function MembraneReceptor(name, typename) {
             while (receptors.length < n) {
                 recp = new createjs.Sprite(self.membraneChompSheet, "inactive", false);
                 initDiffusableMolecule(recp, {left: bounds.left, width: bounds.width, height: 0, top: bounds.top-140}, false);
-                if (self.inputs.receptorStartPos) {
-                    recp.x = self.inputs.receptorStartPos.x;
-                    recp.y = self.inputs.receptorStartPos.y;
+                if (self.inputs.startPos) {
+                    recp.x = self.inputs.startPos.x;
+                    recp.y = self.inputs.startPos.y;
                 } else {
                     recp.x = recp.bounds.left + recp.bounds.width*(Math.random());
                     recp.y = recp.bounds.top + recp.bounds.height*(Math.random());
@@ -259,6 +259,12 @@ function TwoComponentSystem(name,typename) {
             h = self.inputs.inactiveBounds.height;
             self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES            
         }
+
+        this.submodules.transcription_factor.inputs.percentActive = this.inputs.numTFs;
+        this.submodules.membrane_receptor.inputs.percentActive = this.inputs.numReceptors;
+        this.submodules.transcription_factor.inputs.percentActive = this.inputs.percentActiveTFs;
+        this.submodules.membrane_receptor.inputs.percentActive = this.inputs.percentActiveMembranes;
+
 
         self.tickSubmodules(event);
         
