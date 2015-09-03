@@ -3,15 +3,16 @@
 
     modules: {  
         inhibitor: "small molecule",
-        enzyme: "transcription factor"
+        enzyme: "enzyme"
     },
-
 
     setup: function(bounds,timeseries) {
         debugger;
         enzyme.inputs.inactiveBounds = bounds;
         enzyme.inputs.activeBounds = bounds;
         inhibitor.inputs.bounds = bounds;
+        inhibitor.inputs.numMolecules = 10;
+        enzyme.inputs.numTfs = 10;
 
         
 

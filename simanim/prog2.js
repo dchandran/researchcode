@@ -2,8 +2,8 @@
     code: "py/example2.py",
 
     modules: {
-        var comk: "transcription factor",
-        var coms: "transcription factor",
+        var comk: "enzyme",
+        var coms: "enzyme",
         var meca: "small molecule",
         var comk_gene: "expression cassette",
         var coms_gene: "expression cassette",

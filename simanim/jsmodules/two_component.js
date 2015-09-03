@@ -1,14 +1,14 @@
-function TranscriptionFactor(name, typename) {
+function EnzymeActivity(name, typename) {
     var module = new AnimModule(name, typename);
 
     module.init = function() {
         var i;
         var self = module;
-        var imageFile = "protein_chomp" + TranscriptionFactor.lastIndex;
+        var imageFile = "protein_chomp" + EnzymeActivity.lastIndex;
 
-        ++TranscriptionFactor.lastIndex;
-        if (TranscriptionFactor.lastIndex > TranscriptionFactor.maxIndex) {
-            TranscriptionFactor.lastIndex = 1;
+        ++EnzymeActivity.lastIndex;
+        if (EnzymeActivity.lastIndex > EnzymeActivity.maxIndex) {
+            EnzymeActivity.lastIndex = 1;
         }
                 
         self.proteinChompSheet = new createjs.SpriteSheet({
@@ -31,7 +31,7 @@ function TranscriptionFactor(name, typename) {
         var self = module;
 
         var tf, i, j;
-        var percentActiveTFs = self.inputs.percentActiveTFs;
+        var percentActive = self.inputs.percentActive;
         var tfs = self.tfs;
         var tfStates = self.inputs.tfStates || [];
 
@@ -97,13 +97,13 @@ function TranscriptionFactor(name, typename) {
             }
 
             if (tf.currentAnimation !== 'active' && 
-                (i < percentActiveTFs*tfs.length ||
+                (i < percentActive*tfs.length ||
                  (tfStates.length > i && tfStates[i]==='active'))) {
                 tf.gotoAndPlay('active');
                 initDiffusableMolecule(tf, self.inputs.activeBounds, true, 3);
             } else {
                 if (tf.currentAnimation !== 'inactive' && 
-                    (i >= percentActiveTFs*tfs.length ||
+                    (i >= percentActive*tfs.length ||
                      (tfStates.length > i && tfStates[i]==='inactive'))) {
                     if (tf.target)
                         delete tf.target;
@@ -125,11 +125,11 @@ function TranscriptionFactor(name, typename) {
             }
         }
 
-        if (percentActiveTFs * tfs.length > numTaken)
+        if (percentActive * tfs.length > numTaken)
             for (i=0; i < targets.length; ++i) {
                 if (!taken[i]) {
-                    j = Math.floor(Math.random() * percentActiveTFs * tfs.length);
-                    while (tfs[j] && tfs[j].target && j < percentActiveTFs * tfs.length) ++j;
+                    j = Math.floor(Math.random() * percentActive * tfs.length);
+                    while (tfs[j] && tfs[j].target && j < percentActive * tfs.length) ++j;
                     if (tfs[j] && !tfs[j].target) {
                         tfs[j].target = targets[i];
                         tfs[j].rotation = tfs[j].target.rotation;
@@ -173,8 +173,7 @@ function MembraneReceptor(name, typename) {
     module.tick = function(event) {
         var self = module;
 
-        var percentActiveTFs = self.inputs.percentActiveTFs;
-        var percentActiveMembranes = self.inputs.percentActiveMembranes;
+        var percentActive = self.inputs.percentActive;
         var receptors = self.receptors;
         var recp, i;
         var bounds = self.inputs.inactiveBounds;
@@ -219,12 +218,12 @@ function MembraneReceptor(name, typename) {
                 }
 
                 if (rec.currentAnimation !== 'active' && 
-                    (i < percentActiveMembranes*receptors.length || 
+                    (i < percentActive*receptors.length || 
                         (receptorStates.length > i && receptorStates[i]==='active'))) {
                     rec.gotoAndPlay('active');
                 } else {
                     if (rec.currentAnimation !== 'inactive' && 
-                        (i >= percentActiveMembranes*receptors.length || 
+                        (i >= percentActive*receptors.length || 
                             (receptorStates.length > i && receptorStates[i]==='inactive'))) {
                         rec.gotoAndPlay('inactive');
                     }
@@ -243,7 +242,7 @@ function MembraneReceptor(name, typename) {
 function TwoComponentSystem(name,typename) {
     var module = new AnimModule(name, typename);
     module.submodules.membrane_receptor = createModuleFromType(name + "-submodule", "membrane receptor");
-    module.submodules.transcription_factor = createModuleFromType(name + "-submodule", "transcription factor");
+    module.submodules.transcription_factor = createModuleFromType(name + "-submodule", "enzyme");
 
     module.init = function() {
         var i;
@@ -275,8 +274,8 @@ function TwoComponentSystem(name,typename) {
 
 
 registerModuleType("membrane receptor", MembraneReceptor);
-registerModuleType("transcription factor", TranscriptionFactor);
+registerModuleType("enzyme", EnzymeActivity);
 registerModuleType("two component", TwoComponentSystem);
 
-TranscriptionFactor.lastIndex = 1;
-TranscriptionFactor.maxIndex = 2;
+EnzymeActivity.lastIndex = 1;
+EnzymeActivity.maxIndex = 2;

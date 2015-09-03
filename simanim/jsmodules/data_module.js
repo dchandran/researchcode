@@ -13,7 +13,9 @@ function TimeSeriesData(name,typename) {
         var headers = this.inputs.headers;
         var species = this.inputs.species;
 
-        if (!headers || !species || !timeArray || index < 0 || index >= timeArray.length) return;
+        if (!headers || !species || !timeArray) return;
+
+        if (index < 0 || index >= timeArray.length) index = 0;
 
         this.inputs.currentIndex = index;
         console.log("TIME = " + timeArray[index])
