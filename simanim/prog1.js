@@ -34,9 +34,6 @@
         lipid_bilayer.connect('innerCellBounds', two_component, 'activeBounds');
         expression_cassette.connect('firstPart', two_component, 'target');
 
-        lipid_bilayer.connect('innerCellBounds', inhibitor, 'bounds');
-
-        //protein_bursts.connect('mRNAPos', two_component, 'tfStartPos');
 
         timeseries.connect('(r1+r0)/2', two_component, "numReceptors");
         timeseries.connect('(tf1+tf0)/2', two_component, "numTfs");    

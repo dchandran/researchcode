@@ -38,14 +38,19 @@ function TranscriptionFactor(name, typename) {
         self.outputs.tfs = [];
 
         var targets = [];
-        
-        if (self.inputs.target) {
-            targets.push(self.inputs.target);
+
+        if (self.inputs.targets) {
+            targets = self.inputs.targets;
         } else {
-            i = 1;
-            while (self.inputs['target' + i] !== undefined) {
-                targets.push(self.inputs['target' + i]);
-                ++i;
+            
+            if (self.inputs.target) {
+                targets.push(self.inputs.target);
+            } else {
+                i = 1;
+                while (self.inputs['target' + i] !== undefined) {
+                    targets.push(self.inputs['target' + i]);
+                    ++i;
+                }
             }
         }
 
@@ -82,6 +87,7 @@ function TranscriptionFactor(name, typename) {
         }
 
         var taken = [];
+        var numTaken = 0;
         taken.length = targets.length;
 
         for (i=0; i < tfs.length; ++i) {
@@ -113,21 +119,23 @@ function TranscriptionFactor(name, typename) {
                     j = targets.indexOf(tf.target);
                     if (j > -1) {
                         taken[j] = true;
+                        ++numTaken;
                     }
                 }
             }
         }
 
-        for (i=0; i < targets.length; ++i) {
-            if (!taken[i] && percentActiveTFs * tfs.length > 0) {
-                j = Math.floor(Math.random() * percentActiveTFs * tfs.length);
-                while (tfs[j] && tfs[j].target && j < percentActiveTFs * tfs.length) ++j;
-                if (tfs[j] && !tfs[j].target) {
-                    tfs[j].target = targets[i];
-                    tfs[j].rotation = tfs[j].target.rotation;
+        if (percentActiveTFs * tfs.length > numTaken)
+            for (i=0; i < targets.length; ++i) {
+                if (!taken[i]) {
+                    j = Math.floor(Math.random() * percentActiveTFs * tfs.length);
+                    while (tfs[j] && tfs[j].target && j < percentActiveTFs * tfs.length) ++j;
+                    if (tfs[j] && !tfs[j].target) {
+                        tfs[j].target = targets[i];
+                        tfs[j].rotation = tfs[j].target.rotation;
+                    }
                 }
             }
-        }
 
         if (!self.isPaused())
             for (i=0; i < tfs.length; ++i) {
