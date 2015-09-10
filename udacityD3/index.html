@@ -4,167 +4,224 @@
       <link href="index.css" rel="stylesheet" />
       <script src="hand.minified-1.2.js"></script>
       <script src="poly2tri.js"></script>
-      <script src="cannon.js"></script>
       <script src="Oimo.js"></script>
       <script src="babylon.js"></script>
 
       <style>
          html, body, div, canvas {
-         width: 100%;
-         height: 100%;
-         padding: 0;
-         margin: 0;
+           width: 100%;
+           height: 100%;
+           padding: 0;
+           margin: 0;
          }
       </style>
    </head>
    <body>
       <canvas id="canvas"></canvas>
       <script>
+      var decal, ground;
+
 
       var CreateScene = function (engine) {
+        console.log("CREATE SCENE");
+          var scene = new BABYLON.Scene(engine);
+          scene.clearColor = new BABYLON.Color3(0.5, 0.5, 0.5);
 
-    var scene = new BABYLON.Scene(engine);
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
-    scene.activeCamera.attachControl(canvas);
-    var material = new BABYLON.StandardMaterial("kosh", scene);
-    var sphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 32, 3, scene);
-    var sphere2 = BABYLON.Mesh.CreateSphere("Sphere2", 32, 3, scene);
-    var sphere3 = BABYLON.Mesh.CreateSphere("Sphere3", 32, 3, scene);
-    var sphere4 = BABYLON.Mesh.CreateSphere("Sphere4", 32, 3, scene);
-    var sphere5 = BABYLON.Mesh.CreateSphere("Sphere5", 32, 3, scene);
-    var light = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(-17.6, 18.8, -49.9), scene);
+          //var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 1, -15), scene);
+          var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
+          scene.activeCamera = camera;
+          scene.activeCamera.attachControl(canvas);
+          camera.inertia = 0;
+          camera.speed = 50;
 
-    camera.setPosition(new BABYLON.Vector3(-15, 3, 0));
+          var light3 = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+          light3.diffuse = new BABYLON.Color3(1, 1, 1);
+          light3.specular = new BABYLON.Color3(1, 1, 1);
+          light3.groundColor = new BABYLON.Color3(0, 0, 0);
+          light3.intensity = .7;
 
-    sphere2.position.z -= 5;
-    sphere3.position.z += 5;
-    sphere4.position.x += 5;
-    sphere5.position.x -= 5;
+              var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);             
+              ground = BABYLON.Mesh.CreateGround("ground1", 32, 32, 2, scene);
+            // a plane that is moved when click hits a surface
+              decal = BABYLON.Mesh.CreateBox("plane", 3.0, scene);
 
-    // Sphere1 material
-    material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
-    material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
-    material.alpha = 0.2;
-    material.specularPower = 16;
+              decal.scaling.x = (0.2); decal.scaling.y = (1); decal.scaling.z = (0.2);
+              sphere.position.y = 2;
+              ground.position.y = -2; 
 
-    // Fresnel
-    material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
-    material.reflectionFresnelParameters.bias = 0.1;
+              var matGnd = new BABYLON.StandardMaterial("gnd", scene);
+              ground.material = matGnd;
+              matGnd.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
 
-    material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
-    material.emissiveFresnelParameters.bias = 0.6;
-    material.emissiveFresnelParameters.power = 4;
-    material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
+              var matDecal = new BABYLON.StandardMaterial("decalM", scene);
+              decal.material = matDecal;
+              matDecal.diffuseColor = new BABYLON.Color3(1.0, 0, 0);
 
-    material.opacityFresnelParameters = new BABYLON.FresnelParameters();
-    material.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
+              //scene.registerBeforeRender(function () {
+                window.addEventListener("click", function (evt) {
+                    console.log("CLICK");
+                    var upVector = BABYLON.Vector3.Up();
+                    var pickResult = scene.pick(evt.clientX, evt.clientY); 
+                    if (pickResult.hit) {
+                      decal.position = pickResult.pickedPoint;
+                      var ray = BABYLON.Ray.CreateNewFromTo(pickResult.pickedMesh.position, decal.position);
+                      var axis = BABYLON.Vector3.Cross(upVector, ray.direction).normalize();
+                      var angle = Math.acos(BABYLON.Vector3.Dot(upVector, ray.direction));
+                      console.log(pickResult.pickedMesh.position);
+                      console.log(decal.position);
+                      decal.rotate(axis, angle, BABYLON.Space.LOCAL);
+                    }
+                });
 
-    sphere1.material = material;
+              //});
 
-    // Sphere2 material
-    material = new BABYLON.StandardMaterial("kosh2", scene);
-    material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
-    material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
-    material.specularPower = 32;
+              return scene;
+        };
 
-    // Fresnel
-    material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
-    material.reflectionFresnelParameters.bias = 0.1;
+      var CreateScene2 = function (engine) {
 
-    material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
-    material.emissiveFresnelParameters.bias = 0.5;
-    material.emissiveFresnelParameters.power = 4;
-    material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
+          var scene = new BABYLON.Scene(engine);
+          var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+          scene.activeCamera.attachControl(canvas);
+          var material = new BABYLON.StandardMaterial("kosh", scene);
+          var sphere1 = BABYLON.Mesh.CreateSphere("Sphere1", 32, 3, scene);
+          var sphere2 = BABYLON.Mesh.CreateSphere("Sphere2", 32, 3, scene);
+          var sphere3 = BABYLON.Mesh.CreateSphere("Sphere3", 32, 3, scene);
+          var sphere4 = BABYLON.Mesh.CreateSphere("Sphere4", 32, 3, scene);
+          var sphere5 = BABYLON.Mesh.CreateSphere("Sphere5", 32, 3, scene);
+          var light = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(-17.6, 18.8, -49.9), scene);
 
-    sphere2.material = material;
-    sphere2.isBlocker = true; // For intercepting lens flare
+          camera.setPosition(new BABYLON.Vector3(-15, 3, 0));
 
-    // Sphere3 material
-    material = new BABYLON.StandardMaterial("kosh3", scene);
-    material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.emissiveColor = BABYLON.Color3.White();
-    material.specularPower = 64;
-    material.alpha = 0.2;
+          sphere2.position.z -= 5;
+          sphere3.position.z += 5;
+          sphere4.position.x += 5;
+          sphere5.position.x -= 5;
 
-    // Fresnel
-    material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
-    material.emissiveFresnelParameters.bias = 0.2;
-    material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
+          // Sphere1 material
+          material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
+          material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+          material.alpha = 0.2;
+          material.specularPower = 16;
 
-    material.opacityFresnelParameters = new BABYLON.FresnelParameters();
-    material.opacityFresnelParameters.power = 4;
-    material.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
+          // Fresnel
+          material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+          material.reflectionFresnelParameters.bias = 0.1;
 
-    sphere3.material = material;
-    sphere3.isBlocker = true; // For intercepting lens flare
+          material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
+          material.emissiveFresnelParameters.bias = 0.6;
+          material.emissiveFresnelParameters.power = 4;
+          material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-    // Sphere4 material
-    material = new BABYLON.StandardMaterial("kosh4", scene);
-    material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.emissiveColor = BABYLON.Color3.White();
-    material.specularPower = 64;
+          material.opacityFresnelParameters = new BABYLON.FresnelParameters();
+          material.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-    // Fresnel
-    material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
-    material.emissiveFresnelParameters.power = 4;
-    material.emissiveFresnelParameters.bias = 0.5;
-    material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
-    material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
+          sphere1.material = material;
 
-    sphere4.material = material;
-    sphere4.isBlocker = true; // For intercepting lens flare
+          // Sphere2 material
+          material = new BABYLON.StandardMaterial("kosh2", scene);
+          material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
+          material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+          material.specularPower = 32;
 
-    // Sphere5 material
-    material = new BABYLON.StandardMaterial("kosh5", scene);
-    material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
-    material.reflectionTexture.level = 0.5;
-    material.specularPower = 64;
-    material.emissiveColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+          // Fresnel
+          material.reflectionFresnelParameters = new BABYLON.FresnelParameters();
+          material.reflectionFresnelParameters.bias = 0.1;
 
-    // Fresnel
-    material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
-    material.emissiveFresnelParameters.bias = 0.4;
-    material.emissiveFresnelParameters.power = 2;
-    material.emissiveFresnelParameters.leftColor = BABYLON.Color3.Black();
-    material.emissiveFresnelParameters.rightColor = BABYLON.Color3.White();
+          material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
+          material.emissiveFresnelParameters.bias = 0.5;
+          material.emissiveFresnelParameters.power = 4;
+          material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-    sphere5.material = material;
-    sphere5.isBlocker = true; // For intercepting lens flare
+          sphere2.material = material;
+          sphere2.isBlocker = true; // For intercepting lens flare
 
-    // Skybox
-    var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
-    var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-    skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
-    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-    skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    skybox.material = skyboxMaterial;
+          // Sphere3 material
+          material = new BABYLON.StandardMaterial("kosh3", scene);
+          material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          material.emissiveColor = BABYLON.Color3.White();
+          material.specularPower = 64;
+          material.alpha = 0.2;
 
-    // Lens flares
-    var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", light, scene);
-    var flare00 = new BABYLON.LensFlare(0.2, 0, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
-    var flare01 = new BABYLON.LensFlare(0.5, 0.2, new BABYLON.Color3(0.5, 0.5, 1), "Flare.png", lensFlareSystem);
-    var flare02 = new BABYLON.LensFlare(0.2, 1.0, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
-    var flare03 = new BABYLON.LensFlare(0.4, 0.4, new BABYLON.Color3(1, 0.5, 1), "Flare.png", lensFlareSystem);
-    var flare04 = new BABYLON.LensFlare(0.1, 0.6, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
-    var flare05 = new BABYLON.LensFlare(0.3, 0.8, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
+          // Fresnel
+          material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
+          material.emissiveFresnelParameters.bias = 0.2;
+          material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-    // Animations
-    scene.registerBeforeRender(function() {
-        camera.alpha += 0.01 * scene.getAnimationRatio();
-    });
+          material.opacityFresnelParameters = new BABYLON.FresnelParameters();
+          material.opacityFresnelParameters.power = 4;
+          material.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-    return scene;
-};
+          sphere3.material = material;
+          sphere3.isBlocker = true; // For intercepting lens flare
+
+          // Sphere4 material
+          material = new BABYLON.StandardMaterial("kosh4", scene);
+          material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          material.emissiveColor = BABYLON.Color3.White();
+          material.specularPower = 64;
+
+          // Fresnel
+          material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
+          material.emissiveFresnelParameters.power = 4;
+          material.emissiveFresnelParameters.bias = 0.5;
+          material.emissiveFresnelParameters.leftColor = BABYLON.Color3.White();
+          material.emissiveFresnelParameters.rightColor = BABYLON.Color3.Black();
+
+          sphere4.material = material;
+          sphere4.isBlocker = true; // For intercepting lens flare
+
+          // Sphere5 material
+          material = new BABYLON.StandardMaterial("kosh5", scene);
+          material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          material.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
+          material.reflectionTexture.level = 0.5;
+          material.specularPower = 64;
+          material.emissiveColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+          // Fresnel
+          material.emissiveFresnelParameters = new BABYLON.FresnelParameters();
+          material.emissiveFresnelParameters.bias = 0.4;
+          material.emissiveFresnelParameters.power = 2;
+          material.emissiveFresnelParameters.leftColor = BABYLON.Color3.Black();
+          material.emissiveFresnelParameters.rightColor = BABYLON.Color3.White();
+
+          sphere5.material = material;
+          sphere5.isBlocker = true; // For intercepting lens flare
+
+          // Skybox
+          var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, scene);
+          var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+          skyboxMaterial.backFaceCulling = false;
+          skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("TropicalSunnyDay", scene);
+          skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+          skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+          skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+          skybox.material = skyboxMaterial;
+
+          // Lens flares
+          var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", light, scene);
+          var flare00 = new BABYLON.LensFlare(0.2, 0, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
+          var flare01 = new BABYLON.LensFlare(0.5, 0.2, new BABYLON.Color3(0.5, 0.5, 1), "Flare.png", lensFlareSystem);
+          var flare02 = new BABYLON.LensFlare(0.2, 1.0, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
+          var flare03 = new BABYLON.LensFlare(0.4, 0.4, new BABYLON.Color3(1, 0.5, 1), "Flare.png", lensFlareSystem);
+          var flare04 = new BABYLON.LensFlare(0.1, 0.6, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
+          var flare05 = new BABYLON.LensFlare(0.3, 0.8, new BABYLON.Color3(1, 1, 1), "Flare.png", lensFlareSystem);
+
+          // Animations
+          scene.registerBeforeRender(function() {
+              camera.alpha += 0.01 * scene.getAnimationRatio();
+          });
+
+          return scene;
+      };
 
       if (BABYLON.Engine.isSupported()) {
          var canvas = document.getElementById("canvas");
