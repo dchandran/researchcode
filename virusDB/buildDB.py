@@ -163,25 +163,29 @@ else:
     print("viruses table exists with " + str(len(results)) + " entries")
 
 acc_lst = get_all_virus_accession_numbers()
-
+acc_lst.sort()
 # acc = "NC_001416"  #for phage lambda
 # dat = get_virus_data(acc)
 table = []
 
 for acc in acc_lst:
-    print ("parsing " + acc + "\n")
-    dat = get_virus_data(acc)
-    #virus_table.append(dat)
-    tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
-    table.append(tupl)
-    try:
-        sqlcmd = "INSERT INTO viruses VALUES"+str(tupl)
-        print(sqlcmd)
-        dbcursor.execute(sqlcmd)
-        dbconnection.commit()
-    except Exception as e:
-        print("Error: " + str(e))
-        pass
+    dbcursor.execute("SELECT * from viruses WHERE accession='" + acc + "'")
+    results = dbcursor.fetchall()
+    if len(results) == 0:
+        dat = get_virus_data(acc)
+        #virus_table.append(dat)
+        tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
+        table.append(tupl)
+        try:
+            sqlcmd = "INSERT INTO viruses VALUES"+str(tupl)
+            print(sqlcmd)
+            dbcursor.execute(sqlcmd)
+            dbconnection.commit()
+        except Exception as e:
+            print("Error: " + str(e))
+            pass
+    else:
+        print (acc + " already exists in DB")
 
 
 #dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
