@@ -67,9 +67,13 @@
                       var ray = BABYLON.Ray.CreateNewFromTo(pickResult.pickedMesh.position, decal.position);
                       var axis = BABYLON.Vector3.Cross(upVector, ray.direction).normalize();
                       var angle = Math.acos(BABYLON.Vector3.Dot(upVector, ray.direction));
-                      console.log(pickResult.pickedMesh.position);
+                      console.log(angle);
+                      console.log(angle);
                       console.log(decal.position);
+                      if (decal.oldRotationData)
+                          decal.rotate(decal.oldRotationData.axis, -1*decal.oldRotationData.angle, BABYLON.Space.LOCAL)
                       decal.rotate(axis, angle, BABYLON.Space.LOCAL);
+                      decal.oldRotationData = {axis: axis, angle: angle};
                     }
                 });
 
