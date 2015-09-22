@@ -227,10 +227,24 @@
           return scene;
       };
 
+      function createSprites() {
+      	var spriteManager = new BABYLON.SpriteManager("MonsterA", "sample_sprite.png", 100, 64, scene);
+		for (var index = 0; index < 12; index++) {
+		    var sprite = new BABYLON.Sprite("toto", spriteManager);
+		    sprite.position.y = 0;
+		    sprite.position.z = Math.random() * 10 - 5;
+		    sprite.position.x = Math.random() * 10 - 5;
+		    sprite.invertU = (Math.random() < 0.5);
+
+		    sprite.playAnimation(0, 9, true, 100);
+		}
+      }
+
       if (BABYLON.Engine.isSupported()) {
          var canvas = document.getElementById("canvas");
          var engine = new BABYLON.Engine(canvas, true);   
          var scene = CreateScene(engine);
+         createSprites();
          var renderLoop = function () {
             scene.render();
          };
