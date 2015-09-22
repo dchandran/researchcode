@@ -19,13 +19,26 @@
    <body>
       <canvas id="canvas"></canvas>
       <script>
-      var decal, ground;
+
+      var getPositionOnSurface = function(object, pos) {
+      		var upVector = BABYLON.Vector3.Up();
+            if (object) {
+              var ray = BABYLON.Ray.CreateNewFromTo(object, pos);
+              var axis = BABYLON.Vector3.Cross(upVector, ray.direction).normalize();
+              var angle = Math.acos(BABYLON.Vector3.Dot(upVector, ray.direction));
+              return {axis: axis, angle: angle};
+            }
+      }
+
+      function gaussianRandom() {
+		    return ((Math.random() + Math.random() + Math.random() + Math.random() + Math.random() + Math.random()) - 3) / 3;
+		}
 
 
-      var CreateScene = function (engine) {
+      var createScene1 = function (engine) {
         console.log("CREATE SCENE");
           var scene = new BABYLON.Scene(engine);
-          scene.clearColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+          scene.clearColor = new BABYLON.Color3(0.1, 0.1, 0.2);
 
           //var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 1, -15), scene);
           var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
@@ -41,39 +54,28 @@
           light3.intensity = .7;
 
               var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);             
-              ground = BABYLON.Mesh.CreateGround("ground1", 32, 32, 2, scene);
-            // a plane that is moved when click hits a surface
-              decal = BABYLON.Mesh.CreateBox("plane", 3.0, scene);
-
-              decal.scaling.x = (0.2); decal.scaling.y = (1); decal.scaling.z = (0.2);
-              sphere.position.y = 2;
-              ground.position.y = -2; 
+              sphere.visibility = 0.5;
+              sphere.position.y = 0;
 
               var matGnd = new BABYLON.StandardMaterial("gnd", scene);
-              ground.material = matGnd;
               matGnd.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
 
               var matDecal = new BABYLON.StandardMaterial("decalM", scene);
-              decal.material = matDecal;
               matDecal.diffuseColor = new BABYLON.Color3(1.0, 0, 0);
 
               //scene.registerBeforeRender(function () {
                 window.addEventListener("click", function (evt) {
                     console.log("CLICK");
-                    var upVector = BABYLON.Vector3.Up();
                     var pickResult = scene.pick(evt.clientX, evt.clientY); 
                     if (pickResult.hit) {
-                      decal.position = pickResult.pickedPoint;
-                      var ray = BABYLON.Ray.CreateNewFromTo(pickResult.pickedMesh.position, decal.position);
-                      var axis = BABYLON.Vector3.Cross(upVector, ray.direction).normalize();
-                      var angle = Math.acos(BABYLON.Vector3.Dot(upVector, ray.direction));
-                      console.log(angle);
-                      console.log(angle);
+                      /*decal.position = pickResult.pickedPoint;
+                      var res = getPositionOnSurface(pickResult.pickMesh, decal.position);
+                      console.log(res.angle);
                       console.log(decal.position);
                       if (decal.oldRotationData)
                           decal.rotate(decal.oldRotationData.axis, -1*decal.oldRotationData.angle, BABYLON.Space.LOCAL)
-                      decal.rotate(axis, angle, BABYLON.Space.LOCAL);
-                      decal.oldRotationData = {axis: axis, angle: angle};
+                      decal.rotate(res.axis, res.angle, BABYLON.Space.LOCAL);
+                      decal.oldRotationData = {axis: res.axis, angle: res.angle};*/
                     }
                 });
 
@@ -82,7 +84,7 @@
               return scene;
         };
 
-      var CreateScene2 = function (engine) {
+      var createScene2 = function (engine) {
 
           var scene = new BABYLON.Scene(engine);
           var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
@@ -231,10 +233,22 @@
       	var spriteManager = new BABYLON.SpriteManager("MonsterA", "sample_sprite.png", 100, 64, scene);
 		for (var index = 0; index < 12; index++) {
 		    var sprite = new BABYLON.Sprite("toto", spriteManager);
-		    sprite.position.y = 0;
-		    sprite.position.z = Math.random() * 10 - 5;
-		    sprite.position.x = Math.random() * 10 - 5;
+
+		    var x0 = gaussianRandom();
+		    var y0 = gaussianRandom();
+		    var z0 = gaussianRandom();
+
+		    var denm = Math.sqrt(x0*x0 + y0*y0 + z0*z0);
+		    var r = 1;
+		    var x = r*x0/denm;
+		    var y = r*y0/denm;
+		    var z = r*z0/denm;
+
+		    sprite.position.y = y;
+		    sprite.position.z = z;
+		    sprite.position.x = x;
 		    sprite.invertU = (Math.random() < 0.5);
+		    sprite.size = 0.3;
 
 		    sprite.playAnimation(0, 9, true, 100);
 		}
@@ -243,7 +257,7 @@
       if (BABYLON.Engine.isSupported()) {
          var canvas = document.getElementById("canvas");
          var engine = new BABYLON.Engine(canvas, true);   
-         var scene = CreateScene(engine);
+         var scene = createScene1(engine);
          createSprites();
          var renderLoop = function () {
             scene.render();
