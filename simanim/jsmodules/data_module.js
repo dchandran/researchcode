@@ -2,7 +2,7 @@ function TimeSeriesData(name,typename) {
     var module = new AnimModule(name, typename);
     
     module.nextStep = function() {
-        if (this.inputs.time.length <= this.inputs.currentIndex) {
+        if (this.inputs.time.length <= this.inputs.currentIndex+1) {
             this.inputs.currentIndex = -1;
         }
         this.setCurrentIndex(this.inputs.currentIndex+1);

@@ -151,11 +151,12 @@ function loadCodeFile(id, url) {
 
 function setupCodeEditor(id, language, url, callback) {
     //var theme = "ace/theme/monokai"
-    var theme = "ace/theme/clouds_midnight";
+    //var theme = "ace/theme/clouds_midnight";
+    var theme = "ace/theme/solarized_dark";
     //var theme = "ace/theme/kr_theme";
 
     var editor = ace.edit(id);
-    editor.setFontSize('20px');
+    editor.setFontSize('24px');
     editor.setTheme(theme);
     //editor.renderer.setShowGutter(false); 
     editor.getSession().setMode("ace/mode/" + language);
