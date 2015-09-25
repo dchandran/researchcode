@@ -98,13 +98,13 @@ function EnzymeActivity(name, typename) {
 
             if (tf.currentAnimation !== 'active' && 
                 (i < percentActive*tfs.length ||
-                 (tfStates.length > i && tfStates[i]==='active'))) {
+                 (states.length > i && states[i]==='active'))) {
                 tf.gotoAndPlay('active');
                 initDiffusableMolecule(tf, self.inputs.activeBounds, true, 3);
             } else {
                 if (tf.currentAnimation !== 'inactive' && 
                     (i >= percentActive*tfs.length ||
-                     (tfStates.length > i && tfStates[i]==='inactive'))) {
+                     (states.length > i && states[i]==='inactive'))) {
                     if (tf.target)
                         delete tf.target;
                     tf.gotoAndPlay('inactive');
@@ -181,7 +181,7 @@ function MembraneReceptor(name, typename) {
 
         self.outputs.receptors = [];
 
-        var n = self.inputs.count || 0;    
+        var n = self.inputs.numMolecules || 0;    
         if (receptors.length != n) {
 
             while (receptors.length > n) {
@@ -260,10 +260,10 @@ function TwoComponentSystem(name,typename) {
             self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES            
         }
 
-        this.submodules.transcription_factor.inputs.percentActive = this.inputs.numTFs;
-        this.submodules.membrane_receptor.inputs.percentActive = this.inputs.numReceptors;
-        this.submodules.transcription_factor.inputs.percentActive = this.inputs.percentActiveTFs;
-        this.submodules.membrane_receptor.inputs.percentActive = this.inputs.percentActiveMembranes;
+        self.submodules.transcription_factor.inputs.numMolecules = self.inputs.numTFs;
+        self.submodules.membrane_receptor.inputs.numMolecules = self.inputs.numReceptors;
+        self.submodules.transcription_factor.inputs.percentActive = self.inputs.percentActiveTFs;
+        self.submodules.membrane_receptor.inputs.percentActive = self.inputs.percentActiveMembranes;
 
 
         self.tickSubmodules(event);
