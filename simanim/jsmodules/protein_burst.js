@@ -35,7 +35,7 @@ function ProteinProduction(name,typename) {
         self.outputs.mRNAPos = self.outputs.mRNAPos || {};
     };
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
 
         var self = module;
         var mrnas = self.mrnas;
@@ -120,8 +120,8 @@ function ProteinProduction(name,typename) {
                 moveDiffusableMolecule(self.proteins[i]);
             }
         }
-        self.updateDownstream();
-    };
+    });
+
     return module;
 }
 registerModuleType("protein bursts", ProteinProduction);

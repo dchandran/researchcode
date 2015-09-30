@@ -28,11 +28,19 @@ function AnimModule(name, family) {
     this.outputs = {};
     this.submodules = {};
     this.init = null;
-    this.tick = null;
 
     this.connections = [];
 
     _MODULES[name] = this;
+
+    var self = this;
+    self.tick = function(evt) {
+        if (self.tickFunc) {
+            self.tickFunc(evt);
+            self.updateDownstream();
+        }
+    };
+
     return this;
 }
 
@@ -112,6 +120,10 @@ AnimModule.prototype = {
             output = this.connections[i].output;
             targetModule.inputs[input] = this.outputs[output];
         }
+    },
+
+    onTick: function(f) {
+        self.tickFunc = f;
     }
 };
 

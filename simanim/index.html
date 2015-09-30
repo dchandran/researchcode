@@ -42,7 +42,8 @@
         <div class="sliders" id="time-slider"></div>
         <div id="plotpane" style="height:50%; width:100%"></div>
       </div>
-      <div id="right">
+      <a href="#" id="toggle">CODE</a>
+      <div id="right">      
             <ul class="tabs">
               <li><a href="#">| Model</a></li>
               <li><a href="#">| Code</a></li>
@@ -57,11 +58,18 @@
               <div id="yamlpane">
               </div>
             </div>
-        </div>
+      </div>      
     </div>
 
     <script>
-
+      $(function()
+      {
+           $("a#toggle").click(function()
+           {
+               $("#right").toggle('slide');
+               return false;
+           }); 
+      });
     </script>
 </body>
 </html>

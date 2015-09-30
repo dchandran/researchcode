@@ -19,7 +19,7 @@ function SmallMolecule(name,typename) {
         self.molecules = [];
     };
 
-    module.tick = function(event) {
+    module.onTick(function(event) {
         var self = module;
         var bounds = self.inputs.bounds;
         var molecules = self.molecules;
@@ -84,8 +84,7 @@ function SmallMolecule(name,typename) {
         }
         
         self.outputs.molecules = molecules;
-        self.updateDownstream();
-    };
+    });
 
     return module;
 }

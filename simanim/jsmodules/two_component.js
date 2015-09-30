@@ -27,7 +27,7 @@ function EnzymeActivity(name, typename) {
         self.tfs = [];
     };
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
         var self = module;
 
         var tf, i, j;
@@ -144,7 +144,7 @@ function EnzymeActivity(name, typename) {
 
         self.outputs.molecules = tfs;
         self.updateDownstream();
-    };
+    });
 
     return module;
 }

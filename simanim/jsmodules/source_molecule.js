@@ -17,7 +17,7 @@ function SourceMolecules(name,typename) {
         self.time = 0;
     };
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
 
         var self = module;
         var molecules = self.molecules;
@@ -71,7 +71,8 @@ function SourceMolecules(name,typename) {
             molecules.length = molecules.length-1;
         }
         self.updateDownstream();
-    };
+    });
+
     return module;
 }
 registerModuleType("source", SourceMolecules);

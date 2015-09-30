@@ -32,7 +32,7 @@ function ExpressionCassette(name,typename) {
         self.connect('lastPart', self.submodules.protein_bursts, 'cds');
     };
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
 
         var self = module;
 
@@ -100,7 +100,7 @@ function ExpressionCassette(name,typename) {
         
         self.tickSubmodules(event);
         self.updateDownstream();
-    };
+    });
 
     return module;
 }

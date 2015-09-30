@@ -66,7 +66,7 @@ http.createServer(function (request, response) {
                     if(err) console.log("Write File Error:" + err);
 
                     try {
-                        exec('python3 py/temp.py', function (error, stdout, stderr) {
+                        exec('python py/temp.py', function (error, stdout, stderr) {
                           console.log(stdout);
                           console.log(stderr);
                           fs.readFile('temp.json', function (err, data) {
