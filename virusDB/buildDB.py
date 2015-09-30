@@ -188,8 +188,6 @@ for acc in acc_lst:
             pass
     else:
         print (acc + " already exists in DB")
-    break
-
 
 #dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
 #dbconnection.commit()
