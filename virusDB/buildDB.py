@@ -3,6 +3,7 @@ import sqlite3
 import sys
 import wget
 import csv
+import json
 #import rdflib
 import re
 from Bio import GenBank
@@ -58,15 +59,16 @@ def get_virus_data(accession):
         virus['strain'] = entry.source
         virus['taxonomy'] = entry.taxonomy
 
-        residue_shape = ""
-        residue = re.compile("\s+").split(entry.residue_type)
+        #residue_shape = ""
+        #residue = re.compile("\s+").split(entry.residue_type)
         if len(residue) > 1:
             residue_shape = residue[1]
 
+        #virus['nucleic_acid_type'] = residue[0]
+        virus['nucleic_acid_type'] = entry.taxonomy[1]
         virus['nucleic_acid_shape'] = residue_shape
-        virus['nucleic_acid_type'] = residue[0]
 
-        virus['size'] = entry.size
+        virus['length'] = entry.size
         virus['date'] = entry.date
 
         #all the code below is just to get the virus host
@@ -101,7 +103,7 @@ def get_virus_data(accession):
                             break
 
                     f.close()
-                    os.remove(filename)
+                    #os.remove(filename)
                     success = True
                 except Exception as e:
                     print (protein_id + " url is unreachable: " + str(e) + "\ntrying again...")
@@ -120,7 +122,7 @@ def get_virus_data(accession):
                                host_url = m.group(1)
                                break
                         f.close()
-                        os.remove(filename)
+                        #os.remove(filename)
                         success = True
                     except Exception as e:
                         print (organism_url + " unreachable: " + str(e) + "\ntrying again...")
@@ -139,7 +141,7 @@ def get_virus_data(accession):
                                host_name = m.group(1)
                                break
                         f.close()
-                        os.remove(filename)
+                        #os.remove(filename)
                     except Exception as e:
                         print (host_url + " is unreachable: " + str(e) + "\ntrying again...")
 
@@ -156,7 +158,7 @@ dbcursor = dbconnection.cursor()
 dbcursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
 results = dbcursor.fetchall()
 if len(results) < 1:
-    dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, nucleic_acid_type text, nucleic_acid_shape text, size real, strain text, taxonomy text)''')
+    dbcursor.execute('''CREATE TABLE viruses (accession text, date text, host text, host_url text, organism text, organism_url text, nucleic_acid_type text, nucleic_acid_shape text, length real, strain text, taxonomy text)''')
     dbconnection.commit()
     print("Created viruses table")
 else:
@@ -174,7 +176,7 @@ for acc in acc_lst:
     if len(results) == 0:
         dat = get_virus_data(acc)
         #virus_table.append(dat)
-        tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['size'],dat['strain'],','.join(dat['taxonomy']))
+        tupl = (dat['accession'],dat['date'],dat['host'],dat['host_url'],dat['organism'],dat['organism_url'],dat['nucleic_acid_type'],dat['nucleic_acid_shape'],dat['length'],dat['strain'],','.join(dat['taxonomy']))
         table.append(tupl)
         try:
             sqlcmd = "INSERT INTO viruses VALUES"+str(tupl)
@@ -186,6 +188,7 @@ for acc in acc_lst:
             pass
     else:
         print (acc + " already exists in DB")
+    break
 
 
 #dbcursor.executemany('INSERT INTO viruses VALUES (?,?,?,?,?,?,?,?,?,?,?)', table)    
