@@ -59,8 +59,8 @@ def get_virus_data(accession):
         virus['strain'] = entry.source
         virus['taxonomy'] = entry.taxonomy
 
-        #residue_shape = ""
-        #residue = re.compile("\s+").split(entry.residue_type)
+        residue_shape = ""
+        residue = re.compile("\s+").split(entry.residue_type)
         if len(residue) > 1:
             residue_shape = residue[1]
 
