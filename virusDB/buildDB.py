@@ -103,7 +103,7 @@ def get_virus_data(accession):
                             break
 
                     f.close()
-                    #os.remove(filename)
+                    os.remove(filename)
                     success = True
                 except Exception as e:
                     print (protein_id + " url is unreachable: " + str(e) + "\ntrying again...")
@@ -122,7 +122,7 @@ def get_virus_data(accession):
                                host_url = m.group(1)
                                break
                         f.close()
-                        #os.remove(filename)
+                        os.remove(filename)
                         success = True
                     except Exception as e:
                         print (organism_url + " unreachable: " + str(e) + "\ntrying again...")
@@ -141,7 +141,7 @@ def get_virus_data(accession):
                                host_name = m.group(1)
                                break
                         f.close()
-                        #os.remove(filename)
+                        os.remove(filename)
                     except Exception as e:
                         print (host_url + " is unreachable: " + str(e) + "\ntrying again...")
 
