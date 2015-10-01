@@ -1,12 +1,12 @@
-function SmallMolecule(name,typename) {
-    var module = new AnimModule(name,typename);
+function SmallMolecule() {
+    var module = AnimModule();
         
-    module.init = function() {
+    module.onInit( function() {
         var i;
         var self = module;
         var bounds = self.inputs.inactiveBounds;
                 
-        self.spriteSheet = new createjs.SpriteSheet({
+        self.spriteSheet = {
             framerate: 30,
             "images": ["substrate.png"],
             "frames": {"regX": 0, "height": 60, "count": 2, "regY": 0, "width": 69.5},
@@ -14,12 +14,12 @@ function SmallMolecule(name,typename) {
                 "bound": [0],
                 "free": [1]
             }
-        });
+        };
 
         self.molecules = [];
-    };
+    });
 
-    module.onTick(function(event) {
+    module.onTick( function(event) {
         var self = module;
         var bounds = self.inputs.bounds;
         var molecules = self.molecules;
@@ -29,19 +29,18 @@ function SmallMolecule(name,typename) {
         if (!bounds) return;
 
         while (molecules.length > n) {
-            markForDegradation(molecules[molecules.length-1]);
+            molecules[molecules.length-1].degrade();
             molecules.length = molecules.length-1;
         }
 
         while (molecules.length < n) {
-            mol = new createjs.Sprite(self.spriteSheet, "free");
+            mol = Molecule(self.spriteSheet, "free");
             initDiffusableMolecule(mol, bounds, true, 3);
             mol.x = mol.bounds.left + mol.bounds.width*(Math.random());
             mol.y = mol.bounds.top + mol.bounds.height*(Math.random());
             mol.scaleX = mol.scaleY = 0.4;
             mol.alpha = 0.1;
 
-            _EASEL_STAGE.addChild(mol);     
             molecules.push(mol);
         }
 

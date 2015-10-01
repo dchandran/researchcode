@@ -1,21 +1,21 @@
-function SourceMolecules(name,typename) {
-    var module = new AnimModule(name, typename);
+function SourceMolecules() {
+    var module = AnimModule(n);
 
-    module.init = function() {
+    module.onInit( function() {
 
         var self = module;
-        self.sourceSheet = new createjs.SpriteSheet({
+        self.sourceSheet = {
                             framerate: 30,
                             "images": ["source.png"],
                             "frames": {"regX": 0, "height": 20, "count": 1, "regY": 0, "width": 20},
                             "animations": {
                                 "normal": 0
                             }
-                        });
+                        };
         self.molecules = [];
         self.delay = 10;
         self.time = 0;
-    };
+    });
 
     module.onTick( function(event) {
 
@@ -28,16 +28,15 @@ function SourceMolecules(name,typename) {
         if (numMolecules > 0) {
 
             if (molecules.length < self.inputs.numMolecules && self.delay < (event.time - self.time)) {
-                mol = new createjs.Sprite(self.sourceSheet, "normal");
+                mol = Molecule(self.sourceSheet, "normal");
                 mol.x = bounds.left + Math.random()*bounds.width;
                 mol.y = bounds.top;
                 mol.scaleY = 0.3;
                 mol.scaleX = 0.3;
-                _EASEL_STAGE.addChild(mol);
                 molecules.push(mol);
                 self.delay = 0;
-
-                initDiffusableMolecule(mol, bounds, false, 3);
+                mol.setBounds(bounds);
+                mol.setSpeed(3, false);
                 mol.velY = Math.abs(mol.velY);
 
                 self.time = event.time;
@@ -62,17 +61,17 @@ function SourceMolecules(name,typename) {
             if (!self.isPaused())
                 for (i=0; i < molecules.length; ++i) {
                     if (molecules[i])
-                        moveDiffusableMolecule(self.molecules[i]);
+                        self.molecules[i].diffuse();
                 }
         }
 
         while (molecules.length > self.inputs.numMolecules) {
-            _EASEL_STAGE.removeChild(molecules[molecules.length-1]);
+            molecules[molecules.length-1].degrade();
             molecules.length = molecules.length-1;
-        }
-        self.updateDownstream();
+        }        
     });
 
     return module;
 }
+
 registerModuleType("source", SourceMolecules);

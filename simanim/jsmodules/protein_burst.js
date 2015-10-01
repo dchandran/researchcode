@@ -1,19 +1,19 @@
-function ProteinProduction(name,typename) {
-    var module = new AnimModule(name, typename);
+function ProteinProduction() {
+    var module = AnimModule();
 
-    module.init = function() {
+    module.onInit( function() {
 
         var self = module;
-        self.mrnaSheet = new createjs.SpriteSheet({
+        self.mrnaSheet = {
                 framerate: 30,
                 "images": ["mrna_wiggle.png"],
                 "frames": {"regX": 0, "height": 26, "count": 10, "regY": 0, "width": 100},
                 "animations": {
                     "wiggle": [0, 9, "wiggle", 0.3]
                 }
-            });
+            };
 
-        self.protSheet = new createjs.SpriteSheet({
+        self.protSheet = {
                 framerate: 30,
                 "images": ["protein_green_grey.png"],
                 "frames": {"regX": 0, "height": 50, "count": 10, "regY": 0, "width": 60.5},
@@ -21,7 +21,7 @@ function ProteinProduction(name,typename) {
                     "grey": [0,0,"green", 0.02],
                     "green": 1
                 }
-            });
+            };
 
         self.mrnas = [];
         self.proteins = [];
@@ -33,7 +33,7 @@ function ProteinProduction(name,typename) {
         self.inputs.cds = null;
         self.time = 0;
         self.outputs.mRNAPos = self.outputs.mRNAPos || {};
-    };
+    });
 
     module.onTick( function(event) {
 
@@ -51,26 +51,26 @@ function ProteinProduction(name,typename) {
         var dt = (event.time - self.time);
 
         while (mrnas.length > numRNA) {
-            markForDegradation(mrnas[mrnas.length-1]);
+            mrnas[mrnas.length-1].degrade();
             mrnas.length = mrnas.length-1;
         }
 
         while (proteins.length > numGFP) {
-            markForDegradation(proteins[proteins.length-1]);
+            proteins[proteins.length-1].degrade();
             proteins.length = proteins.length-1;
         }
 
         if (mrnas.length < numRNA && self.delayRNA < dt) {
-            mrna = new createjs.Sprite(self.mrnaSheet, "wiggle");
+            mrna = Molecule(self.mrnaSheet, "wiggle");
             mrna.x = cds.x + Math.random()*20;
             mrna.y = cds.y - 20;
             mrna.scaleY = 1;
-            mrna.scaleX = 1;
-            _EASEL_STAGE.addChild(mrna);
+            mrna.scaleX = 1;            
             mrnas.push(mrna);
             self.time = event.time;
 
-            initDiffusableMolecule(mrna, bounds, false, 5);
+            mrna.setBounds(bounds);
+            mrna.setSpeed(5,false);
             mrna.velY = - Math.abs(mrna.velY) - 0.7;
         }
 
@@ -86,16 +86,17 @@ function ProteinProduction(name,typename) {
         }
 
         if (mrnas.length > 0 && proteins.length < numGFP && self.delayProt < dt) {
-            prot = new createjs.Sprite(self.protSheet, "grey");
+            prot = Molecule(self.protSheet, "grey");
             prot.x = lastx;
             prot.y = lasty;
             prot.scaleY = 1;
             prot.scaleX = 1;
-            _EASEL_STAGE.addChild(prot);
+            
             proteins.push(prot);
             self.time = event.time;
 
-            initDiffusableMolecule(prot, bounds, true, 2);
+            prot.setBound(bounds);
+            prot.setSpeed(2,true);
         }
         
         var allRNADead = true;
@@ -104,24 +105,26 @@ function ProteinProduction(name,typename) {
             for (i=0; i < mrnas.length; ++i) {
                 if (mrnas[i]) {
                     allRNADead = false;
-                    moveDiffusableMolecule(self.mrnas[i]);
+                    self.mrnas[i].diffuse();
 
                     if (mrnas[i].y < bounds.top + bounds.height*0.2) {
                         mrna = mrnas[i];
                         mrna.x = cds.x + Math.random()*20;
                         mrna.y = cds.y - 20;
-                        initDiffusableMolecule(mrna, bounds, false, 2);
+                        mrna.setBounds(bounds);
+                        mrna.setSpeed(2,false);
                         mrna.velY = - Math.abs(mrna.velY) - 0.7;
                     }
                 }
             }
 
             for (i=0; i < self.proteins.length; ++i) {
-                moveDiffusableMolecule(self.proteins[i]);
+                self.proteins[i].diffuse();
             }
         }
     });
 
     return module;
 }
+
 registerModuleType("protein bursts", ProteinProduction);

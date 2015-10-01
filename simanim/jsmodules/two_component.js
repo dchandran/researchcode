@@ -1,7 +1,7 @@
-function EnzymeActivity(name, typename) {
-    var module = new AnimModule(name, typename);
+function EnzymeActivity() {
+    var module = AnimModule();
 
-    module.init = function() {
+    module.onInit( function() {
         var i;
         var self = module;
         var imageFile = "protein_chomp" + EnzymeActivity.lastIndex;
@@ -11,7 +11,7 @@ function EnzymeActivity(name, typename) {
             EnzymeActivity.lastIndex = 1;
         }
                 
-        self.proteinChompSheet = new createjs.SpriteSheet({
+        self.proteinChompSheet = {
             framerate: 30,
             "images": [imageFile + ".png"],
             "frames": {"regX": 0, "height": 51, "count": 17, "regY": 0, "width": 65},
@@ -22,10 +22,10 @@ function EnzymeActivity(name, typename) {
                 "bound": 8,
                 "inactive": 16,
             }
-        });
+        };
         
         self.tfs = [];
-    };
+    });
 
     module.onTick( function(event) {
         var self = module;
@@ -61,13 +61,14 @@ function EnzymeActivity(name, typename) {
         if (tfs.length != n) {
 
             while (tfs.length > n) {
-                markForDegradation(tfs[tfs.length-1]);
+                tfs[tfs.length-1].degrade();
                 tfs.length = tfs.length-1;
             }
 
             while (tfs.length < n) {
-                tf = new createjs.Sprite(self.proteinChompSheet, "inactive");
-                initDiffusableMolecule(tf, self.inputs.inactiveBounds);
+                tf = Molecule(self.proteinChompSheet, "inactive");
+                tf.setBounds(self.inputs.inactiveBounds);
+
                 if (self.inputs.startPos && self.inputs.startPos.x && self.inputs.startPos.y) {
                     tf.x = self.inputs.startPos.x;
                     tf.y = self.inputs.startPos.y;
@@ -81,7 +82,7 @@ function EnzymeActivity(name, typename) {
                 tf.alpha = 0.1;
 
                 // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
-                _EASEL_STAGE.addChild(tf);          
+                _EASEL_STAGE.addChild(tf);   
                 tfs.push(tf);
             }
         }
@@ -100,7 +101,8 @@ function EnzymeActivity(name, typename) {
                 (i < percentActive*tfs.length ||
                  (states.length > i && states[i]==='active'))) {
                 tf.gotoAndPlay('active');
-                initDiffusableMolecule(tf, self.inputs.activeBounds, true, 3);
+                tf.setSpeed(3, true);
+                tf.setBounds(self.inputs.activeBounds);
             } else {
                 if (tf.currentAnimation !== 'inactive' && 
                     (i >= percentActive*tfs.length ||
@@ -108,7 +110,8 @@ function EnzymeActivity(name, typename) {
                     if (tf.target)
                         delete tf.target;
                     tf.gotoAndPlay('inactive');
-                    initDiffusableMolecule(tf, self.inputs.inactiveBounds);
+                    tf.setSpeed(1, true);
+                    tf.setBounds(self.inputs.inactiveBounds);
                 }
             }
 
@@ -139,7 +142,7 @@ function EnzymeActivity(name, typename) {
 
         if (!self.isPaused())
             for (i=0; i < tfs.length; ++i) {
-                moveDiffusableMolecule(tfs[i]);
+                tfs[i].diffuse();
             }
 
         self.outputs.molecules = tfs;
@@ -149,15 +152,15 @@ function EnzymeActivity(name, typename) {
     return module;
 }
 
-function MembraneReceptor(name, typename) {
-    var module = new AnimModule(name, typename);
+function MembraneReceptor() {
+    var module = AnimModule();
 
-    module.init = function() {
+    module.onInit( function() {
         var i;
         var self = module;
         var bounds = self.inputs.inactiveBounds;
 
-        self.membraneChompSheet = new createjs.SpriteSheet({
+        self.membraneChompSheet = {
             framerate: 30,
             "images": ["membrane_protein_chomp.png"],
             "frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},              
@@ -165,12 +168,12 @@ function MembraneReceptor(name, typename) {
                 "active": [0, 9, "active", 0.5],
                 "inactive": 10
             }
-        });
+        };
         
         self.receptors = [];
-    };
+    });
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
         var self = module;
 
         var percentActive = self.inputs.percentActive;
@@ -185,13 +188,14 @@ function MembraneReceptor(name, typename) {
         if (receptors.length != n) {
 
             while (receptors.length > n) {
-                markForDegradation(receptors[receptors.length-1]);
+                receptors[receptors.length-1].degrate();
                 receptors.length = receptors.length-1;
             }
 
             while (receptors.length < n) {
-                recp = new createjs.Sprite(self.membraneChompSheet, "inactive", false);
-                initDiffusableMolecule(recp, {left: bounds.left, width: bounds.width, height: 0, top: bounds.top-140}, false);
+                recp = Molecule(self.membraneChompSheet, "inactive");
+                recp.setSpeed(1,false);
+                recp.setBounds({left: bounds.left, width: bounds.width, height: 0, top: bounds.top-140});
                 if (self.inputs.startPos) {
                     recp.x = self.inputs.startPos.x;
                     recp.y = self.inputs.startPos.y;
@@ -203,9 +207,7 @@ function MembraneReceptor(name, typename) {
                 recp.velY = 0;
                 recp.velTheta = 0;
                 recp.alpha = 0.1;
-
-                // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
-                _EASEL_STAGE.addChild(recp);
+                
                 receptors.push(recp);
             }
         }
@@ -229,29 +231,28 @@ function MembraneReceptor(name, typename) {
                     }
                 }
 
-                moveDiffusableMolecule(rec);
+                rec.diffuse();
             }
 
         self.outputs.receptors = receptors;
-        self.updateDownstream();
-    };
+    });
 
     return module;
 }
 
-function TwoComponentSystem(name,typename) {
-    var module = new AnimModule(name, typename);
+function TwoComponentSystem() {
+    var module = AnimModule();
     module.submodules.membrane_receptor = createModuleFromType(name + "-submodule", "membrane receptor");
     module.submodules.transcription_factor = createModuleFromType(name + "-submodule", "enzyme");
 
-    module.init = function() {
+    module.onInit( function() {
         var i;
         var self = module;
         var bounds = self.inputs.inactiveBounds;
         self.initSubmodules();
-    };
+    });
 
-    module.tick = function(event) {
+    module.onTick( function(event) {
         var self = module;
 
         var h;
@@ -273,7 +274,7 @@ function TwoComponentSystem(name,typename) {
         }
 
         self.updateDownstream();
-    };
+    });
 
     return module;
 }
