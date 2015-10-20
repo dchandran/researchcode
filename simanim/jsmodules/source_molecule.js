@@ -1,5 +1,5 @@
 function SourceMolecules() {
-    var module = AnimModule(n);
+    var module = AnimModule();
 
     module.onInit( function() {
 

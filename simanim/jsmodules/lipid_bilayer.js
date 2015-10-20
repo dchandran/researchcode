@@ -1,7 +1,7 @@
 function LipidBilayer(name,typename) {
-    var module = new AnimModule(name, typename);
+    var module = AnimModule(name, typename);
 
-    module.init = function() {
+    module.onInit( function() {
 
         var self = module;
         var scene = self.inputs.bounds;
@@ -10,14 +10,14 @@ function LipidBilayer(name,typename) {
         bg.graphics.beginFill("#222233").drawRect(scene.left, scene.top + 100, scene.width, scene.height);
         _EASEL_STAGE.addChild(bg);    
 
-        var bilayerSheet = new createjs.SpriteSheet({
+        var bilayerSheet = {
                 framerate: 30,
                 "images": ["bilayer.png"],
                 "frames": {"regX": 0, "height": 43, "count": 1, "regY": 0, "width": 9},
                 "animations": {
                     "normal": 0
                 }
-            });
+            };
 
         var bilayer;
         for (var i=0; i <= scene.width; i = i + 9) {
