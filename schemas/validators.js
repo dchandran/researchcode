@@ -28,7 +28,7 @@ export const id = params => wrap(input => {
       //no non-word chars allowed except '-'
       !(/\W+/.test(input.replace('-','')))
     );
-}, 'uuid5');
+}, 'uuid');
 
 export const string = params => wrap(input => {
   return isString(input) || input instanceof String;
@@ -43,9 +43,10 @@ export const email = params => wrap(input => {
   return isString(input) === 'string' && /\w+?@\w\w+?\.\w{2,6}/.test(input);
 }, 'email');
 
-export const number = params => wrap(input => {
-  var range;
 
+
+export const integer = params => wrap(input => {
+  
   if (getPropType(input) !== 'number') {
     return false;
   }
@@ -61,7 +62,26 @@ export const number = params => wrap(input => {
   }
 
   return true;
-}, 'number');
+}, 'integer');
+
+export const real = params => wrap(input => {
+  
+  if (getPropType(input) !== 'number') {
+    return false;
+  }
+
+  if (params !== undefined) {
+    if (params.hasOwnProperty('min') && params.min > input) {
+      return false;
+    }
+
+    if (params.hasOwnProperty('max') && params.max < input) {
+      return false;
+    }
+  }
+
+  return true;
+}, 'real');
 
 export const func = params => wrap(input => {
   return getPropType(input) === 'function';
