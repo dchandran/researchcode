@@ -1,0 +1,1429 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="history.svg"
+   inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\history.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Mend"
+       style="overflow:visible;">
+      <path
+         id="path3846"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.4) rotate(180) translate(10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Tail"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Tail"
+       style="overflow:visible">
+      <g
+         id="g3873"
+         transform="scale(-1.2)">
+        <path
+           id="path3875"
+           d="M -3.8048674,-3.9585227 L 0.54352094,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path3877"
+           d="M -1.2866832,-3.9585227 L 3.0617053,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path3879"
+           d="M 1.3053582,-3.9585227 L 5.6537466,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path3881"
+           d="M -3.8048674,4.1775838 L 0.54352094,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path3883"
+           d="M -1.2866832,4.1775838 L 3.0617053,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path3885"
+           d="M 1.3053582,4.1775838 L 5.6537466,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+      </g>
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3840"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3840-2"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-6"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3840-8"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-61"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3840-3"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3846-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-2151.8224"
+     inkscape:cy="127.59894"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="false"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985"
+       width="36.656254"
+       height="18.571428"
+       x="-54.301311"
+       y="115.72441" />
+    <text
+       xml:space="preserve"
+       style="font-size:29.51930809px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-107.18673"
+       y="39.632977"
+       id="text3755"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3757"
+         x="-107.18673"
+         y="39.632977">undo stack </tspan><tspan
+         sodipodi:role="line"
+         x="-107.18673"
+         y="76.532112"
+         id="tspan3806">either 1 or 2 stacks</tspan></text>
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-1"
+       width="36.656254"
+       height="18.571428"
+       x="-54.301311"
+       y="139.29584" />
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-7"
+       width="36.656254"
+       height="18.571428"
+       x="-54.301311"
+       y="163.22441" />
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-1-4"
+       width="36.656254"
+       height="18.571428"
+       x="-54.301311"
+       y="186.79582" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.32789993px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-113.15533"
+       y="198.28355"
+       id="text3798"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3800"
+         x="-113.15533"
+         y="198.28355">undo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.32789993px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="29.134129"
+       y="135.57988"
+       id="text3798-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3800-9"
+         x="29.134129"
+         y="135.57988">redo</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m -89.285713,177.36218 0,-45.71429"
+       id="path3829"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 49.285717,142.00503 0,40"
+       id="path3831"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-4"
+       width="36.656254"
+       height="18.571428"
+       x="-54.301311"
+       y="92.295837" />
+    <text
+       xml:space="preserve"
+       style="font-size:25.40688896px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-345.01849"
+       y="492.06982"
+       id="text4481-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="-345.01849"
+         y="492.06982"
+         id="tspan4487-2">last view state</tspan><tspan
+         sodipodi:role="line"
+         x="-345.01849"
+         y="523.82843"
+         id="tspan4485-4" /></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -487.22784,347.86744 1051.8088,0"
+       id="path4524"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(57.571429,16.857143)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.55706818,0,0,0.55706818,98.706499,389.03374)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(58.519556,91.759043)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(134.14719,135.53969)" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="45.445972"
+       y="470.62363"
+       id="text4591"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593"
+         x="45.445972"
+         y="470.62363">Project A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-100.87695"
+       y="550.26471"
+       id="text4591-7"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-6"
+         x="-100.87695"
+         y="550.26471">Project A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="83.967896"
+       y="601.65283"
+       id="text4591-1"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4"
+         x="83.967896"
+         y="601.65283">Project B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-119.93981"
+       y="650.79303"
+       id="text4591-7-2"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-6-3"
+         x="-119.93981"
+         y="650.79303">Project A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.21859932px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-72.152451"
+       y="434.35733"
+       id="text4646"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4648"
+         x="-72.152451"
+         y="434.35733">Time</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m -39.571432,448.50504 0,202.85714"
+       id="path3831-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 156.85714,527.79076 47.85714,28.57142"
+       id="path3831-1-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 143.64286,451.36218 0.8876,207.59716"
+       id="path3831-1-5-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(197.32782,209.83833)" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 228.45256,575.15321 49.87745,58.37092"
+       id="path3831-1-5-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="129.06494"
+       y="687.78607"
+       id="text4591-1-2"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-7"
+         x="129.06494"
+         y="687.78607">Project C</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-19"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(39.859678,332.59145)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,70.397962,665.20264)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-6"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(40.807805,407.49335)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(116.43544,451.27399)" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.6932869px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-51.779041"
+       y="769.06842"
+       id="text4591-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-2"
+         x="-51.779041"
+         y="769.06842">Construct 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.6932869px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-218.04192"
+       y="842.95844"
+       id="text4591-7-8"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-6-6"
+         x="-218.04192"
+         y="842.95844">Construct 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.51054573px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-13.171021"
+       y="892.12024"
+       id="text4591-1-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-2"
+         x="-13.171021"
+         y="892.12024">Construct 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.6932869px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-282.38199"
+       y="1112.9835"
+       id="text4591-7-2-4"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-6-3-8"
+         x="-282.38199"
+         y="1112.9835">Construct 1</tspan></text>
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 139.14539,843.52507 47.85714,28.57141"
+       id="path3831-1-5-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 125.93111,762.81078 0.8876,399.02582"
+       id="path3831-1-5-7-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 210.74082,890.88751 49.87745,58.37092"
+       id="path3831-1-5-9-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:28.21859932px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-77.956947"
+       y="762.13947"
+       id="text4646-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4648-9"
+         x="-77.956947"
+         y="762.13947">Time</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m -45.375935,776.28717 0,321.42863"
+       id="path3831-1-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8-6"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,70.549726,773.91389)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-6-0"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,70.706879,741.18645)" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 201.69906,890.70645 0.8876,293.31145"
+       id="path3831-1-5-7-5-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,151.38277,686.82718)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,151.38277,719.18036)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-8"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,152.21233,786.37544)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.55706818,0,0,0.55706818,98.623199,415.55603)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8-6-3"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,70.091231,876.41446)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-6-0-7"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,70.248384,843.68702)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-8-8"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,152.86898,934.74196)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-2"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(180.14719,528.57852)" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 265.41081,968.01098 0.8876,143.31142"
+       id="path3831-1-5-7-5-6-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-13"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,215.09452,764.13171)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-5"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,217.95166,860.7706)" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 204.78411,882.33877 126.30602,58.37092"
+       id="path3831-1-5-9-9-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:18.51309586px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="22.258385"
+       y="980.43292"
+       id="text4591-1-2-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-7-0"
+         x="22.258385"
+         y="980.43292">Construct 3</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-2-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(250.61905,520.02978)" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 335.88267,959.46224 0.8876,143.31146"
+       id="path3831-1-5-7-5-6-9-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-13-0"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,285.56638,755.58297)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-5-9"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,288.42352,852.22186)" />
+    <text
+       xml:space="preserve"
+       style="font-size:18.51309586px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="102.70651"
+       y="1011.2701"
+       id="text4591-1-2-0-7"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-7-0-3"
+         x="102.70651"
+         y="1011.2701">Construct 4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20.36433411px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-271.17932"
+       y="133.30658"
+       id="text5495"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5497"
+         x="-271.17932"
+         y="133.30658">view state</tspan></text>
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-4-5"
+       width="36.656254"
+       height="18.571428"
+       x="-312.61383"
+       y="118.07648" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-56.176093,-142.44372)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-56.176093,-118.57887)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-56.176093,-94.355517)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5-1-2"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-56.176093,-70.344088)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5-1-2-0"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-56.176093,-47.868194)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-5-0"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.56617649,0,0,0.56617649,-342.71184,-86.192187)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20.36433411px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-271.46939"
+       y="164.49426"
+       id="text5495-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5497-4"
+         x="-271.46939"
+         y="164.49426">model state</tspan></text>
+    <rect
+       style="fill:#b6cb0f;fill-opacity:1;stroke:none"
+       id="rect2985-4-6"
+       width="66.656258"
+       height="34.285713"
+       x="-300.47101"
+       y="505.93362"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:28.21859932px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="421.73123"
+       y="325.15372"
+       id="text4646-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4648-7"
+         x="421.73123"
+         y="325.15372">CLIENT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.21859932px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="417.94879"
+       y="383.8905"
+       id="text4646-0-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4648-7-7"
+         x="417.94879"
+         y="383.8905">SERVER</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24.38111496000000100px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;opacity:0.46902655"
+       x="265.57196"
+       y="135.71925"
+       id="text5717"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5719"
+         x="265.57196"
+         y="135.71925">event</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26.44764519px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="357.55975"
+       y="220.17574"
+       id="text5721"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5723"
+         x="357.55975"
+         y="220.17574">async</tspan><tspan
+         sodipodi:role="line"
+         x="357.55975"
+         y="253.23529"
+         id="tspan5725">save</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6,6;stroke-dashoffset:0;marker-end:url(#Arrow1Mend);opacity:0.55309735000000004"
+       d="m 95.782467,104.36991 c 100.844413,1.98801 190.734563,34.10553 253.730313,90.37276"
+       id="path5727"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:0.55309735;fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+       d="m 394.0676,269.61679 c 7.98727,60.55944 5.02028,98.39124 -11.98397,150.37276"
+       id="path5727-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <rect
+       style="opacity:0.47787607;fill:none;stroke:#b6cb0f;stroke-width:25;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect7038"
+       width="500"
+       height="355.71429"
+       x="-2037.1429"
+       y="962.36224"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1947.9397,1124.2693 186.9869,0"
+       id="path6535"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:29.61273956px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1958.0083"
+       y="1033.3369"
+       id="text4481-8-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="-1958.0083"
+         y="1033.3369"
+         id="tspan4487-2-3">Project A</tspan><tspan
+         sodipodi:role="line"
+         x="-1958.0083"
+         y="1070.3528"
+         id="tspan4485-4-5" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.19927216px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1754.1953"
+       y="1132.5057"
+       id="text4481-8-3-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="-1754.1953"
+         y="1132.5057"
+         id="tspan4487-2-3-9">Construct 1</tspan><tspan
+         sodipodi:role="line"
+         x="-1754.1953"
+         y="1160.2549"
+         id="tspan4485-4-5-8" /></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1909.7346,1153.834 186.9869,0"
+       id="path6535-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.19927216px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1716.4299"
+       y="1159.1559"
+       id="text4481-8-3-9-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="-1716.4299"
+         y="1159.1559"
+         id="tspan4485-4-5-8-6">Construct 1.1</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1909.3102,1180.8978 186.9869,0"
+       id="path6535-1-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.19927216px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1713.8519"
+       y="1185.9874"
+       id="text4481-8-3-9-8-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="-1713.8519"
+         y="1185.9874"
+         id="tspan4485-4-5-8-6-3">Construct 1.2</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1910.4193,1124.2693 0,57.2032"
+       id="path6638"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1947.2298,1234.3277 186.9869,0"
+       id="path6535-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.19927216px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1751.4854"
+       y="1242.5641"
+       id="text4481-8-3-9-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="-1751.4854"
+         y="1242.5641"
+         id="tspan4487-2-3-9-2">Construct 2</tspan><tspan
+         sodipodi:role="line"
+         x="-1751.4854"
+         y="1270.3132"
+         id="tspan4485-4-5-8-5" /></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-0"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1313.109,445.59018)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-9"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.55706818,0,0,0.55706818,-1271.9739,817.76678)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1312.1608,520.49208)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.69729233px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1513.6324"
+       y="526.83716"
+       id="text4591-7-5"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4593-6-1"
+         x="-1513.6324"
+         y="526.83716">Project A</tspan></text>
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1227.0375,880.09522 0.8876,207.59718"
+       id="path3831-1-5-7-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-19-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1336.8816,832.03517)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,-1306.3433,1164.6464)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-6-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1335.9335,906.93707)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-3"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1260.3059,950.71771)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.6932869px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1510.8745"
+       y="895.16718"
+       id="text4591-0-9"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4593-2-8"
+         x="-1510.8745"
+         y="895.16718">Construct 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:19.51054573px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1472.2666"
+       y="1018.219"
+       id="text4591-1-0-8"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-2-7"
+         x="-1472.2666"
+         y="1018.219">Construct 1.2</tspan></text>
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1237.5959,1342.9688 47.8571,28.5714"
+       id="path3831-1-5-6-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1250.8102,1262.2545 0.8876,399.0258"
+       id="path3831-1-5-7-5-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8-6-7"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,-1306.1916,1273.3576)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1175.0422,1390.1502 0.8876,74.1083"
+       id="path3831-1-5-7-5-6-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-7"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-1223.3382,1174.1491)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-3"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-1223.3382,1217.6139)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-4-9"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.55706818,0,0,0.55706818,-1272.0572,844.28907)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-1-8-6-3-6"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,-1306.6501,1375.8582)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-15-6-0-7-5"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.6630159,0,0,0.6630159,-1306.4929,1343.1307)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1255.4802,1342.1141 -58.2088,53.3201"
+       id="path3831-1-5-9-9-3-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-2-0-3"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1404.2616,974.7543)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -1318.998,1414.1868 0.8876,91.7936"
+       id="path3831-1-5-7-5-6-9-9-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-13-9-7"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-1369.3143,1210.3075)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-5-6-4"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-1369.4876,1259.4692)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.51054573px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1765.0803"
+       y="999.76453"
+       id="text4591-1-0-8-3"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-2-7-8"
+         x="-1765.0803"
+         y="999.76453">Construct 1.1</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-3-6"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-1029.3455,932.90205)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#4faded;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m -944.08179,1372.3345 0.8876,293.3114"
+       id="path3831-1-5-7-5-6-0-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-7-1"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-994.39809,1229.0644)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#4faded;fill-opacity:1;stroke:none"
+       id="path4557-2-5-6-1-8-8-1-9"
+       sodipodi:cx="84.852814"
+       sodipodi:cy="430.10822"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 102.02541,430.10822 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="matrix(0.58069823,0,0,0.58069823,-992.91189,1416.37)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:19.51054573px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1279.5946"
+       y="1053.5076"
+       id="text4591-1-0-8-7"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.96592583,-0.25881905,0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="C:\Users\Deepak\Documents\researchcode\genomedesign\path6638-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4593-4-2-7-2"
+         x="-1279.5946"
+         y="1053.5076">Construct 2</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.21781301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -1948.2857,1036.6177 0,197.6144"
+       id="path6638-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>
