@@ -1,0 +1,16 @@
+Project Ideas
+
+1) Improved integration of data
+
+Effective communication of design and results can improve reproducibility and growth of community in synthetic biology. The genetic code is the primary means through which we program cells. However, in order to understand and communicate the function performed by the DNA code, an engineer must provide numerous details, such as analysis of experimental results or mathematical analyses. Effective sharing of design would allow another engineer to see DNA code and associated details at various stages of the design process. 
+
+2) Animated simulations
+
+Understanding how a biological system works requires intuition. Displaying plots is often confusing when the reader's intuitive understanding is incomplete. Concepts such as bistability, which are extremely common in biological systems, may appear confusing when explained using graphs and mathematical formalism. The mathematics can be explained using animations in order to feed the reader's intuition. Once the reader is equiped with intuition, they can understand other graphs with far more ease. 
+
+Ideally, I would like project (2) and (1) to be connected. The animations are related to mathematical models, which are one form of explanation of function of a genetic sequence. 
+
+
+2) Metagenomics
+While academia is investing detailed questions pertaining to metagenomics, there are many questions that can be answered if large amounts of data can be collected via crowd-sourcing. For example, 
+
