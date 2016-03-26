@@ -52,7 +52,7 @@ function AnimModule(name, family) {
         var module;
         for (i in this.submodules) {
             module = this.submodules[i];
-            if (isModule(module)) {
+            if (isModule(module) && module.init) {
                 module.init();
             }
         }
@@ -91,8 +91,8 @@ function AnimModule(name, family) {
 
     that.connect = function(output, targetModule, input) {
         if (targetModule) {
-            this.connections.push({ 
-                output: output, 
+            this.connections.push({
+                output: output,
                 targetModule: targetModule,
                 input: input
               });
@@ -114,11 +114,11 @@ function AnimModule(name, family) {
     };
 
     that.onTick = function(f) {
-        self.tickFunc = f;
+        that.tickFunc = f;
     };
 
     that.onInit = function(f) {
-        self.init = f;
+        that.init = f;
     };
 
     return that;
@@ -140,7 +140,7 @@ function Molecule(spritesheetinfo, spritestart) {
         var m = this;
 
         var bounds = m.bounds;
-        
+
         if (m.target) {
             if (m.target.parent === m.parent) {
                 var x = m.target.x;
@@ -215,7 +215,7 @@ function Molecule(spritesheetinfo, spritestart) {
     };
 
     that.setSpeed = function(speed, rotate) {
-        var m = this.m;
+        var m = this;
 
         if (rotate===undefined) {
             rotate = true;
@@ -236,19 +236,23 @@ function Molecule(spritesheetinfo, spritestart) {
 
         m.allowRotation = rotate;
         m.velX = speed*(Math.random() - 0.5);
-        m.velY = speed*(Math.random() - 0.5);        
+        m.velY = speed*(Math.random() - 0.5);
     };
 
     that.setBounds = function(bounds) {
-        var m = this.m;
-        m.bounds = bounds;
+        this.bounds = bounds;
     };
 
     that.degrade = function() {
-        markForDegradation(this.m);
+        markForDegradation(this);
     };
 
     _EASEL_STAGE.addChild(that);
+
+    that.x = 0;
+    that.y = 0;
+    that.setSpeed(5,false);
+
     return that;
 }
 

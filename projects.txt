@@ -1,16 +1,21 @@
 Project Ideas
 
-1) Improved integration of data
+1) Improving collaborations in synthetic biology
 
-Effective communication of design and results can improve reproducibility and growth of community in synthetic biology. The genetic code is the primary means through which we program cells. However, in order to understand and communicate the function performed by the DNA code, an engineer must provide numerous details, such as analysis of experimental results or mathematical analyses. Effective sharing of design would allow another engineer to see DNA code and associated details at various stages of the design process. 
+A framework that allows distant-collaborations in synthetic biology, similar to what github enables for software engineers. Effective collaboration requires sharing of the genetic code and various forms of analyses and data associates with that genetic code. Depending on the context, analyses can include anything from mathematical models or data analysis pipelines. The framework should allow a newcomer to obtain and understand all the details of any project and eventually feel comfortable to contribute to that project.
 
 2) Animated simulations
 
-Understanding how a biological system works requires intuition. Displaying plots is often confusing when the reader's intuitive understanding is incomplete. Concepts such as bistability, which are extremely common in biological systems, may appear confusing when explained using graphs and mathematical formalism. The mathematics can be explained using animations in order to feed the reader's intuition. Once the reader is equiped with intuition, they can understand other graphs with far more ease. 
+Understanding how a biological system works requires intuition. Displaying plots is often confusing when the reader's intuitive understanding is incomplete. Concepts such as bistability, which are extremely common in biological systems, may appear confusing when explained using graphs and mathematical formalism but can be fairly obvious when explained using more visual methods, such as animations. Animations can feed a reader's intuition. Once the reader is equiped with intuition, they can understand other graphs with far more ease and become more comfortable with a new field of study.
 
 Ideally, I would like project (2) and (1) to be connected. The animations are related to mathematical models, which are one form of explanation of function of a genetic sequence. 
 
+3) Metagenomics
 
-2) Metagenomics
-While academia is investing detailed questions pertaining to metagenomics, there are many questions that can be answered if large amounts of data can be collected via crowd-sourcing. For example, 
+While academia is investing detailed questions pertaining to metagenomics, there are many questions that require large amounts of data can be collected. Crowd-sourcing is a promising solution, but requires software support in order to ensure that the data is collected properly. One how to microbes affect urban farming? As urban farming and indoor farming become more popular, it may be necessary to monitor the microbe health of soil and plant roots. This project would involve developing the hardware and software infractructure for such monitoring systems. Another option is monitoring microbes in rain and other water sources; gather large data using the same pipeline would enable us to ask important questions about the role of microbes. Ideally, we should also include viruses if we can successfully extract and sequence them.
+
+
+
+
+
 

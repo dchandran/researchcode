@@ -10,7 +10,7 @@ function EnzymeActivity() {
         if (EnzymeActivity.lastIndex > EnzymeActivity.maxIndex) {
             EnzymeActivity.lastIndex = 1;
         }
-                
+
         self.proteinChompSheet = {
             framerate: 30,
             "images": [imageFile + ".png"],
@@ -23,7 +23,7 @@ function EnzymeActivity() {
                 "inactive": 16,
             }
         };
-        
+
         self.tfs = [];
     });
 
@@ -42,7 +42,7 @@ function EnzymeActivity() {
         if (self.inputs.targets) {
             targets = self.inputs.targets;
         } else {
-            
+
             if (self.inputs.target) {
                 targets.push(self.inputs.target);
             } else {
@@ -77,12 +77,12 @@ function EnzymeActivity() {
                     tf.x = tf.bounds.left + tf.bounds.width*(Math.random());
                     tf.y = tf.bounds.top;// + (Math.random());
                 }
-                
+
                 tf.scaleX = tf.scaleY = 1;
                 tf.alpha = 0.1;
 
                 // Add Grant to the _EASEL_STAGE, and add it as a listener to Ticker to get updates each frame.
-                _EASEL_STAGE.addChild(tf);   
+                _EASEL_STAGE.addChild(tf);
                 tfs.push(tf);
             }
         }
@@ -97,7 +97,7 @@ function EnzymeActivity() {
                 tf.alpha += 0.02;
             }
 
-            if (tf.currentAnimation !== 'active' && 
+            if (tf.currentAnimation !== 'active' &&
                 (i < percentActive*tfs.length ||
                  (states.length > i && states[i]==='active'))) {
                 tf.gotoAndPlay('active');
@@ -163,13 +163,13 @@ function MembraneReceptor() {
         self.membraneChompSheet = {
             framerate: 30,
             "images": ["membrane_protein_chomp.png"],
-            "frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},              
+            "frames": {"regX": 0, "height": 120, "count": 11, "regY": 0, "width": 50},
             "animations": {
                 "active": [0, 9, "active", 0.5],
                 "inactive": 10
             }
         };
-        
+
         self.receptors = [];
     });
 
@@ -184,7 +184,7 @@ function MembraneReceptor() {
 
         self.outputs.receptors = [];
 
-        var n = self.inputs.numMolecules || 0;    
+        var n = self.inputs.numMolecules || 0;
         if (receptors.length != n) {
 
             while (receptors.length > n) {
@@ -207,7 +207,7 @@ function MembraneReceptor() {
                 recp.velY = 0;
                 recp.velTheta = 0;
                 recp.alpha = 0.1;
-                
+
                 receptors.push(recp);
             }
         }
@@ -219,13 +219,13 @@ function MembraneReceptor() {
                     rec.alpha += 0.05 * Math.random();
                 }
 
-                if (rec.currentAnimation !== 'active' && 
-                    (i < percentActive*receptors.length || 
+                if (rec.currentAnimation !== 'active' &&
+                    (i < percentActive*receptors.length ||
                         (receptorStates.length > i && receptorStates[i]==='active'))) {
                     rec.gotoAndPlay('active');
                 } else {
-                    if (rec.currentAnimation !== 'inactive' && 
-                        (i >= percentActive*receptors.length || 
+                    if (rec.currentAnimation !== 'inactive' &&
+                        (i >= percentActive*receptors.length ||
                             (receptorStates.length > i && receptorStates[i]==='inactive'))) {
                         rec.gotoAndPlay('inactive');
                     }
@@ -258,7 +258,7 @@ function TwoComponentSystem() {
         var h;
         if (self.inputs.inactiveBounds) {
             h = self.inputs.inactiveBounds.height;
-            self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES            
+            self.inputs.inactiveBounds.height = 100; //inputs are REFERENCES
         }
 
         self.submodules.transcription_factor.inputs.numMolecules = self.inputs.numTFs;
@@ -268,7 +268,7 @@ function TwoComponentSystem() {
 
 
         self.tickSubmodules(event);
-        
+
         if (h) {
             self.inputs.inactiveBounds.height = h;
         }

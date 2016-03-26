@@ -1,11 +1,11 @@
 function SmallMolecule() {
     var module = AnimModule();
-        
+
     module.onInit( function() {
         var i;
         var self = module;
         var bounds = self.inputs.inactiveBounds;
-                
+
         self.spriteSheet = {
             framerate: 30,
             "images": ["substrate.png"],
@@ -35,7 +35,8 @@ function SmallMolecule() {
 
         while (molecules.length < n) {
             mol = Molecule(self.spriteSheet, "free");
-            initDiffusableMolecule(mol, bounds, true, 3);
+            mol.setSpeed(3,true);
+            mol.setBounds(bounds);
             mol.x = mol.bounds.left + mol.bounds.width*(Math.random());
             mol.y = mol.bounds.top + mol.bounds.height*(Math.random());
             mol.scaleX = mol.scaleY = 0.4;
@@ -48,10 +49,10 @@ function SmallMolecule() {
 
         if (!self.isPaused()) {
             k2 = 0;
-            
+
             for (j in self.inputs) {
                 percentBound = self.inputs[ j + ' bound' ];
-                if (j !== "bounds" && percentBound) {                    
+                if (j !== "bounds" && percentBound) {
                     n = percentBound;
                     arr = self.inputs[j];
                     for (k=arr.length-1; k >= 0 && k2 < molecules.length && n > 0; --k) {
@@ -78,10 +79,10 @@ function SmallMolecule() {
                     mol.alpha += 0.02;
                 }
 
-                moveDiffusableMolecule(mol);
+                mol.diffuse();
             }
         }
-        
+
         self.outputs.molecules = molecules;
     });
 

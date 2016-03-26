@@ -65,7 +65,7 @@ function ProteinProduction() {
             mrna.x = cds.x + Math.random()*20;
             mrna.y = cds.y - 20;
             mrna.scaleY = 1;
-            mrna.scaleX = 1;            
+            mrna.scaleX = 1;
             mrnas.push(mrna);
             self.time = event.time;
 
@@ -91,14 +91,14 @@ function ProteinProduction() {
             prot.y = lasty;
             prot.scaleY = 1;
             prot.scaleX = 1;
-            
+
             proteins.push(prot);
             self.time = event.time;
 
-            prot.setBound(bounds);
+            prot.setBounds(bounds);
             prot.setSpeed(2,true);
         }
-        
+
         var allRNADead = true;
 
         if (!self.isPaused()) {
